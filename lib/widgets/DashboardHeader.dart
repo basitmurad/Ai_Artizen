@@ -293,7 +293,6 @@ class HeaderActionButton extends StatelessWidget {
   }
 }
 
-// Specialized Dashboard Header for AI Artizen
 class AIArtizenDashboardHeader extends StatelessWidget {
   final String displayName;
   final String userInitials;
@@ -328,3 +327,38 @@ class AIArtizenDashboardHeader extends StatelessWidget {
     );
   }
 }
+// Specialized Dashboard Header for AI Artizen
+// class AIArtizenDashboardHeader extends StatelessWidget {
+//   final String displayName;
+//   final String userInitials;
+//   final int totalCoins;
+//   final AnimationController coinController;
+//   final VoidCallback onRefresh;
+//
+//   const AIArtizenDashboardHeader({
+//     Key? key,
+//     required this.displayName,
+//     required this.userInitials,
+//     required this.totalCoins,
+//     required this.coinController,
+//     required this.onRefresh,
+//   }) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return DashboardHeader(
+//       displayName: displayName,
+//       userInitials: userInitials,
+//       totalCoins: totalCoins,
+//       coinController: coinController,
+//       onRefresh: onRefresh,
+//       additionalActions: [
+//         // You can add more action buttons here in the future
+//         // HeaderActionButton(
+//         //   icon: Icons.settings,
+//         //   onPressed: () => _showSettings(context),
+//         // ),
+//       ],
+//     );
+//   }
+// }
