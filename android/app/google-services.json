@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "712455392405",
+    "firebase_url": "https://ai-artizen-default-rtdb.firebaseio.com",
+    "project_id": "ai-artizen",
+    "storage_bucket": "ai-artizen.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712455392405:android:a5d210e61dc09c22f55f9c",
+        "android_client_info": {
+          "package_name": "com.example.aiartizen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaEFrusLTngT5wtkJfwGwVUa11-Xkoy3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712455392405:android:a4d7dae46471229df55f9c",
+        "android_client_info": {
+          "package_name": "com.example.artizen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaEFrusLTngT5wtkJfwGwVUa11-Xkoy3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
