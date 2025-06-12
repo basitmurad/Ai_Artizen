@@ -1,8 +1,9 @@
+
 import 'dart:convert';
 
 import '../models/JsonModel.dart';
 
-class JsonDataManager2 {
+class JsonDataManagerProfessional {
   static const String moduleJsonData = '''
 {
   "module": "Module 1",

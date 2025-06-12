@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import '../models/JsonModel.dart';
 
-class JsonDataManager2 {
+class JsonDataManagerEthics {
   static const String moduleJsonData = '''
 {
-  "module": "Module 1",
+  "module": "Module 2",
   "levels": [
     {
       "level": "Level 1 (Acquire)",
