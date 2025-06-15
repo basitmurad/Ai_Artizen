@@ -1,0 +1,162 @@
+{
+  "moduleTitle": "AI Foundations and Applications",
+  "moduleId": 3,
+  "description": "Core concepts and practical implementations",
+  "scenarios": [
+    {
+      "id": 3001,
+      "title": "Understanding Machine Learning Basics",
+      "description": "Learn fundamental concepts of machine learning and AI",
+      "difficulty": "beginner",
+      "estimatedTime": "25 minutes",
+      "scenario": {
+        "context": "You need to choose the right AI approach for predicting customer preferences.",
+        "challenge": "Which machine learning approach is most suitable for this task?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Use rule-based programming with fixed conditions",
+            "feedback": "Rule-based systems lack the flexibility to adapt to changing patterns.",
+            "points": 1
+          },
+          {
+            "id": "B",
+            "text": "Implement supervised learning with historical customer data",
+            "feedback": "Perfect! Supervised learning is ideal for prediction tasks with labeled data.",
+            "points": 3
+          },
+          {
+            "id": "C",
+            "text": "Apply unsupervised learning without any training data",
+            "feedback": "Unsupervised learning isn't optimal for prediction tasks requiring labeled examples.",
+            "points": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": 3002,
+      "title": "Data Quality and Preparation",
+      "description": "Learn the importance of data quality in AI systems",
+      "difficulty": "beginner",
+      "estimatedTime": "30 minutes",
+      "scenario": {
+        "context": "Your AI model's performance is poor despite using advanced algorithms.",
+        "challenge": "What's the most likely cause and solution?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Use a more complex algorithm",
+            "feedback": "More complexity won't help if the underlying data quality is poor.",
+            "points": 1
+          },
+          {
+            "id": "B",
+            "text": "Examine and improve data quality, cleaning, and preprocessing",
+            "feedback": "Excellent! Data quality is often the most critical factor in AI success.",
+            "points": 3
+          },
+          {
+            "id": "C",
+            "text": "Increase the model training time",
+            "feedback": "Longer training won't solve fundamental data quality issues.",
+            "points": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": 3003,
+      "title": "Model Selection and Evaluation",
+      "description": "Learn to choose and evaluate appropriate AI models",
+      "difficulty": "intermediate",
+      "estimatedTime": "35 minutes",
+      "scenario": {
+        "context": "You need to select an AI model for medical diagnosis assistance.",
+        "challenge": "What factors are most important in model selection for this critical application?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Choose the model with highest accuracy only",
+            "feedback": "Accuracy alone isn't sufficient; interpretability and reliability are crucial in healthcare.",
+            "points": 1
+          },
+          {
+            "id": "B",
+            "text": "Balance accuracy, interpretability, reliability, and safety considerations",
+            "feedback": "Perfect! Medical applications require comprehensive evaluation beyond just accuracy.",
+            "points": 3
+          },
+          {
+            "id": "C",
+            "text": "Use the most popular model in the industry",
+            "feedback": "Popularity doesn't guarantee suitability for specific applications and requirements.",
+            "points": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": 3004,
+      "title": "AI Integration and Deployment",
+      "description": "Understand best practices for deploying AI in real-world applications",
+      "difficulty": "intermediate",
+      "estimatedTime": "40 minutes",
+      "scenario": {
+        "context": "Your AI model works well in testing but fails in production.",
+        "challenge": "What's the best approach to ensure successful deployment?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Deploy the model as-is and fix issues as they arise",
+            "feedback": "This reactive approach can cause significant problems in production.",
+            "points": 0
+          },
+          {
+            "id": "B",
+            "text": "Implement gradual rollout, monitoring, and feedback systems",
+            "feedback": "Excellent! This systematic approach ensures safe and effective deployment.",
+            "points": 3
+          },
+          {
+            "id": "C",
+            "text": "Retrain the model with more data",
+            "feedback": "More data might help, but deployment issues often involve infrastructure and monitoring.",
+            "points": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": 3005,
+      "title": "AI Performance Optimization",
+      "description": "Learn to optimize AI systems for better performance and efficiency",
+      "difficulty": "advanced",
+      "estimatedTime": "45 minutes",
+      "scenario": {
+        "context": "Your AI system is accurate but too slow for real-time applications.",
+        "challenge": "How do you optimize for speed while maintaining quality?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Reduce model complexity without considering impact on accuracy",
+            "feedback": "This might improve speed but could significantly harm performance quality.",
+            "points": 1
+          },
+          {
+            "id": "B",
+            "text": "Implement model optimization techniques, efficient architectures, and hardware acceleration",
+            "feedback": "Perfect! This comprehensive approach balances speed and quality effectively.",
+            "points": 3
+          },
+          {
+            "id": "C",
+            "text": "Use sampling to process only a subset of data",
+            "feedback": "Sampling might miss important information and reduce system reliability.",
+            "points": 1
+          }
+        ]
+      }
+    }
+  ]
+}

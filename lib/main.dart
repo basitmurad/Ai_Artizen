@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'auth/SplashScreen.dart';
 
+
 void main() async {
   // Ensure Flutter is initialized
   WidgetsFlutterBinding.ensureInitialized();

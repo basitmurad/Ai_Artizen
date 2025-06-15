@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../json/JsonDataManager2.dart';
+import '../json/JsonDataManager4.dart';
+import '../json/JsonDataManager5.dart';
 import '../models/JsonModel.dart';
 import 'ActivityScreen.dart';
 
@@ -22,7 +24,7 @@ class LevelScenariosScreen extends StatefulWidget {
 }
 
 class _LevelScenariosScreenState extends State<LevelScenariosScreen>
-    with TickerProviderStateMixin {
+ with TickerProviderStateMixin {
   PageController _pageController = PageController();
   List<Scenario> scenarios = [];
   int currentScenarioIndex = 0;
@@ -47,8 +49,14 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
     _initializeAnimations();
     _loadUserData();
     _loadScenarios();
+    print('\n🎮 === LevelScenariosScreen STARTED ===');
+    print('🎮 Received Parameters:');
+    print('   📋 levelId: ${widget.levelId}');
+    print('   📋 levelName: ${widget.levelName}');
+    print('   📋 moduleID: ${widget.moduleID}');
+    print('🎮 =====================================');
 
-    print('Module detail are   ${widget.levelName  }  and ${widget.levelId}   adn ${widget.moduleID}');
+    print('Module detail are   ${widget.levelName  }  and ${widget.levelId}   and ${widget.moduleID}');
   }
 
   void _initializeAnimations() {
@@ -249,7 +257,33 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
 
   void _loadScenarios() {
     try {
-      final educationModule = JsonDataManager2.getModule();
+      print('\n🔧 Loading scenarios for module: ${widget.moduleID}');
+
+      dynamic educationModule;
+
+      // ✅ Use moduleID to determine which JsonDataManager to load
+      switch (widget.moduleID) {
+        case 'human_centered_mindset':
+          print('📂 Loading JsonDataManager2 for human_centered_mindset');
+          educationModule = JsonDataManager2.getModule();
+          break;
+        case 'ai_ethics':  // ✅ ADD THIS CASE
+          print('📂 Loading JsonDataManager5 for ai_ethics');
+          educationModule = JsonDataManager5.getModule();
+          break;
+        case 'ai_pedagogy':
+          print('📂 Loading JsonDataManager4 for ai_pedagogy');
+          educationModule = JsonDataManager4.getModule();
+          break;
+
+        default:
+          print('❌ Unknown moduleID: ${widget.moduleID}, defaulting to JsonDataManager2');
+          educationModule = JsonDataManager2.getModule();
+          break;
+      }
+
+      print('🎯 Loaded module: ${educationModule?.moduleName}');
+
       final level = educationModule.getLevelByNumber(widget.levelId);
 
       if (level != null) {
@@ -258,9 +292,15 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
           isLoading = false;
         });
         print('📚 Loaded ${scenarios.length} scenarios for ${level.level}');
+        print('✅ SUCCESS: Correct scenarios loaded for ${widget.moduleID}');
 
         // Setup real-time coin listener after scenarios are loaded
         _setupCoinListener();
+      } else {
+        print('❌ Level ${widget.levelId} not found in module ${educationModule?.moduleName}');
+        setState(() {
+          isLoading = false;
+        });
       }
     } catch (e) {
       print('❌ Error loading scenarios: $e');
@@ -269,7 +309,6 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
       });
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

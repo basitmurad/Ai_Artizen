@@ -357,7 +357,7 @@ class _SplashScreenWithAuthStreamState extends State<SplashScreenWithAuthStream>
     _navigationDone = true;
 
     if (currentUser != null) {
-      _navigateToScreen(AIArtizenDashboard());
+      _navigateToScreen(NewDashboard());
     } else {
       _navigateToScreen(AuthenticationScreen());
     }

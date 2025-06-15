@@ -1,0 +1,162 @@
+{
+  "moduleTitle": "AI Ethics",
+  "moduleId": 2,
+  "description": "Responsible AI practices and ethical considerations",
+  "scenarios": [
+    {
+      "id": 2001,
+      "title": "Bias Detection and Mitigation",
+      "description": "Learn to identify and address bias in AI systems",
+      "difficulty": "beginner",
+      "estimatedTime": "20 minutes",
+      "scenario": {
+        "context": "Your AI hiring system shows preference for certain demographic groups.",
+        "challenge": "What's the best approach to address this bias?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Ignore the bias since the AI is technically working",
+            "feedback": "Ignoring bias perpetuates discrimination and is ethically wrong.",
+            "points": 0
+          },
+          {
+            "id": "B",
+            "text": "Audit the training data, adjust algorithms, and implement bias monitoring",
+            "feedback": "Excellent! This is a comprehensive approach to bias mitigation.",
+            "points": 3
+          },
+          {
+            "id": "C",
+            "text": "Simply remove demographic information from inputs",
+            "feedback": "This doesn't address underlying bias and may create proxy discrimination.",
+            "points": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": 2002,
+      "title": "Privacy and Data Protection",
+      "description": "Understand privacy principles in AI development",
+      "difficulty": "beginner",
+      "estimatedTime": "25 minutes",
+      "scenario": {
+        "context": "You're building an AI health monitoring app that collects personal health data.",
+        "challenge": "How do you ensure user privacy while maintaining AI effectiveness?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Collect all available data for better AI performance",
+            "feedback": "This violates privacy principles and data minimization practices.",
+            "points": 0
+          },
+          {
+            "id": "B",
+            "text": "Implement data minimization, encryption, and user consent protocols",
+            "feedback": "Perfect! This balances AI effectiveness with privacy protection.",
+            "points": 3
+          },
+          {
+            "id": "C",
+            "text": "Share data with third parties for better insights",
+            "feedback": "This compromises user privacy without proper consent and safeguards.",
+            "points": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": 2003,
+      "title": "Transparency and Explainability",
+      "description": "Learn the importance of making AI decisions understandable",
+      "difficulty": "intermediate",
+      "estimatedTime": "30 minutes",
+      "scenario": {
+        "context": "Your AI system denies a loan application, but the applicant wants to know why.",
+        "challenge": "How do you provide meaningful explanation for the AI's decision?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Tell them it's proprietary and can't be explained",
+            "feedback": "This lacks transparency and may violate regulatory requirements.",
+            "points": 0
+          },
+          {
+            "id": "B",
+            "text": "Provide clear, understandable explanations of key factors that influenced the decision",
+            "feedback": "Excellent! This promotes transparency and builds trust.",
+            "points": 3
+          },
+          {
+            "id": "C",
+            "text": "Give a generic response about credit scoring",
+            "feedback": "This doesn't provide meaningful explanation specific to their case.",
+            "points": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": 2004,
+      "title": "Fairness and Justice",
+      "description": "Ensure AI systems promote fairness across different groups",
+      "difficulty": "intermediate",
+      "estimatedTime": "35 minutes",
+      "scenario": {
+        "context": "Your AI system for university admissions shows different acceptance rates for different ethnic groups.",
+        "challenge": "How do you address this fairness concern?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Accept the results since the AI is objective",
+            "feedback": "AI systems can perpetuate historical biases and aren't automatically fair.",
+            "points": 0
+          },
+          {
+            "id": "B",
+            "text": "Analyze root causes, adjust for historical inequities, and implement fairness metrics",
+            "feedback": "Great! This addresses systemic issues and promotes equitable outcomes.",
+            "points": 3
+          },
+          {
+            "id": "C",
+            "text": "Apply the same algorithm to everyone equally",
+            "feedback": "Equal treatment doesn't always result in fair outcomes due to historical disadvantages.",
+            "points": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": 2005,
+      "title": "Accountability and Responsibility",
+      "description": "Establish clear responsibility frameworks for AI decisions",
+      "difficulty": "advanced",
+      "estimatedTime": "40 minutes",
+      "scenario": {
+        "context": "An autonomous AI system makes a decision that causes significant harm.",
+        "challenge": "How do you establish accountability for this outcome?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Blame the AI system itself since it made the decision",
+            "feedback": "AI systems aren't moral agents; human responsibility must be established.",
+            "points": 0
+          },
+          {
+            "id": "B",
+            "text": "Establish clear governance structures with defined human responsibility at each level",
+            "feedback": "Excellent! This ensures human accountability throughout the AI lifecycle.",
+            "points": 3
+          },
+          {
+            "id": "C",
+            "text": "Consider it an unavoidable consequence of AI advancement",
+            "feedback": "This avoids responsibility and doesn't promote ethical AI development.",
+            "points": 0
+          }
+        ]
+      }
+    }
+  ]
+}

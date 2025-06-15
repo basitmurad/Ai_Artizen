@@ -1,11 +1,9 @@
-import 'dart:convert';
 
-import '../models/JsonModel.dart';
-
-class JsonDataManager2 {
-  static const String moduleJsonData = '''
 {
   "module": "Module 1",
+  "moduleTitle": "Human-Centered Mindset",
+  "moduleId": 1,
+  "description": "Building empathy and understanding in AI implementation",
   "levels": [
     {
       "level": "Level 1 (Acquire)",
@@ -589,50 +587,4 @@ class JsonDataManager2 {
       ]
     }
   ]
-}
-''';
-
-  static EducationModule getModule() {
-    final jsonData = json.decode(moduleJsonData);
-    return EducationModule.fromJson(jsonData);
-  }
-
-  // Legacy methods for backward compatibility
-  static Map<String, dynamic> getModuleData() {
-    return json.decode(moduleJsonData);
-  }
-
-  static List<Level> getLevels() {
-    return getModule().levels;
-  }
-
-  static List<Scenario> getScenariosByLevel(String levelName) {
-    final module = getModule();
-    final level = module.getLevelByName(levelName);
-    return level?.scenarios ?? [];
-  }
-
-  static String getModuleTitle() {
-    return getModule().moduleName;
-  }
-  static List<dynamic> getScenarios() {
-    final moduleData = getModuleData();
-    return moduleData['scenarios'] ?? [];
-  }
-  static String getModuleName() {
-    return getModule().moduleName;
-  }
-
-  // New helper methods using models
-  static Scenario? getScenarioById(int id) {
-    return getModule().getScenarioById(id);
-  }
-
-  static Level? getLevelByNumber(int levelNumber) {
-    return getModule().getLevelByNumber(levelNumber);
-  }
-
-  static List<Scenario> getAllScenarios() {
-    return getModule().allScenarios;
-  }
 }
