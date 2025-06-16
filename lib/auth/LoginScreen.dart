@@ -318,7 +318,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import '../home/AIArtizenDashboard.dart';
+import '../home/NewDashboard.dart';
 import '../widgets/text_field_widget.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -426,7 +426,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pushReplacement(
           context,
           PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => AIArtizenDashboard(),
+            pageBuilder: (context, animation, secondaryAnimation) => NewDashboard(),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
               return SlideTransition(
                 position: Tween<Offset>(
@@ -710,7 +710,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.pushReplacement(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) => AIArtizenDashboard(),
+                      pageBuilder: (context, animation, secondaryAnimation) => NewDashboard(),
                       transitionsBuilder: (context, animation, secondaryAnimation, child) {
                         return FadeTransition(
                           opacity: animation,

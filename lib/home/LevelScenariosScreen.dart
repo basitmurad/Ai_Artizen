@@ -254,7 +254,6 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
       });
     }
   }
-
   void _loadScenarios() {
     try {
       print('\n🔧 Loading scenarios for module: ${widget.moduleID}');
@@ -266,19 +265,25 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
         case 'human_centered_mindset':
           print('📂 Loading JsonDataManager2 for human_centered_mindset');
           educationModule = JsonDataManager2.getModule();
+          _printCompleteModuleData(educationModule, 'JsonDataManager2');
           break;
-        case 'ai_ethics':  // ✅ ADD THIS CASE
+
+        case 'ai_ethics':
           print('📂 Loading JsonDataManager5 for ai_ethics');
           educationModule = JsonDataManager5.getModule();
+          _printCompleteModuleData(educationModule, 'JsonDataManager5');
           break;
+
         case 'ai_pedagogy':
           print('📂 Loading JsonDataManager4 for ai_pedagogy');
           educationModule = JsonDataManager4.getModule();
+          _printCompleteModuleData(educationModule, 'JsonDataManager4');
           break;
 
         default:
           print('❌ Unknown moduleID: ${widget.moduleID}, defaulting to JsonDataManager2');
           educationModule = JsonDataManager2.getModule();
+          _printCompleteModuleData(educationModule, 'JsonDataManager2 (Default)');
           break;
       }
 
@@ -309,6 +314,186 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
       });
     }
   }
+
+// Fixed method to print complete module data
+  void _printCompleteModuleData(dynamic educationModule, String managerName) {
+    print('\n' + '='*80);
+    print('📊 COMPLETE $managerName DATA ANALYSIS');
+    print('='*80);
+
+    if (educationModule == null) {
+      print('❌ Module is null!');
+      return;
+    }
+
+    // Print module overview
+    print('\n🏛️ MODULE OVERVIEW:');
+    print('   📋 Module Name: ${educationModule.moduleName}');
+    print('   📋 Total Levels: ${educationModule.levels.length}');
+    print('   📋 Total Scenarios: ${educationModule.allScenarios.length}');
+
+    // Print all levels and scenarios
+    for (int levelIndex = 0; levelIndex < educationModule.levels.length; levelIndex++) {
+      var level = educationModule.levels[levelIndex];
+      print('\n🎯 LEVEL ${levelIndex + 1}: ${level.level}');
+      print('   📊 Scenarios in this level: ${level.scenarios.length}');
+
+      // Print each scenario in detail
+      for (int scenarioIndex = 0; scenarioIndex < level.scenarios.length; scenarioIndex++) {
+        var scenario = level.scenarios[scenarioIndex];
+        print('\n   📝 SCENARIO ${scenarioIndex + 1} (ID: ${scenario.id}):');
+        print('      🏷️  Title: ${scenario.title}');
+        print('      📖 Description: ${scenario.description}');
+
+        if (scenario.question != null) {
+          print('      ❓ Question: ${scenario.question}');
+        }
+
+        print('      🎯 Options:');
+        for (int optionIndex = 0; optionIndex < scenario.options.length; optionIndex++) {
+          String marker = (optionIndex + 1) == scenario.correctAnswer ? '✅' : '   ';
+          print('         $marker ${optionIndex + 1}. ${scenario.options[optionIndex]}');
+        }
+
+        print('      🎯 Correct Answer: Option ${scenario.correctAnswer}');
+
+        if (scenario.feedback != null) {
+          print('      💡 Feedback: ${scenario.feedback}');
+        }
+
+        // Print activity details - FIXED: Handle Activity object properly
+        if (scenario.activity != null) {
+          print('      🎮 ACTIVITY:');
+          print('         📋 Type: ${scenario.activity!.type ?? 'Unknown'}');
+          print('         🏷️  Name: ${scenario.activity!.name ?? 'Unnamed'}');
+
+          if (scenario.activity!.description != null) {
+            print('         📖 Description: ${scenario.activity!.description}');
+          }
+
+          // Handle different activity types based on Activity object
+          if (scenario.activity!.type == 'Mini Card Activity') {
+            _printMiniCardActivity(scenario.activity!);
+          } else if (scenario.activity!.type == 'Interactive Simulation') {
+            _printInteractiveSimulation(scenario.activity!);
+          }
+        }
+
+        print('   ' + '-'*60);
+      }
+    }
+
+    print('\n' + '='*80);
+    print('✅ END OF $managerName DATA ANALYSIS');
+    print('='*80 + '\n');
+  }
+
+// Fixed method to print Mini Card Activity details
+  void _printMiniCardActivity(Activity activity) {
+    print('         🃏 CARDS:');
+
+    if (activity.cards != null && activity.cards!.isNotEmpty) {
+      for (int cardIndex = 0; cardIndex < activity.cards!.length; cardIndex++) {
+        var card = activity.cards![cardIndex];
+        String correctness = card.correct == 'Fair' ? '✅ FAIR' : '❌ UNFAIR';
+        print('            🃏 Card ${cardIndex + 1}: $correctness');
+        print('               📝 Statement: ${card.statement}');
+        print('               💡 Feedback: ${card.feedback}');
+      }
+    }
+
+    if (activity.completionMessage != null) {
+      print('         🏆 Completion Message: ${activity.completionMessage}');
+    }
+  }
+
+// Fixed method to print Interactive Simulation details
+  void _printInteractiveSimulation(Activity activity) {
+    if (activity.scenes != null && activity.scenes!.isNotEmpty) {
+      print('         🎬 SCENES:');
+
+      for (int sceneIndex = 0; sceneIndex < activity.scenes!.length; sceneIndex++) {
+        var scene = activity.scenes![sceneIndex];
+        print('            🎬 Scene ${scene.sceneNumber ?? sceneIndex + 1}:');
+        print('               📖 Description: ${scene.description}');
+
+        if (scene.options != null && scene.options!.isNotEmpty) {
+          print('               🎯 Options:');
+          for (int optionIndex = 0; optionIndex < scene.options!.length; optionIndex++) {
+            String letter = String.fromCharCode(65 + optionIndex); // A, B, C...
+            print('                  $letter. ${scene.options![optionIndex]}');
+          }
+        }
+      }
+    }
+
+    if (activity.idealPath != null) {
+      print('         🏆 Ideal Path: ${activity.idealPath}');
+    }
+
+    if (activity.idealEnding != null) {
+      print('         ✅ Ideal Ending: ${activity.idealEnding}');
+    }
+
+    if (activity.badEnding != null) {
+      print('         ❌ Bad Ending: ${activity.badEnding}');
+    }
+  }
+  // void _loadScenarios() {
+  //   try {
+  //     print('\n🔧 Loading scenarios for module: ${widget.moduleID}');
+  //
+  //     dynamic educationModule;
+  //
+  //     // ✅ Use moduleID to determine which JsonDataManager to load
+  //     switch (widget.moduleID) {
+  //       case 'human_centered_mindset':
+  //         print('📂 Loading JsonDataManager2 for human_centered_mindset');
+  //         print('📂 Loading JsonDataManager2 for human_centered_mindset$JsonDataManager2');
+  //         educationModule = JsonDataManager2.getModule();
+  //         break;
+  //       case 'ai_ethics':  // ✅ ADD THIS CASE
+  //         print('📂 Loading JsonDataManager5 for ai_ethics$JsonDataManager5');
+  //         educationModule = JsonDataManager5.getModule();
+  //         break;
+  //       case 'ai_pedagogy':
+  //         print('📂 Loading JsonDataManager4 for ai_pedagogy$JsonDataManager4');
+  //         educationModule = JsonDataManager4.getModule();
+  //         break;
+  //
+  //       default:
+  //         print('❌ Unknown moduleID: ${widget.moduleID}, defaulting to JsonDataManager2');
+  //         educationModule = JsonDataManager2.getModule();
+  //         break;
+  //     }
+  //
+  //     print('🎯 Loaded module: ${educationModule?.moduleName}');
+  //
+  //     final level = educationModule.getLevelByNumber(widget.levelId);
+  //
+  //     if (level != null) {
+  //       setState(() {
+  //         scenarios = level.scenarios;
+  //         isLoading = false;
+  //       });
+  //       print('📚 Loaded ${scenarios.length} scenarios for ${level.level}');
+  //       print('✅ SUCCESS: Correct scenarios loaded for ${widget.moduleID}');
+  //
+  //       // Setup real-time coin listener after scenarios are loaded
+  //       _setupCoinListener();
+  //     } else {
+  //       print('❌ Level ${widget.levelId} not found in module ${educationModule?.moduleName}');
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //     }
+  //   } catch (e) {
+  //     print('❌ Error loading scenarios: $e');
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -877,7 +1062,7 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ActivityScreen(
+        builder: (context) => EnhancedActivityScreen(
           scenario: scenario,
           onActivityComplete: () {
             Navigator.pop(context); // Return from activity

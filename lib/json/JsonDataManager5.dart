@@ -1,598 +1,650 @@
-import 'dart:convert';
+  import 'dart:convert';
 
-import '../models/JsonModel.dart';
+  import '../models/JsonModel.dart';
 
-class JsonDataManager5 {
-  static const String moduleJsonData = '''
-  {
-  "module": "Module 5 - AI Ethics",
-  "levels": [
+  class JsonDataManager5 {
+    static const String moduleJsonData = '''
     {
-      "level": "Level 1 (Acquire)",
-      "scenarios": [
-        {
-          "id": 51,
-          "title": "Biased Language Detection",
-          "description": "An AI system flags students from Armenia, who use minority languages, as \\"suspicious\\" due to translation errors and cultural misunderstandings.",
-          "question": "What should the teacher do when they notice this bias?",
-          "options": [
-            "Continue using the system since it works for most students.",
-            "Report the bias and temporarily disable the feature while seeking alternatives.",
-            "Ignore the issue since it only affects a few students."
-          ],
-          "correctAnswer": 2,
-          "feedback": "Recognizing and addressing AI bias protects vulnerable students and ensures equitable learning environments.",
-          "activity": {
-            "type": "Mini Card Activity",
-            "name": "Bias or Fair?",
-            "cards": [
-              {
-                "statement": "An AI assessment tool consistently gives lower scores to students with non-native accents.",
-                "correct": "Unfair",
-                "feedback": "AI systems should not discriminate based on accent or language background. This creates educational inequity."
-              },
-              {
-                "statement": "A teacher notices AI bias and immediately seeks input from diverse community members.",
-                "correct": "Fair",
-                "feedback": "Involving diverse perspectives helps identify and address bias, promoting inclusive education."
-              },
-              {
-                "statement": "The school uses an AI tool that has been tested across different cultural and linguistic groups.",
-                "correct": "Fair",
-                "feedback": "Testing AI across diverse populations helps ensure fair and equitable outcomes for all students."
-              }
+    "module": "Module 2",
+    "levels": [
+      {
+        "level": "Level 1 (Acquire)",
+        "scenarios": [
+          {
+            "id": 21,
+            "title": "AI Surveillance & Privacy",
+            "description": "Ms. Zara's school implements an AI tool to monitor students' online behavior, aiming to prevent cyberbullying. However, the system frequently flags students like Jameel and Sania, who use minority languages, as \\"suspicious,\\" due to translation errors and cultural misunderstandings.",
+            "question": "What should Ms. Zara do to ensure student safety without compromising fairness and cultural inclusion?",
+            "options": [
+              "Continue using the tool but manually review flagged cases",
+              "Disable the tool and rely solely on teacher observation",
+              "Demand transparency and push for an audit to check for bias in the algorithm"
             ],
-            "completionMessage": "Excellent! Recognizing and addressing AI bias is essential for creating fair and inclusive learning environments."
-          }
-        },
-        {
-          "id": 52,
-          "title": "Privacy vs. Personalization",
-          "description": "A learning platform wants access to students' personal data, browsing history, and social media to personalize their learning experience.",
-          "question": "How should the school approach this request?",
-          "options": [
-            "Accept it since personalized learning improves outcomes.",
-            "Evaluate what data is truly necessary and ensure transparent consent processes.",
-            "Reject it completely to avoid any privacy risks."
-          ],
-          "correctAnswer": 2,
-          "feedback": "Balancing personalization with privacy requires careful evaluation of data necessity and transparent consent.",
-          "activity": {
-            "type": "Mini Card Activity",
-            "name": "Privacy Protected or Violated?",
-            "cards": [
-              {
-                "statement": "An AI platform collects student location data to track attendance without informing parents.",
-                "correct": "Unfair",
-                "feedback": "Collecting location data without consent violates privacy. Transparency is essential in educational technology."
-              },
-              {
-                "statement": "Students and parents are clearly informed about what data is collected and how it will be used.",
-                "correct": "Fair",
-                "feedback": "Transparency and informed consent are fundamental to ethical data use in education."
-              },
-              {
-                "statement": "The school shares student performance data with third-party companies without permission.",
-                "correct": "Unfair",
-                "feedback": "Sharing student data without consent violates privacy rights and trust. Schools must protect student information."
-              }
+            "correctAnswer": 3,
+            "feedback": "Advocating for transparent, unbiased AI helps protect student safety while respecting cultural diversity and fairness.",
+            "activity": {
+              "type": "Interactive Simulation",
+              "name": "Audit the Algorithm",
+              "description": "You are Ms. Zara. After noticing that minority-language students are unfairly flagged by your school's AI surveillance tool, you must decide what to do.",
+              "scenes": [
+                {
+                  "sceneNumber": 1,
+                  "description": "You notice Sania, a top student, has been flagged twice this week for using Wakhi phrases.",
+                  "options": [
+                    "Talk to the vice principal immediately",
+                    "Collect more evidence from other students"
+                  ]
+                },
+                {
+                  "sceneNumber": 2,
+                  "description": "You collect 4 similar cases—Jameel, Nasreen, Hafiz, and Musa.",
+                  "options": [
+                    "File a report to the school ethics committee",
+                    "Keep the report private and confront the AI company"
+                  ]
+                },
+                {
+                  "sceneNumber": 3,
+                  "description": "The ethics committee agrees to review the AI tool.",
+                  "options": [
+                    "Recommend that the tool be paused until the audit completes",
+                    "Recommend hiring a cultural linguist to retrain the tool"
+                  ]
+                }
+              ],
+              "idealPath": "A-A-A",
+              "idealEnding": "The school pauses the tool and brings in experts to correct bias. Minority students feel safer and more included.",
+              "badEnding": "The company refuses to acknowledge the issue. The tool continues to harm marginalized students."
+            }
+          },
+          {
+            "id": 22,
+            "title": "Whose Language Counts?",
+            "description": "Ms. Kulsoom's school adopts an AI language-learning app that supports only dominant languages like English and Spanish. However, students from indigenous and marginalized communities feel excluded, as their native languages are not recognized by the app.",
+            "question": "How should Ms. Kulsoom respond to ensure all students feel included and valued?",
+            "options": [
+              "Use the app for most students and offer manual support to others",
+              "Reject the app entirely and develop culturally inclusive resources herself",
+              "Advocate with the developer to include local and indigenous languages in the app"
             ],
-            "completionMessage": "Great work! Privacy protection requires transparency, consent, and careful consideration of data necessity."
-          }
-        },
-        {
-          "id": 53,
-          "title": "Algorithmic Decision Making",
-          "description": "An AI system recommends which students should be placed in advanced or remedial classes based on past performance and demographic data.",
-          "question": "What ethical concerns should the school consider?",
-          "options": [
-            "Trust the AI completely since it removes human bias.",
-            "Review AI recommendations alongside teacher observations and student input.",
-            "Use the AI recommendations without question to save time."
-          ],
-          "correctAnswer": 2,
-          "feedback": "Human oversight and multiple perspectives are essential when AI influences important educational decisions.",
-          "activity": {
-            "type": "Mini Card Activity",
-            "name": "Decision Making: Ethical or Not?",
-            "cards": [
-              {
-                "statement": "An AI places students in tracks based solely on socioeconomic data without considering individual potential.",
-                "correct": "Unfair",
-                "feedback": "Using socioeconomic status alone for placement can perpetuate inequality and limit student opportunities."
-              },
-              {
-                "statement": "Teachers use AI insights as one factor among many when making student placement decisions.",
-                "correct": "Fair",
-                "feedback": "Combining AI insights with human judgment and multiple data sources leads to more equitable decisions."
-              },
-              {
-                "statement": "Students have no opportunity to appeal or discuss AI-generated placement recommendations.",
-                "correct": "Unfair",
-                "feedback": "Students should have agency in decisions affecting their education. Appeals and discussions promote fairness."
-              }
+            "correctAnswer": 3,
+            "feedback": "Advocating for linguistic inclusion in AI tools ensures every student's identity is respected and valued in the learning process.",
+            "activity": {
+              "type": "Interactive Simulation",
+              "name": "Audit the App",
+              "description": "You are Ms. Kulsoom. Your school has adopted an AI language-learning app that only supports dominant languages like English and Spanish. Students who speak indigenous languages like Wakhi and Shina feel excluded and disengaged.",
+              "scenes": [
+                {
+                  "sceneNumber": 1,
+                  "description": "You notice Karim and Sana quietly skip activities involving the AI app. Their native languages aren't supported.",
+                  "options": [
+                    "Raise the concern with the vice principal immediately",
+                    "Offer manual worksheets to support excluded students"
+                  ]
+                }
+              ],
+              "idealPath": "A-B-B-A",
+              "idealEnding": "The developer adds Wakhi and Shina support in the next update. Students are excited to see their languages respected. Engagement improves schoolwide.",
+              "badEnding": "Without support, the developer drops the idea. Students continue feeling excluded, and the app drives further disengagement."
+            }
+          },
+          {
+            "id": 23,
+            "title": "The Voice That Wasn't Heard",
+            "description": "Mr. Imran introduces an AI-powered reading fluency app in his class. The app tracks and scores students' reading aloud skills using voice recognition. However, students with speech impairments and accents—like Areeba, who stutters, and Karim, who speaks with a regional accent—consistently receive lower scores.",
+            "question": "What should Mr. Imran do to ensure inclusive and equitable learning for all students?",
+            "options": [
+              "Continue using the app, since it works well for most students",
+              "Allow affected students to skip the app-based activity",
+              "Raise concerns with the developers and provide an alternative assessment for excluded students"
             ],
-            "completionMessage": "Well done! Ethical AI decision-making requires human oversight, multiple perspectives, and student agency."
-          }
-        },
-        {
-          "id": 54,
-          "title": "Emotional AI Concerns",
-          "description": "A new AI system claims to detect student emotions and stress levels through facial recognition and voice analysis during online classes.",
-          "question": "What should teachers consider before implementing this technology?",
-          "options": [
-            "Implement it immediately to better support student wellbeing.",
-            "Consider privacy implications, accuracy concerns, and alternative support methods.",
-            "Use it only for students who seem to be struggling."
-          ],
-          "correctAnswer": 2,
-          "feedback": "Emotional AI raises significant privacy and accuracy concerns that require careful ethical consideration.",
-          "activity": {
-            "type": "Mini Card Activity",
-            "name": "Emotional AI: Helpful or Harmful?",
-            "cards": [
-              {
-                "statement": "An AI monitors student facial expressions without their knowledge to detect \\"engagement levels.\\"",
-                "correct": "Unfair",
-                "feedback": "Secret emotional monitoring violates privacy and autonomy. Students should know when and how they're being observed."
-              },
-              {
-                "statement": "Teachers use AI emotion detection as one tool among many, with student consent and clear boundaries.",
-                "correct": "Fair",
-                "feedback": "When used transparently with consent, emotional AI can support student wellbeing if properly implemented."
-              },
-              {
-                "statement": "The school relies entirely on AI emotion detection instead of building human relationships with students.",
-                "correct": "Unfair",
-                "feedback": "Technology cannot replace human connection and understanding in supporting student emotional needs."
-              }
+            "correctAnswer": 3,
+            "feedback": "AI tools must be inclusive of diverse speech patterns, disabilities, and accents to avoid unfair learning experiences.",
+            "activity": {
+              "type": "Interactive Simulation",
+              "name": "Reading Fairly",
+              "description": "You are Mr. Imran. You use a reading fluency app that rates students' speech, but those with accents or speech differences get unfairly low scores.",
+              "scenes": [
+                {
+                  "sceneNumber": 1,
+                  "description": "Karim, a fluent reader with a regional accent, is consistently marked as \\"below average.\\"",
+                  "options": [
+                    "Talk to the app provider about speech diversity",
+                    "Let affected students skip the app and give them written tasks"
+                  ]
+                }
+              ],
+              "idealPath": "A-A",
+              "idealEnding": "Your advocacy leads to an inclusive update. All learners feel respected and assessed fairly.",
+              "badEnding": "Alternative assessments help some students, but the app's bias remains unchallenged."
+            }
+          },
+          {
+            "id": 24,
+            "title": "Not in the Picture",
+            "description": "Ms. Hina's school deploys an AI-powered facial recognition system for automating attendance. The system promises efficiency, but within a week, she notices a troubling pattern—students with darker skin tones, those who wear traditional headscarves, and Faizan, a student with facial muscle paralysis due to a disability, are frequently marked absent.",
+            "question": "What should Ms. Hina do next?",
+            "options": [
+              "Keep using the system and manually adjust the attendance afterward",
+              "Ignore the issue—it's a technical limitation, not her responsibility",
+              "Document the bias and formally report it to school leadership or the responsible authority"
             ],
-            "completionMessage": "Excellent! Emotional AI requires careful consideration of privacy, consent, and the irreplaceable value of human connection."
-          }
-        },
-        {
-          "id": 55,
-          "title": "AI-Generated Content Verification",
-          "description": "Students are using AI to generate essays and reports. Some content appears to contain factual errors and potential misinformation.",
-          "question": "How should teachers address this ethically?",
-          "options": [
-            "Ban AI-generated content completely.",
-            "Teach students to fact-check and cite AI-generated content appropriately.",
-            "Allow unlimited AI use without verification requirements."
-          ],
-          "correctAnswer": 2,
-          "feedback": "Teaching responsible AI use and verification skills prepares students for ethical technology use in their future.",
-          "activity": {
-            "type": "Mini Card Activity",
-            "name": "AI Content: Responsible or Risky?",
-            "cards": [
-              {
-                "statement": "A student submits an AI-generated report without checking facts or adding personal analysis.",
-                "correct": "Unfair",
-                "feedback": "Submitting unverified AI content without original thinking undermines learning and academic integrity."
-              },
-              {
-                "statement": "Students learn to use AI as a research starting point, then verify information and add their own insights.",
-                "correct": "Fair",
-                "feedback": "Using AI responsibly as a tool while maintaining critical thinking and verification skills promotes ethical learning."
-              },
-              {
-                "statement": "The teacher helps students understand when and how to disclose AI assistance in their work.",
-                "correct": "Fair",
-                "feedback": "Transparency about AI use builds integrity and helps students develop responsible technology habits."
-              }
+            "correctAnswer": 3,
+            "feedback": "Educators must identify and report algorithmic bias in AI tools to ensure no student is excluded based on appearance or disability.",
+            "activity": {
+              "type": "Interactive Simulation",
+              "name": "Face the Bias",
+              "description": "You are Ms. Hina. A facial recognition tool wrongly marks absent students with dark skin, headscarves, or facial disabilities.",
+              "scenes": [
+                {
+                  "sceneNumber": 1,
+                  "description": "You notice students like Faizan and Mahira are repeatedly misrecognized.",
+                  "options": [
+                    "Document the errors with photos and dates",
+                    "Keep adjusting attendance manually without raising a fuss"
+                  ]
+                },
+                {
+                  "sceneNumber": 2,
+                  "description": "You collect 12 error cases over 2 weeks.",
+                  "options": [
+                    "Submit your report formally to school leadership",
+                    "Discuss the issue informally with your colleague again"
+                  ]
+                }
+              ],
+              "idealPath": "A-A",
+              "idealEnding": "Your formal report leads to real change. Students stop being unfairly marked absent.",
+              "badEnding": "The issue is brushed aside again. Students continue being harmed by the tool."
+            }
+          },
+          {
+            "id": 25,
+            "title": "Whose Data, Whose Rules?",
+            "description": "Ms. Shazia, a teacher in a private school in Karachi, is asked to implement a new AI-powered student analytics tool. The tool tracks academic performance, emotional responses via webcam, and online behavior patterns. The company claims the system is \\"secure\\" and follows global regulations like GDPR and FERPA. However, the software collects biometric and behavioral data without any formal consent from parents or students.",
+            "question": "What should Ms. Shazia do to act ethically and responsibly?",
+            "options": [
+              "Proceed with the tool—it's already used internationally",
+              "Raise the issue with the school administration and request clarity on Pakistan's Personal Data Protection Bill",
+              "Use the tool but avoid sensitive features like webcam access"
             ],
-            "completionMessage": "Great job! Teaching responsible AI use includes verification, transparency, and maintaining critical thinking skills."
+            "correctAnswer": 2,
+            "feedback": "Understanding and complying with local data protection laws is essential for ethical AI implementation in education.",
+            "activity": {
+              "type": "Interactive Simulation",
+              "name": "Data in the Dark",
+              "description": "You are Ms. Shazia. A new AI tool collects students' biometric and emotional data—but there's no mention of Pakistan's privacy laws.",
+              "scenes": [
+                {
+                  "sceneNumber": 1,
+                  "description": "You find out that parents and students were not asked for formal consent.",
+                  "options": [
+                    "Raise the concern with school leadership and ask for legal review",
+                    "Use the tool with webcam off to avoid issues"
+                  ]
+                },
+                {
+                  "sceneNumber": 2,
+                  "description": "The school realizes there's no reference to Pakistan's Personal Data Protection Bill in the tool agreement.",
+                  "options": [
+                    "Recommend pausing tool use until legal consultation is complete",
+                    "Continue using the tool but only in non-sensitive subjects"
+                  ]
+                }
+              ],
+              "idealPath": "A-A",
+              "idealEnding": "You ensure legal and ethical compliance. Trust and transparency are restored.",
+              "badEnding": "Students' data is still being collected without consent. Trust in the school's decisions declines."
+            }
           }
-        }
-      ]
-    },
-    {
-      "level": "Level 2 (Deepen)",
-      "scenarios": [
-        {
-          "id": 56,
-          "title": "Surveillance vs. Safety",
-          "description": "The school wants to install AI-powered cameras that can identify \\"suspicious behavior\\" and predict potential safety incidents.",
-          "question": "What ethical balance should the school seek?",
-          "options": [
-            "Install the system immediately for maximum safety.",
-            "Engage the community in discussions about privacy, effectiveness, and alternatives.",
-            "Reject surveillance technology entirely."
-          ],
-          "correctAnswer": 2,
-          "feedback": "Complex ethical decisions require community input and careful consideration of competing values.",
-          "activity": {
-            "type": "Mini Card Activity",
-            "name": "Safety vs. Privacy: Balanced or Biased?",
-            "cards": [
-              {
-                "statement": "AI cameras monitor hallways but students and families aren't informed about data collection policies.",
-                "correct": "Unfair",
-                "feedback": "Surveillance without transparency violates trust and privacy. Communities deserve clear information about monitoring."
-              },
-              {
-                "statement": "The school conducts community forums to discuss surveillance technology before implementation.",
-                "correct": "Fair",
-                "feedback": "Community engagement ensures that safety measures reflect shared values and address legitimate concerns."
-              },
-              {
-                "statement": "AI surveillance disproportionately flags students from certain ethnic backgrounds as \\"suspicious.\\"",
-                "correct": "Unfair",
-                "feedback": "Biased surveillance systems can perpetuate discrimination and create hostile environments for marginalized students."
-              }
+        ]
+      },
+      {
+        "level": "Level 2 (Deepen)",
+        "scenarios": [
+          {
+            "id": 26,
+            "title": "AI Career Bias in a Karachi School",
+            "description": "A Lahore-based AI career counselor app recommends engineering/medicine only to male students and teaching/nursing to female students at a Karachi public school. Female students protest, but the principal insists the tool aligns with \\"market trends.\\"",
+            "question": "How should the teacher address this?",
+            "options": [
+              "Accept the tool's recommendations as \\"culturally appropriate.\\"",
+              "Manually suggest STEM fields to female students.",
+              "Advocate for a bias audit with the Punjab IT Board."
             ],
-            "completionMessage": "Excellent! Balancing safety and privacy requires community input, transparency, and vigilance against bias."
-          }
-        },
-        {
-          "id": 57,
-          "title": "AI Tutoring Dependency",
-          "description": "Students have become heavily dependent on AI tutoring systems and no longer engage with human teachers or peers for help.",
-          "question": "How should educators respond to this dependency?",
-          "options": [
-            "Encourage continued AI use since it's helping students learn.",
-            "Design activities that require human collaboration and gradually reduce AI dependency.",
-            "Immediately remove all AI tutoring tools."
-          ],
-          "correctAnswer": 2,
-          "feedback": "Healthy learning environments balance technological tools with essential human connections and collaborative skills.",
-          "activity": {
-            "type": "Mini Card Activity",
-            "name": "AI Dependency: Helpful or Harmful?",
-            "cards": [
-              {
-                "statement": "Students work exclusively with AI tutors and avoid asking questions in class or participating in group work.",
-                "correct": "Unfair",
-                "feedback": "Over-dependence on AI can limit social learning and critical thinking skills developed through human interaction."
-              },
-              {
-                "statement": "Teachers design lessons that combine AI assistance with peer collaboration and discussion.",
-                "correct": "Fair",
-                "feedback": "Balanced approaches help students benefit from AI while maintaining essential human learning experiences."
-              },
-              {
-                "statement": "Students use AI tutors for initial practice, then apply learning through human interaction and feedback.",
-                "correct": "Fair",
-                "feedback": "Using AI as a supplement rather than replacement for human interaction promotes comprehensive learning."
-              }
+            "correctAnswer": 3,
+            "feedback": "AI tools must avoid reinforcing gender stereotypes. Pakistani schools should align with national policies like the Digital Pakistan Vision, which promotes inclusive tech.",
+            "activity": {
+              "type": "Interactive Simulation",
+              "name": "Bias Detection Lab",
+              "description": "You are a teacher at a school that's piloting a new AI career guidance tool. During testing, you notice potential gender bias in the recommendations.",
+              "scenes": [
+                {
+                  "sceneNumber": 1,
+                  "description": "Your test shows the AI recommends different careers based on gender.",
+                  "options": [
+                    "Document specific examples of biased recommendations",
+                    "Assume it's just a few glitches that will fix themselves"
+                  ]
+                },
+                {
+                  "sceneNumber": 2,
+                  "description": "You now have clear evidence of bias patterns.",
+                  "options": [
+                    "Organize a student activity to analyze the bias",
+                    "Report directly to administration without student involvement"
+                  ]
+                }
+              ],
+              "idealPath": "A-A",
+              "idealEnding": "Students participate in identifying bias, learning about algorithmic fairness firsthand. The school uses these findings to improve the tool.",
+              "badEnding": "The administration makes changes without student input, missing a valuable teaching opportunity about AI ethics."
+            }
+          },
+          {
+            "id": 27,
+            "title": "Biometric Data in Islamabad's Smart Classrooms",
+            "description": "A \\"smart school\\" in Islamabad requires fingerprint scans for attendance via an AI system. Parents worry scans are stored indefinitely and shared with third parties. The admin claims it's \\"secure,\\" but Pakistan lacks robust data laws.",
+            "question": "What should teachers do?",
+            "options": [
+              "Enforce usage; biometrics are \\"modernization.\\"",
+              "Offer manual attendance for students opting out.",
+              "Demand written guarantees from the vendor."
             ],
-            "completionMessage": "Well done! Healthy AI integration maintains the irreplaceable value of human connection in learning."
-          }
-        },
-        {
-          "id": 58,
-          "title": "Algorithmic Fairness in Assessment",
-          "description": "An AI grading system consistently gives higher scores to essays written in formal academic language, potentially disadvantaging students from diverse linguistic backgrounds.",
-          "question": "How should the school address this fairness issue?",
-          "options": [
-            "Continue using the system since it maintains academic standards.",
-            "Adjust the algorithm or supplement with human review to ensure linguistic diversity is valued.",
-            "Lower standards to accommodate all language styles."
-          ],
-          "correctAnswer": 2,
-          "feedback": "Fair assessment recognizes diverse strengths while maintaining meaningful evaluation standards.",
-          "activity": {
-            "type": "Mini Card Activity",
-            "name": "Fair Assessment or Hidden Bias?",
-            "cards": [
-              {
-                "statement": "An AI system penalizes creative writing that doesn't follow traditional Western narrative structures.",
-                "correct": "Unfair",
-                "feedback": "Assessment systems should recognize diverse forms of expression and cultural storytelling traditions."
-              },
-              {
-                "statement": "Teachers train AI systems using diverse examples of excellent work from different cultural backgrounds.",
-                "correct": "Fair",
-                "feedback": "Inclusive training data helps AI systems recognize excellence across diverse cultural and linguistic expressions."
-              },
-              {
-                "statement": "Assessment criteria are transparent and students understand how their diverse strengths are valued.",
-                "correct": "Fair",
-                "feedback": "Clear, inclusive criteria help students understand expectations while celebrating diverse approaches to excellence."
-              }
+            "correctAnswer": 2,
+            "feedback": "Under Pakistan's Personal Data Protection Bill, consent is key. Forced biometrics risk breaches.",
+            "activity": {
+              "type": "Interactive Simulation",
+              "name": "Privacy Policy Lab",
+              "description": "You're evaluating a new school technology that collects student data.",
+              "scenes": [
+                {
+                  "sceneNumber": 1,
+                  "description": "You notice the system lacks clear data protection measures.",
+                  "options": [
+                    "Document the privacy gaps and propose solutions",
+                    "Assume the vendor has handled security adequately"
+                  ]
+                },
+                {
+                  "sceneNumber": 2,
+                  "description": "Administration asks for specific improvement recommendations.",
+                  "options": [
+                    "Develop a consent process with clear data usage explanations",
+                    "Suggest limiting data collection to only essential information"
+                  ]
+                }
+              ],
+              "idealPath": "A-A",
+              "idealEnding": "The school implements transparent data practices.",
+              "badEnding": "Data continues being collected without proper safeguards."
+            }
+          },
+          {
+            "id": 28,
+            "title": "AI Plagiarism at PU Lahore",
+            "description": "At Punjab University, an AI detector flags a student's Urdu essay as \\"plagiarized\\" due to matching phrases from classical poetry. The student argues this is common in Urdu literature.",
+            "question": "How should the professor respond?",
+            "options": [
+              "Fail the student; AI tools are definitive.",
+              "Ignore the flag; Urdu idioms differ from English.",
+              "Clarify guidelines for cultural/linguistic nuances."
             ],
-            "completionMessage": "Great work! Fair assessment requires recognizing diverse strengths and addressing hidden biases in evaluation systems."
-          }
-        },
-        {
-          "id": 59,
-          "title": "Data Ownership and Control",
-          "description": "Students create digital art and stories using AI tools, but the platform claims ownership rights over student-generated content.",
-          "question": "What should educators advocate for regarding student digital rights?",
-          "options": [
-            "Accept platform terms since the tools are free to use.",
-            "Advocate for student ownership of their creative work and clear data rights.",
-            "Stop using creative AI tools entirely."
-          ],
-          "correctAnswer": 2,
-          "feedback": "Students should maintain ownership and control over their creative work, even when using AI assistance.",
-          "activity": {
-            "type": "Mini Card Activity",
-            "name": "Digital Rights: Protected or Exploited?",
-            "cards": [
-              {
-                "statement": "A platform uses student artwork created with AI to train new models without permission or compensation.",
-                "correct": "Unfair",
-                "feedback": "Using student work without permission exploits their creativity. Students deserve control over their digital creations."
-              },
-              {
-                "statement": "Students retain full rights to work they create using AI tools, with clear terms about platform use.",
-                "correct": "Fair",
-                "feedback": "Protecting student ownership rights encourages creativity and respects intellectual property in digital learning."
-              },
-              {
-                "statement": "The school educates students about digital rights and helps them make informed decisions about platform use.",
-                "correct": "Fair",
-                "feedback": "Digital literacy includes understanding rights and making informed choices about technology use and data sharing."
-              }
+            "correctAnswer": 3,
+            "feedback": "AI tools trained on Western data may misjudge local contexts. Policies must respect Pakistani literary norms.",
+            "activity": {
+              "type": "Interactive Simulation",
+              "name": "Context Matters",
+              "description": "Your institution is implementing an AI writing evaluation tool.",
+              "scenes": [
+                {
+                  "sceneNumber": 1,
+                  "description": "The tool flags legitimate writing as problematic.",
+                  "options": [
+                    "Investigate why these errors are occurring",
+                    "Lower the sensitivity to reduce flags"
+                  ]
+                },
+                {
+                  "sceneNumber": 2,
+                  "description": "You discover cultural/language biases in the algorithm.",
+                  "options": [
+                    "Create discipline-specific guidelines for human review",
+                    "Remove the tool's most problematic features"
+                  ]
+                }
+              ],
+              "idealPath": "A-A",
+              "idealEnding": "Hybrid human-AI evaluation improves accuracy.",
+              "badEnding": "Important checks are lost while biases remain."
+            }
+          },
+          {
+            "id": 29,
+            "title": "AI Accessibility for Sindh's Rural Students",
+            "description": "An AI tutoring app for Sindh's schools lacks Urdu/Sindhi support and requires high internet bandwidth. Rural students with disabilities struggle, but the vendor calls updates \\"too costly.\\"",
+            "question": "What's the ethical solution?",
+            "options": [
+              "Use it only in urban schools.",
+              "Partner with local NGOs to fund inclusive upgrades.",
+              "Wait for government subsidies."
             ],
-            "completionMessage": "Excellent! Protecting student digital rights empowers learners and promotes ethical technology use."
-          }
-        },
-        {
-          "id": 60,
-          "title": "AI and Academic Integrity",
-          "description": "A student uses AI to solve math problems but claims the work as entirely their own. Other students report feeling pressured to use AI to keep up.",
-          "question": "How should the school develop policies that promote integrity while embracing beneficial AI use?",
-          "options": [
-            "Ban all AI use to eliminate cheating concerns.",
-            "Develop clear guidelines about AI disclosure and appropriate use for different assignments.",
-            "Allow unlimited AI use without disclosure requirements."
-          ],
-          "correctAnswer": 2,
-          "feedback": "Clear, thoughtful policies help students use AI ethically while maintaining academic integrity and learning goals.",
-          "activity": {
-            "type": "Mini Card Activity",
-            "name": "Academic Integrity: Maintained or Compromised?",
-            "cards": [
-              {
-                "statement": "Students use AI to check their work and understand mistakes before submitting assignments.",
-                "correct": "Fair",
-                "feedback": "Using AI as a learning support tool while maintaining personal effort promotes both integrity and learning."
-              },
-              {
-                "statement": "A student submits AI-generated solutions without understanding the process or disclosing AI use.",
-                "correct": "Unfair",
-                "feedback": "Submitting AI work without understanding or disclosure undermines learning and violates academic integrity."
-              },
-              {
-                "statement": "Teachers design assessments that require demonstrating understanding beyond what AI can provide.",
-                "correct": "Fair",
-                "feedback": "Thoughtful assessment design ensures students must demonstrate genuine learning while allowing beneficial AI support."
-              }
+            "correctAnswer": 2,
+            "feedback": "Pakistan's National Education Policy mandates inclusivity. Offline/low-bandwidth options are critical.",
+            "activity": {
+              "type": "Interactive Simulation",
+              "name": "Inclusive Design Challenge",
+              "description": "Your school is adopting a new learning technology.",
+              "scenes": [
+                {
+                  "sceneNumber": 1,
+                  "description": "You notice some students can't use the tool effectively.",
+                  "options": [
+                    "Identify specific accessibility barriers",
+                    "Provide alternative assignments for affected students"
+                  ]
+                },
+                {
+                  "sceneNumber": 2,
+                  "description": "You compile a list of needed adaptations.",
+                  "options": [
+                    "Work with developers to implement accessibility features",
+                    "Find supplemental tools to fill the gaps"
+                  ]
+                }
+              ],
+              "idealPath": "A-A",
+              "idealEnding": "The technology becomes usable for all students.",
+              "badEnding": "A patchwork solution creates inconsistent experiences."
+            }
+          },
+          {
+            "id": 30,
+            "title": "AI Surveillance in Peshawar's Colleges",
+            "description": "A Peshawar college uses AI cameras to flag \\"suspicious behavior\\" (e.g., long bathroom breaks). Female students report false flags due to cultural norms (e.g., praying during breaks).",
+            "question": "How should staff address this?",
+            "options": [
+              "Trust the AI; security outweighs privacy.",
+              "Adjust thresholds for gender-specific norms.",
+              "Disable surveillance to avoid controversy."
             ],
-            "completionMessage": "Great job! Academic integrity with AI requires clear guidelines, transparency, and focus on genuine learning."
+            "correctAnswer": 2,
+            "feedback": "AI must respect Pakistani cultural norms. Over-surveillance risks violating privacy and safety.",
+            "activity": {
+              "type": "Interactive Simulation",
+              "name": "Bias Detection",
+              "description": "Your organization is using AI for behavior monitoring.",
+              "scenes": [
+                {
+                  "sceneNumber": 1,
+                  "description": "The system shows inconsistent results across groups.",
+                  "options": [
+                    "Analyze the data for potential biases",
+                    "Adjust parameters to equalize outcomes"
+                  ]
+                },
+                {
+                  "sceneNumber": 2,
+                  "description": "You identify specific algorithmic biases.",
+                  "options": [
+                    "Recommend retraining the model with balanced data",
+                    "Implement manual review for flagged cases"
+                  ]
+                }
+              ],
+              "idealPath": "A-A",
+              "idealEnding": "The system becomes fairer and more accurate.",
+              "badEnding": "The process becomes inefficient while biases persist."
+            }
           }
-        }
-      ]
-    },
-    {
-      "level": "Level 3 (Create)",
-      "scenarios": [
-        {
-          "id": 61,
-          "title": "Designing Ethical AI Policies",
-          "description": "Your school district is creating comprehensive AI ethics guidelines for educational use. You're leading a committee with teachers, students, parents, and community members.",
-          "question": "What should be the foundational principle guiding your policy development?",
-          "options": [
-            "Maximizing AI efficiency and cost savings.",
-            "Centering student wellbeing, equity, and educational value in all AI decisions.",
-            "Following whatever policies other successful schools have implemented."
-          ],
-          "correctAnswer": 2,
-          "feedback": "Student-centered ethical frameworks ensure AI serves educational goals while protecting learner rights and promoting equity.",
-          "activity": {
-            "type": "Mini Card Activity",
-            "name": "Ethical Policy: Comprehensive or Incomplete?",
-            "cards": [
-              {
-                "statement": "The policy includes input from students, families, teachers, and community members from diverse backgrounds.",
-                "correct": "Fair",
-                "feedback": "Inclusive policy development ensures diverse perspectives and needs are considered in AI ethics guidelines."
-              },
-              {
-                "statement": "AI policies are created by administrators without consulting teachers or families.",
-                "correct": "Unfair",
-                "feedback": "Top-down policy making without stakeholder input often misses important concerns and lacks community buy-in."
-              },
-              {
-                "statement": "The policy includes regular review processes to adapt to new AI developments and community needs.",
-                "correct": "Fair",
-                "feedback": "Adaptive policies that evolve with technology and community needs maintain relevance and effectiveness."
-              }
+        ]
+      },
+      {
+        "level": "Level 3 (Create)",
+        "scenarios": [
+          {
+            "id": 31,
+            "title": "AI Tool vs Climate Goals",
+            "description": "Mr. Iqbal discovers that a new AI-based device used for science simulations consumes excessive energy and relies on imported components that are harmful to the environment. He wonders if promoting this tool contradicts his school's climate-conscious values.",
+            "question": "What action should Mr. Iqbal take to ensure alignment with sustainable education values?",
+            "options": [
+              "Recommend the school continue using the tool but limit its usage",
+              "Collect data, consult climate experts, and co-design an energy-efficient alternative with students",
+              "Avoid discussing the issue and wait for the district to make a decision"
             ],
-            "completionMessage": "Excellent! Effective AI ethics policies require inclusive development, student-centered principles, and adaptive frameworks."
-          }
-        },
-        {
-          "id": 62,
-          "title": "Building AI Literacy Programs",
-          "description": "You're designing a school-wide AI literacy program to help students understand AI capabilities, limitations, and ethical considerations.",
-          "question": "What approach would best prepare students for responsible AI citizenship?",
-          "options": [
-            "Focus primarily on technical skills and AI programming.",
-            "Combine hands-on AI experiences with critical thinking about societal impacts and ethical decision-making.",
-            "Emphasize potential dangers and risks of AI technology."
-          ],
-          "correctAnswer": 2,
-          "feedback": "Comprehensive AI literacy includes both practical skills and critical understanding of ethical and societal implications.",
-          "activity": {
-            "type": "Mini Card Activity",
-            "name": "AI Literacy: Comprehensive or Limited?",
-            "cards": [
-              {
-                "statement": "Students learn to identify AI-generated content and understand how different AI systems work.",
-                "correct": "Fair",
-                "feedback": "Understanding AI capabilities and limitations helps students become informed and critical technology users."
-              },
-              {
-                "statement": "The curriculum only focuses on AI benefits without discussing potential risks or ethical concerns.",
-                "correct": "Unfair",
-                "feedback": "Balanced AI education must address both opportunities and challenges to prepare responsible digital citizens."
-              },
-              {
-                "statement": "Students engage in discussions about AI bias, privacy, and fairness through real-world case studies.",
-                "correct": "Fair",
-                "feedback": "Examining real ethical dilemmas helps students develop critical thinking skills for responsible AI use."
-              }
+            "correctAnswer": 2,
+            "feedback": "Creating an environmentally conscious AI tool engages students in sustainability and ethical innovation.",
+            "activity": {
+              "type": "Interactive Simulation",
+              "name": "Sustainability Audit",
+              "description": "Your school recently adopted an AI-based smart scheduling tool to optimize student and teacher timetables. You begin to notice that the system heavily relies on cloud computing services that contribute significantly to carbon emissions.",
+              "scenes": [
+                {
+                  "sceneNumber": 1,
+                  "description": "You read a report linking the AI tool's backend infrastructure to high energy use and carbon emissions.",
+                  "options": [
+                    "Present the data and propose an environmental audit of the tool",
+                    "Ignore the report and focus on how efficient the scheduling has become"
+                  ]
+                },
+                {
+                  "sceneNumber": 2,
+                  "description": "You present your findings to the school's tech committee. They agree to explore alternatives.",
+                  "options": [
+                    "Recommend switching to a low-energy open-source alternative",
+                    "Suggest planting trees to offset the carbon emissions"
+                  ]
+                }
+              ],
+              "idealPath": "A-A",
+              "idealEnding": "The school transitions to a greener tool with local hosting. It sparks broader awareness of digital sustainability among staff and students.",
+              "badEnding": "Tree planting is approved, but the AI tool's emissions continue unchecked. No systemic change occurs."
+            }
+          },
+          {
+            "id": 32,
+            "title": "Multistakeholder Simulation",
+            "description": "Ms. Nilofer leads a debate simulation where students represent stakeholders in AI regulation — from tech firms to indigenous community leaders — discussing how a new AI attendance system may affect marginalized youth.",
+            "question": "What is the best way for Ms. Nilofer to extend the activity's impact?",
+            "options": [
+              "Write a class memo summarizing the debate",
+              "Help students compile a formal draft policy to present to the school board",
+              "Conclude the activity and move to the next topic"
             ],
-            "completionMessage": "Great work! Comprehensive AI literacy prepares students to be informed, ethical, and empowered technology users."
-          }
-        },
-        {
-          "id": 63,
-          "title": "Community AI Ethics Initiative",
-          "description": "You're launching a community-wide initiative to address AI ethics in education, involving multiple schools, families, and local organizations.",
-          "question": "How should you structure this initiative for maximum impact and inclusivity?",
-          "options": [
-            "Focus on implementing the same AI tools and policies across all participating schools.",
-            "Create collaborative networks that respect community differences while sharing ethical frameworks and resources.",
-            "Develop separate programs for different socioeconomic communities."
-          ],
-          "correctAnswer": 2,
-          "feedback": "Collaborative approaches that respect diversity while promoting shared ethical principles create stronger, more sustainable initiatives.",
-          "activity": {
-            "type": "Mini Card Activity",
-            "name": "Community Initiative: Inclusive or Exclusive?",
-            "cards": [
-              {
-                "statement": "The initiative provides translation services and culturally relevant examples for diverse community members.",
-                "correct": "Fair",
-                "feedback": "Accessible, culturally responsive programming ensures all community members can participate meaningfully."
-              },
-              {
-                "statement": "Meetings are scheduled only during work hours, making it difficult for working parents to participate.",
-                "correct": "Unfair",
-                "feedback": "Inaccessible scheduling excludes important voices and perspectives from community decision-making processes."
-              },
-              {
-                "statement": "The initiative includes youth voices and leadership opportunities for students in AI ethics discussions.",
-                "correct": "Fair",
-                "feedback": "Including student perspectives ensures AI ethics initiatives address real learner needs and experiences."
-              }
+            "correctAnswer": 2,
+            "feedback": "Policy drafting from simulated debate encourages advocacy and real-world application of ethical principles.",
+            "activity": {
+              "type": "Interactive Simulation",
+              "name": "Drafting Ethical Impact",
+              "description": "Your students just completed a multistakeholder simulation about how an AI attendance system might marginalize youth from remote or underserved communities. They represented diverse voices — tech developers, school leaders, community elders, and students.",
+              "scenes": [
+                {
+                  "sceneNumber": 1,
+                  "description": "The simulation ended, and students are energized but unsure what to do next.",
+                  "options": [
+                    "Guide them in drafting a shared ethical policy based on the debate",
+                    "Let students individually reflect in their journals"
+                  ]
+                },
+                {
+                  "sceneNumber": 2,
+                  "description": "Students collaborate on a document outlining ethical standards and inclusion measures, with inputs from each stakeholder role.",
+                  "options": [
+                    "Submit the policy draft to the school board for real-world consideration",
+                    "Keep it as a class record without sharing externally"
+                  ]
+                }
+              ],
+              "idealPath": "A-A",
+              "idealEnding": "The school board acknowledges the proposal and agrees to discuss inclusive design in future AI tool adoptions. Students feel empowered and see their voice making a difference.",
+              "badEnding": "The effort stays within the classroom. Students feel proud but miss the opportunity to influence actual change."
+            }
+          },
+          {
+            "id": 33,
+            "title": "Disability-Inclusive AI",
+            "description": "An AI assessment tool doesn't adapt to students with hearing disabilities. Ms. Mehreen and her learners explore this issue and begin co-designing alternative voice-text models.",
+            "question": "What should Ms. Mehreen prioritize?",
+            "options": [
+              "Abandon the AI tool for traditional methods",
+              "Partner with local developers and special educators to co-create an inclusive model",
+              "Wait for the district to launch a new tool"
             ],
-            "completionMessage": "Excellent! Inclusive community initiatives create stronger AI ethics frameworks that serve all learners effectively."
-          }
-        },
-        {
-          "id": 64,
-          "title": "Evaluating AI Impact on Learning",
-          "description": "After implementing various AI tools in your educational context, you need to assess their impact on student learning, equity, and wellbeing.",
-          "question": "What evaluation approach would provide the most comprehensive understanding of AI's educational impact?",
-          "options": [
-            "Focus only on test scores and academic performance metrics.",
-            "Use multiple data sources including student voice, equity indicators, and long-term learning outcomes.",
-            "Rely primarily on technology usage statistics and efficiency measures."
-          ],
-          "correctAnswer": 2,
-          "feedback": "Comprehensive evaluation requires multiple perspectives and indicators to understand AI's full impact on learning and equity.",
-          "activity": {
-            "type": "Mini Card Activity",
-            "name": "AI Evaluation: Comprehensive or Narrow?",
-            "cards": [
-              {
-                "statement": "Evaluation includes surveys asking students about their experiences, concerns, and suggestions regarding AI tools.",
-                "correct": "Fair",
-                "feedback": "Student voice provides essential insights into AI's real impact on learning experiences and wellbeing."
-              },
-              {
-                "statement": "The school only measures whether AI tools increased test scores without considering equity or student experience.",
-                "correct": "Unfair",
-                "feedback": "Narrow evaluation misses important impacts on equity, engagement, and holistic learning outcomes."
-              },
-              {
-                "statement": "Evaluation examines whether AI tools are helping or hindering different student populations equitably.",
-                "correct": "Fair",
-                "feedback": "Equity-focused evaluation ensures AI benefits all students and doesn't exacerbate existing educational disparities."
-              }
+            "correctAnswer": 2,
+            "feedback": "Co-creation empowers teachers and learners to innovate inclusively, addressing disability equity gaps.",
+            "activity": {
+              "type": "Interactive Simulation",
+              "name": "Inclusive AI Redesign",
+              "description": "You are Ms. Mehreen. Your classroom uses an AI assessment tool that doesn't recognize the needs of students with hearing disabilities. You decide to act with your students.",
+              "scenes": [
+                {
+                  "sceneNumber": 1,
+                  "description": "You notice Ali and Sara, who use sign language, struggle to interact with the voice-based AI assessment.",
+                  "options": [
+                    "Temporarily exempt them from AI-based tasks",
+                    "Start a classroom discussion on the accessibility gap"
+                  ]
+                },
+                {
+                  "sceneNumber": 2,
+                  "description": "Your students passionately suggest ideas to improve access. You gather thoughts about integrating text-based or sign-supported options.",
+                  "options": [
+                    "Reach out to local developers and special educators for technical collaboration",
+                    "Document ideas but postpone action until next term"
+                  ]
+                }
+              ],
+              "idealPath": "B-A",
+              "idealEnding": "The new model becomes a case study for inclusive AI, and students feel proud to have co-created it.",
+              "badEnding": "Students feel their input is ignored. The excitement fades, and the accessibility issue persists."
+            }
+          },
+          {
+            "id": 34,
+            "title": "Ethics Hackathon",
+            "description": "Mr. Saeed hosts an \\"Ethics in EdTech Hackathon,\\" inviting students to design AI tools that address bullying, low literacy, or cultural erasure.",
+            "question": "How should Mr. Saeed ensure that the event leads to meaningful outcomes?",
+            "options": [
+              "Let students work freely and enjoy the experience",
+              "Guide teams to align projects with AI ethical principles and present to a local education council",
+              "Use the winning project in class regardless of ethical review"
             ],
-            "completionMessage": "Great job! Comprehensive AI evaluation considers multiple perspectives and outcomes to ensure beneficial, equitable implementation."
-          }
-        },
-        {
-          "id": 65,
-          "title": "Future-Proofing Ethical AI Education",
-          "description": "As AI technology rapidly evolves, you're developing strategies to ensure your educational AI ethics approach remains relevant and effective.",
-          "question": "What strategy would best prepare your educational community for unknown future AI developments?",
-          "options": [
-            "Create detailed rules for every possible AI scenario.",
-            "Build flexible ethical frameworks and critical thinking skills that can adapt to new technologies.",
-            "Wait to see what AI developments occur before making any policies."
-          ],
-          "correctAnswer": 2,
-          "feedback": "Adaptable ethical frameworks and strong critical thinking skills provide the best foundation for navigating future AI developments.",
-          "activity": {
-            "type": "Mini Card Activity",
-            "name": "Future-Ready or Outdated?",
-            "cards": [
-              {
-                "statement": "Students learn general principles of digital ethics that can apply to new technologies as they emerge.",
-                "correct": "Fair",
-                "feedback": "Teaching transferable ethical reasoning skills prepares students for technologies that don't yet exist."
-              },
-              {
-                "statement": "The school creates very specific rules about current AI tools but no framework for evaluating new technologies.",
-                "correct": "Unfair",
-                "feedback": "Rigid, technology-specific rules quickly become outdated. Flexible frameworks provide better long-term guidance."
-              },
-              {
-                "statement": "The curriculum includes regular discussions about emerging technologies and their potential ethical implications.",
-                "correct": "Fair",
-                "feedback": "Ongoing dialogue about technological change helps students develop skills for lifelong ethical technology use."
-              }
+            "correctAnswer": 2,
+            "feedback": "Structured, ethics-aligned creativity supports responsible innovation in AI development.",
+            "activity": {
+              "type": "Interactive Simulation",
+              "name": "Ethical Design Sprint",
+              "description": "You are Mr. Saeed. You're organizing an \\"Ethics in EdTech Hackathon\\" where students create AI tools to address real problems like bullying or cultural erasure.",
+              "scenes": [
+                {
+                  "sceneNumber": 1,
+                  "description": "You introduce the event but notice teams immediately start coding without discussing ethical guidelines.",
+                  "options": [
+                    "Let them continue — creativity should be unrestricted",
+                    "Provide them with an ethics checklist for AI development"
+                  ]
+                },
+                {
+                  "sceneNumber": 2,
+                  "description": "Students begin rethinking their designs, identifying risks and safeguards before implementation.",
+                  "options": [
+                    "Invite a panel of local educators and community members to evaluate the final projects",
+                    "Choose the winners based only on technical features"
+                  ]
+                }
+              ],
+              "idealPath": "B-A",
+              "idealEnding": "Students learn how ethics strengthen innovation. They feel proud of making socially valuable tools.",
+              "badEnding": "Projects work technically but ignore ethical risks. A bullying-report app raises privacy concerns and gets rejected by the school."
+            }
+          },
+          {
+            "id": 35,
+            "title": "Regulating Algorithmic Decisions",
+            "description": "A scholarship platform uses an AI to shortlist candidates. Mr. Rahim finds that minority language students are consistently overlooked.",
+            "question": "What should Mr. Rahim do?",
+            "options": [
+              "Write a blog about the problem",
+              "Work with peers and legal experts to simulate a regulatory framework that ensures fairness in AI selection",
+              "Ask students to apply to other platforms"
             ],
-            "completionMessage": "Excellent! Future-proofing AI ethics education requires flexible frameworks and strong critical thinking skills."
+            "correctAnswer": 2,
+            "feedback": "Simulating regulatory models allows teachers to lead in ethical reforms for AI tools in education.",
+            "activity": {
+              "type": "Interactive Simulation",
+              "name": "Fairness Framework Simulation",
+              "description": "You are Mr. Rahim. You discover that an AI-based scholarship platform overlooks students from minority language backgrounds.",
+              "scenes": [
+                {
+                  "sceneNumber": 1,
+                  "description": "You gather data showing repeated exclusion of Wakhi- and Shina-speaking students.",
+                  "options": [
+                    "Publish an open letter on social media",
+                    "Bring the issue to your school's digital ethics committee"
+                  ]
+                },
+                {
+                  "sceneNumber": 2,
+                  "description": "The committee asks you to propose how such platforms can be made more equitable.",
+                  "options": [
+                    "Collaborate with colleagues and legal experts to simulate a fair algorithm policy",
+                    "Recommend stopping AI use in scholarship platforms"
+                  ]
+                }
+              ],
+              "idealPath": "B-A",
+              "idealEnding": "Your efforts influence policy talks, and other schools start replicating your model.",
+              "badEnding": "The platform is abandoned, but no alternatives exist. Marginalized students remain excluded from scholarship visibility."
+            }
           }
-        }
-      ]
+        ]
+      }
+    ]
+  }''';
+
+    static EducationModule getModule() {
+      final jsonData = json.decode(moduleJsonData);
+      return EducationModule.fromJson(jsonData);
     }
-  ]
-}''';
 
-  static EducationModule getModule() {
-    final jsonData = json.decode(moduleJsonData);
-    return EducationModule.fromJson(jsonData);
-  }
+    // Legacy methods for backward compatibility
+    static Map<String, dynamic> getModuleData() {
+      return json.decode(moduleJsonData);
+    }
 
-  // Legacy methods for backward compatibility
-  static Map<String, dynamic> getModuleData() {
-    return json.decode(moduleJsonData);
-  }
+    static List<Level> getLevels() {
+      return getModule().levels;
+    }
 
-  static List<Level> getLevels() {
-    return getModule().levels;
-  }
+    static List<Scenario> getScenariosByLevel(String levelName) {
+      final module = getModule();
+      final level = module.getLevelByName(levelName);
+      return level?.scenarios ?? [];
+    }
 
-  static List<Scenario> getScenariosByLevel(String levelName) {
-    final module = getModule();
-    final level = module.getLevelByName(levelName);
-    return level?.scenarios ?? [];
-  }
+    static String getModuleTitle() {
+      return getModule().moduleName;
+    }
 
-  static String getModuleTitle() {
-    return getModule().moduleName;
-  }
+    static List<dynamic> getScenarios() {
+      final moduleData = getModuleData();
+      return moduleData['scenarios'] ?? [];
+    }
 
-  static List<dynamic> getScenarios() {
-    final moduleData = getModuleData();
-    return moduleData['scenarios'] ?? [];
-  }
+    static String getModuleName() {
+      return getModule().moduleName;
+    }
 
-  static String getModuleName() {
-    return getModule().moduleName;
-  }
+    // New helper methods using models
+    static Scenario? getScenarioById(int id) {
+      return getModule().getScenarioById(id);
+    }
 
-  // New helper methods using models
-  static Scenario? getScenarioById(int id) {
-    return getModule().getScenarioById(id);
-  }
+    static Level? getLevelByNumber(int levelNumber) {
+      return getModule().getLevelByNumber(levelNumber);
+    }
 
-  static Level? getLevelByNumber(int levelNumber) {
-    return getModule().getLevelByNumber(levelNumber);
+    static List<Scenario> getAllScenarios() {
+      return getModule().allScenarios;
+    }
   }
-
-  static List<Scenario> getAllScenarios() {
-    return getModule().allScenarios;
-  }
-}

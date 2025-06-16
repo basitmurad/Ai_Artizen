@@ -1,4 +1,4 @@
-import 'package:artizen/home/AIArtizenDashboard.dart';
+import 'package:artizen/home/NewDashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
@@ -81,7 +81,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 // Navigate to Dashboard using MaterialPageRoute
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => AIArtizenDashboard()),
+          MaterialPageRoute(builder: (context) => NewDashboard()),
         );
         // Navigate to home screen or login screen
         // Navigator.pushReplacementNamed(context, '/home');

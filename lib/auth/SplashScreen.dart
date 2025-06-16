@@ -5,8 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../home/AIArtizenDashboard.dart';
-import '../main.dart';
 import 'AuthenticationScreen.dart';
 
 class SplashScreen extends StatefulWidget {
