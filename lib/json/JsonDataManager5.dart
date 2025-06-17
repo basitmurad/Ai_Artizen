@@ -1,650 +1,658 @@
-  import 'dart:convert';
+import 'dart:convert';
 
-  import '../models/JsonModel.dart';
+import '../models/JsonModel.dart';
 
-  class JsonDataManager5 {
-    static const String moduleJsonData = '''
+class JsonDataManager5 {
+  static const String moduleJsonData = '''
+  {
+  "module": "Module 5",
+  "levels": [
     {
-    "module": "Module 2",
-    "levels": [
-      {
-        "level": "Level 1 (Acquire)",
-        "scenarios": [
-          {
-            "id": 21,
-            "title": "AI Surveillance & Privacy",
-            "description": "Ms. Zara's school implements an AI tool to monitor students' online behavior, aiming to prevent cyberbullying. However, the system frequently flags students like Jameel and Sania, who use minority languages, as \\"suspicious,\\" due to translation errors and cultural misunderstandings.",
-            "question": "What should Ms. Zara do to ensure student safety without compromising fairness and cultural inclusion?",
-            "options": [
-              "Continue using the tool but manually review flagged cases",
-              "Disable the tool and rely solely on teacher observation",
-              "Demand transparency and push for an audit to check for bias in the algorithm"
+      "level": "Level 1 (Acquire)",
+      "scenarios": [
+        {
+          "id": 56,
+          "title": "Evolving Role in the AI Era",
+          "description": "Ms. Farzana attends a staff meeting where AI tools in education are discussed. She begins to wonder how her teaching role is expected to evolve in this changing environment.",
+          "question": "What should Ms. Farzana do first to stay professionally relevant?",
+          "options": [
+            "Memorize AI definitions and wait for official training",
+            "Reflect on how AI is changing educational expectations and update her skillset accordingly",
+            "Avoid AI tools because they may replace her role"
+          ],
+          "correctAnswer": 2,
+          "feedback": "Reflecting on how AI is changing her role shows that Ms. Farzana understands the need for continuous learning and professional evolution in the AI era.",
+          "activity": {
+            "type": "Interactive Simulation",
+            "name": "Professional Mindset Check",
+            "description": "You are evaluating two teacher profiles to determine which reflects an appropriate understanding of the teacher's evolving role in an AI-rich education system.",
+            "scenes": [
+              {
+                "sceneNumber": 1,
+                "description": "Profile A: Mr. Faisal believes that AI tools are just accessories and continues with traditional teaching methods. He thinks his main role is delivering content without considering technology integration.",
+                "options": [
+                  "This reflects appropriate AI-era mindset",
+                  "This needs improvement for AI era teaching"
+                ]
+              },
+              {
+                "sceneNumber": 2,
+                "description": "Profile B: Ms. Aneeza sees AI as a support system that changes how she facilitates learning. She focuses on guiding students in inquiry, reflection, and ethical AI use.",
+                "options": [
+                  "This reflects appropriate AI-era mindset",
+                  "This needs improvement for AI era teaching"
+                ]
+              }
             ],
-            "correctAnswer": 3,
-            "feedback": "Advocating for transparent, unbiased AI helps protect student safety while respecting cultural diversity and fairness.",
-            "activity": {
-              "type": "Interactive Simulation",
-              "name": "Audit the Algorithm",
-              "description": "You are Ms. Zara. After noticing that minority-language students are unfairly flagged by your school's AI surveillance tool, you must decide what to do.",
-              "scenes": [
-                {
-                  "sceneNumber": 1,
-                  "description": "You notice Sania, a top student, has been flagged twice this week for using Wakhi phrases.",
-                  "options": [
-                    "Talk to the vice principal immediately",
-                    "Collect more evidence from other students"
-                  ]
-                },
-                {
-                  "sceneNumber": 2,
-                  "description": "You collect 4 similar cases—Jameel, Nasreen, Hafiz, and Musa.",
-                  "options": [
-                    "File a report to the school ethics committee",
-                    "Keep the report private and confront the AI company"
-                  ]
-                },
-                {
-                  "sceneNumber": 3,
-                  "description": "The ethics committee agrees to review the AI tool.",
-                  "options": [
-                    "Recommend that the tool be paused until the audit completes",
-                    "Recommend hiring a cultural linguist to retrain the tool"
-                  ]
-                }
-              ],
-              "idealPath": "A-A-A",
-              "idealEnding": "The school pauses the tool and brings in experts to correct bias. Minority students feel safer and more included.",
-              "badEnding": "The company refuses to acknowledge the issue. The tool continues to harm marginalized students."
-            }
-          },
-          {
-            "id": 22,
-            "title": "Whose Language Counts?",
-            "description": "Ms. Kulsoom's school adopts an AI language-learning app that supports only dominant languages like English and Spanish. However, students from indigenous and marginalized communities feel excluded, as their native languages are not recognized by the app.",
-            "question": "How should Ms. Kulsoom respond to ensure all students feel included and valued?",
-            "options": [
-              "Use the app for most students and offer manual support to others",
-              "Reject the app entirely and develop culturally inclusive resources herself",
-              "Advocate with the developer to include local and indigenous languages in the app"
-            ],
-            "correctAnswer": 3,
-            "feedback": "Advocating for linguistic inclusion in AI tools ensures every student's identity is respected and valued in the learning process.",
-            "activity": {
-              "type": "Interactive Simulation",
-              "name": "Audit the App",
-              "description": "You are Ms. Kulsoom. Your school has adopted an AI language-learning app that only supports dominant languages like English and Spanish. Students who speak indigenous languages like Wakhi and Shina feel excluded and disengaged.",
-              "scenes": [
-                {
-                  "sceneNumber": 1,
-                  "description": "You notice Karim and Sana quietly skip activities involving the AI app. Their native languages aren't supported.",
-                  "options": [
-                    "Raise the concern with the vice principal immediately",
-                    "Offer manual worksheets to support excluded students"
-                  ]
-                }
-              ],
-              "idealPath": "A-B-B-A",
-              "idealEnding": "The developer adds Wakhi and Shina support in the next update. Students are excited to see their languages respected. Engagement improves schoolwide.",
-              "badEnding": "Without support, the developer drops the idea. Students continue feeling excluded, and the app drives further disengagement."
-            }
-          },
-          {
-            "id": 23,
-            "title": "The Voice That Wasn't Heard",
-            "description": "Mr. Imran introduces an AI-powered reading fluency app in his class. The app tracks and scores students' reading aloud skills using voice recognition. However, students with speech impairments and accents—like Areeba, who stutters, and Karim, who speaks with a regional accent—consistently receive lower scores.",
-            "question": "What should Mr. Imran do to ensure inclusive and equitable learning for all students?",
-            "options": [
-              "Continue using the app, since it works well for most students",
-              "Allow affected students to skip the app-based activity",
-              "Raise concerns with the developers and provide an alternative assessment for excluded students"
-            ],
-            "correctAnswer": 3,
-            "feedback": "AI tools must be inclusive of diverse speech patterns, disabilities, and accents to avoid unfair learning experiences.",
-            "activity": {
-              "type": "Interactive Simulation",
-              "name": "Reading Fairly",
-              "description": "You are Mr. Imran. You use a reading fluency app that rates students' speech, but those with accents or speech differences get unfairly low scores.",
-              "scenes": [
-                {
-                  "sceneNumber": 1,
-                  "description": "Karim, a fluent reader with a regional accent, is consistently marked as \\"below average.\\"",
-                  "options": [
-                    "Talk to the app provider about speech diversity",
-                    "Let affected students skip the app and give them written tasks"
-                  ]
-                }
-              ],
-              "idealPath": "A-A",
-              "idealEnding": "Your advocacy leads to an inclusive update. All learners feel respected and assessed fairly.",
-              "badEnding": "Alternative assessments help some students, but the app's bias remains unchallenged."
-            }
-          },
-          {
-            "id": 24,
-            "title": "Not in the Picture",
-            "description": "Ms. Hina's school deploys an AI-powered facial recognition system for automating attendance. The system promises efficiency, but within a week, she notices a troubling pattern—students with darker skin tones, those who wear traditional headscarves, and Faizan, a student with facial muscle paralysis due to a disability, are frequently marked absent.",
-            "question": "What should Ms. Hina do next?",
-            "options": [
-              "Keep using the system and manually adjust the attendance afterward",
-              "Ignore the issue—it's a technical limitation, not her responsibility",
-              "Document the bias and formally report it to school leadership or the responsible authority"
-            ],
-            "correctAnswer": 3,
-            "feedback": "Educators must identify and report algorithmic bias in AI tools to ensure no student is excluded based on appearance or disability.",
-            "activity": {
-              "type": "Interactive Simulation",
-              "name": "Face the Bias",
-              "description": "You are Ms. Hina. A facial recognition tool wrongly marks absent students with dark skin, headscarves, or facial disabilities.",
-              "scenes": [
-                {
-                  "sceneNumber": 1,
-                  "description": "You notice students like Faizan and Mahira are repeatedly misrecognized.",
-                  "options": [
-                    "Document the errors with photos and dates",
-                    "Keep adjusting attendance manually without raising a fuss"
-                  ]
-                },
-                {
-                  "sceneNumber": 2,
-                  "description": "You collect 12 error cases over 2 weeks.",
-                  "options": [
-                    "Submit your report formally to school leadership",
-                    "Discuss the issue informally with your colleague again"
-                  ]
-                }
-              ],
-              "idealPath": "A-A",
-              "idealEnding": "Your formal report leads to real change. Students stop being unfairly marked absent.",
-              "badEnding": "The issue is brushed aside again. Students continue being harmed by the tool."
-            }
-          },
-          {
-            "id": 25,
-            "title": "Whose Data, Whose Rules?",
-            "description": "Ms. Shazia, a teacher in a private school in Karachi, is asked to implement a new AI-powered student analytics tool. The tool tracks academic performance, emotional responses via webcam, and online behavior patterns. The company claims the system is \\"secure\\" and follows global regulations like GDPR and FERPA. However, the software collects biometric and behavioral data without any formal consent from parents or students.",
-            "question": "What should Ms. Shazia do to act ethically and responsibly?",
-            "options": [
-              "Proceed with the tool—it's already used internationally",
-              "Raise the issue with the school administration and request clarity on Pakistan's Personal Data Protection Bill",
-              "Use the tool but avoid sensitive features like webcam access"
-            ],
-            "correctAnswer": 2,
-            "feedback": "Understanding and complying with local data protection laws is essential for ethical AI implementation in education.",
-            "activity": {
-              "type": "Interactive Simulation",
-              "name": "Data in the Dark",
-              "description": "You are Ms. Shazia. A new AI tool collects students' biometric and emotional data—but there's no mention of Pakistan's privacy laws.",
-              "scenes": [
-                {
-                  "sceneNumber": 1,
-                  "description": "You find out that parents and students were not asked for formal consent.",
-                  "options": [
-                    "Raise the concern with school leadership and ask for legal review",
-                    "Use the tool with webcam off to avoid issues"
-                  ]
-                },
-                {
-                  "sceneNumber": 2,
-                  "description": "The school realizes there's no reference to Pakistan's Personal Data Protection Bill in the tool agreement.",
-                  "options": [
-                    "Recommend pausing tool use until legal consultation is complete",
-                    "Continue using the tool but only in non-sensitive subjects"
-                  ]
-                }
-              ],
-              "idealPath": "A-A",
-              "idealEnding": "You ensure legal and ethical compliance. Trust and transparency are restored.",
-              "badEnding": "Students' data is still being collected without consent. Trust in the school's decisions declines."
-            }
+            "idealPath": "B-A",
+            "idealEnding": "Ms. Aneeza reflects the evolving role of educators in the AI era by shifting from content delivery to learning facilitation. Embracing AI as a co-teacher and guide prepares teachers for the demands of modern classrooms.",
+            "badEnding": "Mr. Faisal's static view may limit professional growth and student engagement in the AI era."
           }
-        ]
-      },
-      {
-        "level": "Level 2 (Deepen)",
-        "scenarios": [
-          {
-            "id": 26,
-            "title": "AI Career Bias in a Karachi School",
-            "description": "A Lahore-based AI career counselor app recommends engineering/medicine only to male students and teaching/nursing to female students at a Karachi public school. Female students protest, but the principal insists the tool aligns with \\"market trends.\\"",
-            "question": "How should the teacher address this?",
-            "options": [
-              "Accept the tool's recommendations as \\"culturally appropriate.\\"",
-              "Manually suggest STEM fields to female students.",
-              "Advocate for a bias audit with the Punjab IT Board."
+        },
+        {
+          "id": 57,
+          "title": "Identifying Learning Gaps with AI",
+          "description": "Ms. Rozina finds several online AI courses but is unsure which align with her needs. She wonders how to assess what AI knowledge and skills she actually lacks.",
+          "question": "What is the next best step for her?",
+          "options": [
+            "Take the most popular AI course without reflection",
+            "Use a self-assessment tool to identify specific gaps",
+            "Stop learning until formal PD is provided"
+          ],
+          "correctAnswer": 2,
+          "feedback": "Using a self-assessment tool allows Ms. Rozina to make an informed decision about her professional development journey based on her actual needs.",
+          "activity": {
+            "type": "Interactive Simulation",
+            "name": "Learning Gap Assessment",
+            "description": "You are comparing two professional development approaches taken by teachers to identify which reflects informed use of AI for identifying learning needs.",
+            "scenes": [
+              {
+                "sceneNumber": 1,
+                "description": "Option A: Mr. Taimoor randomly selects online AI courses based on popularity and struggles to complete them due to lack of relevance.",
+                "options": [
+                  "This demonstrates informed learning approach",
+                  "This approach lacks direction and planning"
+                ]
+              },
+              {
+                "sceneNumber": 2,
+                "description": "Option B: Ms. Shagufta completes an AI-readiness self-assessment that identifies her gaps in ethical use and classroom applications. She then enrolls in targeted courses based on her needs.",
+                "options": [
+                  "This demonstrates informed learning approach",
+                  "This approach lacks direction and planning"
+                ]
+              }
             ],
-            "correctAnswer": 3,
-            "feedback": "AI tools must avoid reinforcing gender stereotypes. Pakistani schools should align with national policies like the Digital Pakistan Vision, which promotes inclusive tech.",
-            "activity": {
-              "type": "Interactive Simulation",
-              "name": "Bias Detection Lab",
-              "description": "You are a teacher at a school that's piloting a new AI career guidance tool. During testing, you notice potential gender bias in the recommendations.",
-              "scenes": [
-                {
-                  "sceneNumber": 1,
-                  "description": "Your test shows the AI recommends different careers based on gender.",
-                  "options": [
-                    "Document specific examples of biased recommendations",
-                    "Assume it's just a few glitches that will fix themselves"
-                  ]
-                },
-                {
-                  "sceneNumber": 2,
-                  "description": "You now have clear evidence of bias patterns.",
-                  "options": [
-                    "Organize a student activity to analyze the bias",
-                    "Report directly to administration without student involvement"
-                  ]
-                }
-              ],
-              "idealPath": "A-A",
-              "idealEnding": "Students participate in identifying bias, learning about algorithmic fairness firsthand. The school uses these findings to improve the tool.",
-              "badEnding": "The administration makes changes without student input, missing a valuable teaching opportunity about AI ethics."
-            }
-          },
-          {
-            "id": 27,
-            "title": "Biometric Data in Islamabad's Smart Classrooms",
-            "description": "A \\"smart school\\" in Islamabad requires fingerprint scans for attendance via an AI system. Parents worry scans are stored indefinitely and shared with third parties. The admin claims it's \\"secure,\\" but Pakistan lacks robust data laws.",
-            "question": "What should teachers do?",
-            "options": [
-              "Enforce usage; biometrics are \\"modernization.\\"",
-              "Offer manual attendance for students opting out.",
-              "Demand written guarantees from the vendor."
-            ],
-            "correctAnswer": 2,
-            "feedback": "Under Pakistan's Personal Data Protection Bill, consent is key. Forced biometrics risk breaches.",
-            "activity": {
-              "type": "Interactive Simulation",
-              "name": "Privacy Policy Lab",
-              "description": "You're evaluating a new school technology that collects student data.",
-              "scenes": [
-                {
-                  "sceneNumber": 1,
-                  "description": "You notice the system lacks clear data protection measures.",
-                  "options": [
-                    "Document the privacy gaps and propose solutions",
-                    "Assume the vendor has handled security adequately"
-                  ]
-                },
-                {
-                  "sceneNumber": 2,
-                  "description": "Administration asks for specific improvement recommendations.",
-                  "options": [
-                    "Develop a consent process with clear data usage explanations",
-                    "Suggest limiting data collection to only essential information"
-                  ]
-                }
-              ],
-              "idealPath": "A-A",
-              "idealEnding": "The school implements transparent data practices.",
-              "badEnding": "Data continues being collected without proper safeguards."
-            }
-          },
-          {
-            "id": 28,
-            "title": "AI Plagiarism at PU Lahore",
-            "description": "At Punjab University, an AI detector flags a student's Urdu essay as \\"plagiarized\\" due to matching phrases from classical poetry. The student argues this is common in Urdu literature.",
-            "question": "How should the professor respond?",
-            "options": [
-              "Fail the student; AI tools are definitive.",
-              "Ignore the flag; Urdu idioms differ from English.",
-              "Clarify guidelines for cultural/linguistic nuances."
-            ],
-            "correctAnswer": 3,
-            "feedback": "AI tools trained on Western data may misjudge local contexts. Policies must respect Pakistani literary norms.",
-            "activity": {
-              "type": "Interactive Simulation",
-              "name": "Context Matters",
-              "description": "Your institution is implementing an AI writing evaluation tool.",
-              "scenes": [
-                {
-                  "sceneNumber": 1,
-                  "description": "The tool flags legitimate writing as problematic.",
-                  "options": [
-                    "Investigate why these errors are occurring",
-                    "Lower the sensitivity to reduce flags"
-                  ]
-                },
-                {
-                  "sceneNumber": 2,
-                  "description": "You discover cultural/language biases in the algorithm.",
-                  "options": [
-                    "Create discipline-specific guidelines for human review",
-                    "Remove the tool's most problematic features"
-                  ]
-                }
-              ],
-              "idealPath": "A-A",
-              "idealEnding": "Hybrid human-AI evaluation improves accuracy.",
-              "badEnding": "Important checks are lost while biases remain."
-            }
-          },
-          {
-            "id": 29,
-            "title": "AI Accessibility for Sindh's Rural Students",
-            "description": "An AI tutoring app for Sindh's schools lacks Urdu/Sindhi support and requires high internet bandwidth. Rural students with disabilities struggle, but the vendor calls updates \\"too costly.\\"",
-            "question": "What's the ethical solution?",
-            "options": [
-              "Use it only in urban schools.",
-              "Partner with local NGOs to fund inclusive upgrades.",
-              "Wait for government subsidies."
-            ],
-            "correctAnswer": 2,
-            "feedback": "Pakistan's National Education Policy mandates inclusivity. Offline/low-bandwidth options are critical.",
-            "activity": {
-              "type": "Interactive Simulation",
-              "name": "Inclusive Design Challenge",
-              "description": "Your school is adopting a new learning technology.",
-              "scenes": [
-                {
-                  "sceneNumber": 1,
-                  "description": "You notice some students can't use the tool effectively.",
-                  "options": [
-                    "Identify specific accessibility barriers",
-                    "Provide alternative assignments for affected students"
-                  ]
-                },
-                {
-                  "sceneNumber": 2,
-                  "description": "You compile a list of needed adaptations.",
-                  "options": [
-                    "Work with developers to implement accessibility features",
-                    "Find supplemental tools to fill the gaps"
-                  ]
-                }
-              ],
-              "idealPath": "A-A",
-              "idealEnding": "The technology becomes usable for all students.",
-              "badEnding": "A patchwork solution creates inconsistent experiences."
-            }
-          },
-          {
-            "id": 30,
-            "title": "AI Surveillance in Peshawar's Colleges",
-            "description": "A Peshawar college uses AI cameras to flag \\"suspicious behavior\\" (e.g., long bathroom breaks). Female students report false flags due to cultural norms (e.g., praying during breaks).",
-            "question": "How should staff address this?",
-            "options": [
-              "Trust the AI; security outweighs privacy.",
-              "Adjust thresholds for gender-specific norms.",
-              "Disable surveillance to avoid controversy."
-            ],
-            "correctAnswer": 2,
-            "feedback": "AI must respect Pakistani cultural norms. Over-surveillance risks violating privacy and safety.",
-            "activity": {
-              "type": "Interactive Simulation",
-              "name": "Bias Detection",
-              "description": "Your organization is using AI for behavior monitoring.",
-              "scenes": [
-                {
-                  "sceneNumber": 1,
-                  "description": "The system shows inconsistent results across groups.",
-                  "options": [
-                    "Analyze the data for potential biases",
-                    "Adjust parameters to equalize outcomes"
-                  ]
-                },
-                {
-                  "sceneNumber": 2,
-                  "description": "You identify specific algorithmic biases.",
-                  "options": [
-                    "Recommend retraining the model with balanced data",
-                    "Implement manual review for flagged cases"
-                  ]
-                }
-              ],
-              "idealPath": "A-A",
-              "idealEnding": "The system becomes fairer and more accurate.",
-              "badEnding": "The process becomes inefficient while biases persist."
-            }
+            "idealPath": "B-A",
+            "idealEnding": "Ms. Shagufta uses a structured, self-assessment-based approach to guide her learning, ensuring the courses align with her competency needs. This shows effective planning and self-awareness, key to professional growth in the AI era.",
+            "badEnding": "Mr. Taimoor's approach lacks direction and is less effective for meaningful professional development."
           }
-        ]
-      },
-      {
-        "level": "Level 3 (Create)",
-        "scenarios": [
-          {
-            "id": 31,
-            "title": "AI Tool vs Climate Goals",
-            "description": "Mr. Iqbal discovers that a new AI-based device used for science simulations consumes excessive energy and relies on imported components that are harmful to the environment. He wonders if promoting this tool contradicts his school's climate-conscious values.",
-            "question": "What action should Mr. Iqbal take to ensure alignment with sustainable education values?",
-            "options": [
-              "Recommend the school continue using the tool but limit its usage",
-              "Collect data, consult climate experts, and co-design an energy-efficient alternative with students",
-              "Avoid discussing the issue and wait for the district to make a decision"
+        },
+        {
+          "id": 58,
+          "title": "Reflective Practice with AI Tools",
+          "description": "Mr. Karim wants to understand which of his lessons are less engaging for students. He explores whether AI can help him reflect on and improve his teaching.",
+          "question": "Which option best supports this goal?",
+          "options": [
+            "Use an AI tool that analyzes classroom audio for engagement trends",
+            "Use a general video editor",
+            "Use a PDF converter"
+          ],
+          "correctAnswer": 1,
+          "feedback": "By selecting an AI tool focused on reflection and classroom analysis, Mr. Karim can gain actionable insights to improve his teaching.",
+          "activity": {
+            "type": "Interactive Simulation",
+            "name": "Effective Reflection Comparison",
+            "description": "You are comparing two teachers' approaches to professional reflection to determine which is more effective.",
+            "scenes": [
+              {
+                "sceneNumber": 1,
+                "description": "Option A: Mr. Bilal uses a basic notepad to reflect on lessons occasionally. He does not track patterns or outcomes and rarely revisits past entries.",
+                "options": [
+                  "This approach promotes effective reflection",
+                  "This approach lacks depth and consistency"
+                ]
+              },
+              {
+                "sceneNumber": 2,
+                "description": "Option B: Ms. Huma uses an AI tool that analyzes her recorded lessons and provides visual reports on student engagement. She adjusts her strategies based on the insights.",
+                "options": [
+                  "This approach promotes effective reflection",
+                  "This approach lacks depth and consistency"
+                ]
+              }
             ],
-            "correctAnswer": 2,
-            "feedback": "Creating an environmentally conscious AI tool engages students in sustainability and ethical innovation.",
-            "activity": {
-              "type": "Interactive Simulation",
-              "name": "Sustainability Audit",
-              "description": "Your school recently adopted an AI-based smart scheduling tool to optimize student and teacher timetables. You begin to notice that the system heavily relies on cloud computing services that contribute significantly to carbon emissions.",
-              "scenes": [
-                {
-                  "sceneNumber": 1,
-                  "description": "You read a report linking the AI tool's backend infrastructure to high energy use and carbon emissions.",
-                  "options": [
-                    "Present the data and propose an environmental audit of the tool",
-                    "Ignore the report and focus on how efficient the scheduling has become"
-                  ]
-                },
-                {
-                  "sceneNumber": 2,
-                  "description": "You present your findings to the school's tech committee. They agree to explore alternatives.",
-                  "options": [
-                    "Recommend switching to a low-energy open-source alternative",
-                    "Suggest planting trees to offset the carbon emissions"
-                  ]
-                }
-              ],
-              "idealPath": "A-A",
-              "idealEnding": "The school transitions to a greener tool with local hosting. It sparks broader awareness of digital sustainability among staff and students.",
-              "badEnding": "Tree planting is approved, but the AI tool's emissions continue unchecked. No systemic change occurs."
-            }
-          },
-          {
-            "id": 32,
-            "title": "Multistakeholder Simulation",
-            "description": "Ms. Nilofer leads a debate simulation where students represent stakeholders in AI regulation — from tech firms to indigenous community leaders — discussing how a new AI attendance system may affect marginalized youth.",
-            "question": "What is the best way for Ms. Nilofer to extend the activity's impact?",
-            "options": [
-              "Write a class memo summarizing the debate",
-              "Help students compile a formal draft policy to present to the school board",
-              "Conclude the activity and move to the next topic"
-            ],
-            "correctAnswer": 2,
-            "feedback": "Policy drafting from simulated debate encourages advocacy and real-world application of ethical principles.",
-            "activity": {
-              "type": "Interactive Simulation",
-              "name": "Drafting Ethical Impact",
-              "description": "Your students just completed a multistakeholder simulation about how an AI attendance system might marginalize youth from remote or underserved communities. They represented diverse voices — tech developers, school leaders, community elders, and students.",
-              "scenes": [
-                {
-                  "sceneNumber": 1,
-                  "description": "The simulation ended, and students are energized but unsure what to do next.",
-                  "options": [
-                    "Guide them in drafting a shared ethical policy based on the debate",
-                    "Let students individually reflect in their journals"
-                  ]
-                },
-                {
-                  "sceneNumber": 2,
-                  "description": "Students collaborate on a document outlining ethical standards and inclusion measures, with inputs from each stakeholder role.",
-                  "options": [
-                    "Submit the policy draft to the school board for real-world consideration",
-                    "Keep it as a class record without sharing externally"
-                  ]
-                }
-              ],
-              "idealPath": "A-A",
-              "idealEnding": "The school board acknowledges the proposal and agrees to discuss inclusive design in future AI tool adoptions. Students feel empowered and see their voice making a difference.",
-              "badEnding": "The effort stays within the classroom. Students feel proud but miss the opportunity to influence actual change."
-            }
-          },
-          {
-            "id": 33,
-            "title": "Disability-Inclusive AI",
-            "description": "An AI assessment tool doesn't adapt to students with hearing disabilities. Ms. Mehreen and her learners explore this issue and begin co-designing alternative voice-text models.",
-            "question": "What should Ms. Mehreen prioritize?",
-            "options": [
-              "Abandon the AI tool for traditional methods",
-              "Partner with local developers and special educators to co-create an inclusive model",
-              "Wait for the district to launch a new tool"
-            ],
-            "correctAnswer": 2,
-            "feedback": "Co-creation empowers teachers and learners to innovate inclusively, addressing disability equity gaps.",
-            "activity": {
-              "type": "Interactive Simulation",
-              "name": "Inclusive AI Redesign",
-              "description": "You are Ms. Mehreen. Your classroom uses an AI assessment tool that doesn't recognize the needs of students with hearing disabilities. You decide to act with your students.",
-              "scenes": [
-                {
-                  "sceneNumber": 1,
-                  "description": "You notice Ali and Sara, who use sign language, struggle to interact with the voice-based AI assessment.",
-                  "options": [
-                    "Temporarily exempt them from AI-based tasks",
-                    "Start a classroom discussion on the accessibility gap"
-                  ]
-                },
-                {
-                  "sceneNumber": 2,
-                  "description": "Your students passionately suggest ideas to improve access. You gather thoughts about integrating text-based or sign-supported options.",
-                  "options": [
-                    "Reach out to local developers and special educators for technical collaboration",
-                    "Document ideas but postpone action until next term"
-                  ]
-                }
-              ],
-              "idealPath": "B-A",
-              "idealEnding": "The new model becomes a case study for inclusive AI, and students feel proud to have co-created it.",
-              "badEnding": "Students feel their input is ignored. The excitement fades, and the accessibility issue persists."
-            }
-          },
-          {
-            "id": 34,
-            "title": "Ethics Hackathon",
-            "description": "Mr. Saeed hosts an \\"Ethics in EdTech Hackathon,\\" inviting students to design AI tools that address bullying, low literacy, or cultural erasure.",
-            "question": "How should Mr. Saeed ensure that the event leads to meaningful outcomes?",
-            "options": [
-              "Let students work freely and enjoy the experience",
-              "Guide teams to align projects with AI ethical principles and present to a local education council",
-              "Use the winning project in class regardless of ethical review"
-            ],
-            "correctAnswer": 2,
-            "feedback": "Structured, ethics-aligned creativity supports responsible innovation in AI development.",
-            "activity": {
-              "type": "Interactive Simulation",
-              "name": "Ethical Design Sprint",
-              "description": "You are Mr. Saeed. You're organizing an \\"Ethics in EdTech Hackathon\\" where students create AI tools to address real problems like bullying or cultural erasure.",
-              "scenes": [
-                {
-                  "sceneNumber": 1,
-                  "description": "You introduce the event but notice teams immediately start coding without discussing ethical guidelines.",
-                  "options": [
-                    "Let them continue — creativity should be unrestricted",
-                    "Provide them with an ethics checklist for AI development"
-                  ]
-                },
-                {
-                  "sceneNumber": 2,
-                  "description": "Students begin rethinking their designs, identifying risks and safeguards before implementation.",
-                  "options": [
-                    "Invite a panel of local educators and community members to evaluate the final projects",
-                    "Choose the winners based only on technical features"
-                  ]
-                }
-              ],
-              "idealPath": "B-A",
-              "idealEnding": "Students learn how ethics strengthen innovation. They feel proud of making socially valuable tools.",
-              "badEnding": "Projects work technically but ignore ethical risks. A bullying-report app raises privacy concerns and gets rejected by the school."
-            }
-          },
-          {
-            "id": 35,
-            "title": "Regulating Algorithmic Decisions",
-            "description": "A scholarship platform uses an AI to shortlist candidates. Mr. Rahim finds that minority language students are consistently overlooked.",
-            "question": "What should Mr. Rahim do?",
-            "options": [
-              "Write a blog about the problem",
-              "Work with peers and legal experts to simulate a regulatory framework that ensures fairness in AI selection",
-              "Ask students to apply to other platforms"
-            ],
-            "correctAnswer": 2,
-            "feedback": "Simulating regulatory models allows teachers to lead in ethical reforms for AI tools in education.",
-            "activity": {
-              "type": "Interactive Simulation",
-              "name": "Fairness Framework Simulation",
-              "description": "You are Mr. Rahim. You discover that an AI-based scholarship platform overlooks students from minority language backgrounds.",
-              "scenes": [
-                {
-                  "sceneNumber": 1,
-                  "description": "You gather data showing repeated exclusion of Wakhi- and Shina-speaking students.",
-                  "options": [
-                    "Publish an open letter on social media",
-                    "Bring the issue to your school's digital ethics committee"
-                  ]
-                },
-                {
-                  "sceneNumber": 2,
-                  "description": "The committee asks you to propose how such platforms can be made more equitable.",
-                  "options": [
-                    "Collaborate with colleagues and legal experts to simulate a fair algorithm policy",
-                    "Recommend stopping AI use in scholarship platforms"
-                  ]
-                }
-              ],
-              "idealPath": "B-A",
-              "idealEnding": "Your efforts influence policy talks, and other schools start replicating your model.",
-              "badEnding": "The platform is abandoned, but no alternatives exist. Marginalized students remain excluded from scholarship visibility."
-            }
+            "idealPath": "B-A",
+            "idealEnding": "Ms. Huma's use of an AI-supported tool allows her to gain data-driven insights into her teaching, making her reflection process more precise and impactful.",
+            "badEnding": "Mr. Bilal's manual method lacks consistency and depth needed for systematic improvement."
           }
-        ]
-      }
-    ]
-  }''';
-
-    static EducationModule getModule() {
-      final jsonData = json.decode(moduleJsonData);
-      return EducationModule.fromJson(jsonData);
+        },
+        {
+          "id": 59,
+          "title": "Using AI for Content Mastery",
+          "description": "Ms. Sana uses an AI platform that reviews her lesson recordings and suggests weak spots. She notices it consistently flags her fraction lessons as low in engagement.",
+          "question": "How is this helping her professional growth?",
+          "options": [
+            "It reduces her need to plan",
+            "It helps her target specific improvement areas",
+            "It replaces her teaching tasks"
+          ],
+          "correctAnswer": 2,
+          "feedback": "By helping Ms. Sana identify content gaps, the AI supports her in focusing on continuous improvement in teaching specific topics.",
+          "activity": {
+            "type": "Interactive Simulation",
+            "name": "Personalized Learning Strategy",
+            "description": "You are evaluating which teacher is leveraging AI for personalized professional development.",
+            "scenes": [
+              {
+                "sceneNumber": 1,
+                "description": "Option A: Ms. Seema uses an AI platform that adapts learning content to her needs and suggests peer mentors based on her skill gaps.",
+                "options": [
+                  "This leverages AI for personalized development",
+                  "This approach is too technology-dependent"
+                ]
+              },
+              {
+                "sceneNumber": 2,
+                "description": "Option B: Mr. Danish prefers to follow a fixed course list chosen by his supervisor without considering his individual needs or performance data.",
+                "options": [
+                  "This leverages AI for personalized development",
+                  "This approach lacks personalization"
+                ]
+              }
+            ],
+            "idealPath": "A-B",
+            "idealEnding": "Ms. Seema's approach demonstrates effective use of AI to tailor her learning journey, while also benefiting from peer support.",
+            "badEnding": "Mr. Danish's method is static and lacks the personalization needed for effective professional growth."
+          }
+        },
+        {
+          "id": 60,
+          "title": "Avoiding AI Content Bubbles",
+          "description": "Ms. Nilofer notices her AI news feed only shows articles that match her existing teaching style. She is concerned this might be limiting her exposure to new ideas.",
+          "question": "What should she do to stay professionally diverse?",
+          "options": [
+            "Stick to the feed—it likely shows what's most relevant to her profile",
+            "Actively explore content and communities beyond what the AI suggests",
+            "Turn off the AI tool entirely to avoid bias in recommendations"
+          ],
+          "correctAnswer": 2,
+          "feedback": "Exploring beyond algorithm-driven content helps Ms. Nilofer avoid echo chambers and stay open to new educational practices.",
+          "activity": {
+            "type": "Interactive Simulation",
+            "name": "Professional Roadmap Planning",
+            "description": "You are comparing two teachers' approaches to professional development planning to determine which shows thoughtful strategy.",
+            "scenes": [
+              {
+                "sceneNumber": 1,
+                "description": "Option A: Mr. Aslam uses his AI-readiness results to create a personalized plan with short-term and long-term goals, focusing on tools relevant to his subject area.",
+                "options": [
+                  "This demonstrates effective planning strategy",
+                  "This approach is overly complicated"
+                ]
+              },
+              {
+                "sceneNumber": 2,
+                "description": "Option B: Ms. Shaista copies her colleague's development plan, assuming that what worked for him will work for her too, regardless of their different teaching contexts.",
+                "options": [
+                  "This demonstrates effective planning strategy",
+                  "This approach lacks individualization"
+                ]
+              }
+            ],
+            "idealPath": "A-B",
+            "idealEnding": "Mr. Aslam's roadmap is grounded in self-assessment and aligned with his professional needs, showing strategic thinking.",
+            "badEnding": "Ms. Shaista's approach overlooks individual learning paths, which are critical for meaningful progress."
+          }
+        }
+      ]
+    },
+    {
+      "level": "Level 2 (Deepen)",
+      "scenarios": [
+        {
+          "id": 61,
+          "title": "Peer Feedback or Platform Insights?",
+          "description": "Ms. Fareeda is designing a professional development session and wants to base it on actual gaps in teaching practices. She has access to both peer feedback and AI-generated performance analytics.",
+          "question": "Which should she prioritize to best understand evolving teacher needs?",
+          "options": [
+            "Only use peer opinions to avoid over-relying on technology",
+            "Combine peer feedback with insights from AI analytics",
+            "Rely only on AI data since it is more objective"
+          ],
+          "correctAnswer": 2,
+          "feedback": "Combining AI data with peer insights enables a balanced, contextualized understanding of teaching practices. AI alone may miss nuance, while peer feedback alone might lack data precision.",
+          "activity": {
+            "type": "Interactive Simulation",
+            "name": "Professional Circle Expansion",
+            "description": "You are observing two teachers using a professional AI platform to find mentors and evaluating who is managing algorithmic bias better.",
+            "scenes": [
+              {
+                "sceneNumber": 1,
+                "description": "Teacher A: Only accepts AI mentor suggestions, all of whom match his subject and teaching style.",
+                "options": [
+                  "This demonstrates thoughtful AI use",
+                  "This creates an echo chamber effect"
+                ]
+              },
+              {
+                "sceneNumber": 2,
+                "description": "Teacher B: Explores mentors outside the AI list by searching for different teaching styles and regions.",
+                "options": [
+                  "This demonstrates thoughtful AI use",
+                  "This creates unnecessary complexity"
+                ]
+              }
+            ],
+            "idealPath": "B-A",
+            "idealEnding": "Teacher B avoids echo chambers and gains richer perspectives by actively seeking diversity beyond algorithm suggestions.",
+            "badEnding": "Teacher A limits professional growth by staying within algorithmic comfort zones."
+          }
+        },
+        {
+          "id": 62,
+          "title": "Self-Assessment and Data Privacy",
+          "description": "Mr. Tanveer uses a self-assessment AI app that stores his teaching data on external servers.",
+          "question": "What is the best course of action?",
+          "options": [
+            "Use the tool but review its privacy policy and settings",
+            "Avoid any AI app that stores data",
+            "Trust all tools provided by vendors"
+          ],
+          "correctAnswer": 1,
+          "feedback": "Teachers should be informed users—leveraging tools while safeguarding their professional data through privacy awareness.",
+          "activity": {
+            "type": "Interactive Simulation",
+            "name": "Data Protection Awareness",
+            "description": "You are comparing two teachers using AI self-assessment tools for teaching reflection to determine who is more privacy-aware.",
+            "scenes": [
+              {
+                "sceneNumber": 1,
+                "description": "Teacher A: Reads the platform's privacy settings, restricts unnecessary data sharing, and updates security preferences.",
+                "options": [
+                  "This shows appropriate data protection",
+                  "This is overly cautious and limits functionality"
+                ]
+              },
+              {
+                "sceneNumber": 2,
+                "description": "Teacher B: Uses the tool as-is, assuming school-vetted platforms don't need personal scrutiny.",
+                "options": [
+                  "This shows appropriate data protection",
+                  "This lacks necessary privacy awareness"
+                ]
+              }
+            ],
+            "idealPath": "A-B",
+            "idealEnding": "Responsible AI use includes understanding how your data is stored and shared. Trust must be earned, not assumed.",
+            "badEnding": "Blind trust in platforms can lead to privacy vulnerabilities and data misuse."
+          }
+        },
+        {
+          "id": 63,
+          "title": "Algorithm Bias in Peer Recommendations",
+          "description": "While using an AI PD platform, Mr. Bilal notices he is repeatedly recommended the same type of peers for mentoring—those who match his existing style.",
+          "question": "How should he respond to broaden his learning?",
+          "options": [
+            "Follow recommendations without question",
+            "Manually seek mentors with different expertise and viewpoints",
+            "Quit using the platform and rely only on his school community"
+          ],
+          "correctAnswer": 2,
+          "feedback": "Manually diversifying mentors ensures he avoids algorithmic echo chambers and fosters richer professional growth. AI suggestions should be a guide, not a limit.",
+          "activity": {
+            "type": "Interactive Simulation",
+            "name": "Bias Management Strategy",
+            "description": "You are evaluating two teachers using a professional AI platform to determine who is managing algorithmic bias better.",
+            "scenes": [
+              {
+                "sceneNumber": 1,
+                "description": "Teacher A: Only accepts AI mentor suggestions, all of whom match his subject and teaching style.",
+                "options": [
+                  "This demonstrates thoughtful AI use",
+                  "This creates professional limitations"
+                ]
+              },
+              {
+                "sceneNumber": 2,
+                "description": "Teacher B: Explores mentors outside the AI list by searching for different teaching styles and regions.",
+                "options": [
+                  "This demonstrates thoughtful AI use",
+                  "This ignores helpful AI recommendations"
+                ]
+              }
+            ],
+            "idealPath": "B-A",
+            "idealEnding": "Teacher B avoids echo chambers and gains richer perspectives by actively seeking diversity beyond algorithm suggestions.",
+            "badEnding": "Teacher A limits growth by accepting only similar mentors, missing valuable diverse perspectives."
+          }
+        },
+        {
+          "id": 64,
+          "title": "Evaluating PD Resources",
+          "description": "Ms. Rukhsana comes across two AI-based PD resources. One has peer-reviewed validation but fewer features; the other is flashy but lacks transparency.",
+          "question": "Which should she choose for sustainable PD?",
+          "options": [
+            "Choose the validated one that aligns with ethical standards",
+            "Go with the one that's more interactive",
+            "Use both without evaluating"
+          ],
+          "correctAnswer": 1,
+          "feedback": "Validated, ethically sound tools provide reliable learning over time. Flashy tools lacking transparency may compromise quality or values.",
+          "activity": {
+            "type": "Interactive Simulation",
+            "name": "Platform Sustainability Assessment",
+            "description": "You are choosing between two AI platforms for teacher PD to determine which supports deeper, long-term professional learning.",
+            "scenes": [
+              {
+                "sceneNumber": 1,
+                "description": "Platform A: Offers AI-backed resources validated by peer reviews and local educators.",
+                "options": [
+                  "This supports sustainable learning",
+                  "This seems too traditional and slow"
+                ]
+              },
+              {
+                "sceneNumber": 2,
+                "description": "Platform B: Looks appealing but lacks clear information on how its content is generated or reviewed.",
+                "options": [
+                  "This offers innovative possibilities",
+                  "This lacks necessary transparency"
+                ]
+              }
+            ],
+            "idealPath": "A-B",
+            "idealEnding": "Validated and ethically developed content ensures lasting value and reliable professional growth.",
+            "badEnding": "Flashy tools without transparency can mislead and dilute PD quality over time."
+          }
+        },
+        {
+          "id": 65,
+          "title": "AI in Collaborative Communities",
+          "description": "A teacher group in Hunza is using an AI tool to share PD resources, but the platform rarely promotes contributions from local teachers.",
+          "question": "What's the best action for inclusivity?",
+          "options": [
+            "Let the platform function as is",
+            "Propose the inclusion of local voices and advocate for algorithmic changes",
+            "Create a separate non-AI group"
+          ],
+          "correctAnswer": 2,
+          "feedback": "Advocating for inclusive algorithmic design ensures local representation in professional growth spaces. It supports contextual relevance.",
+          "activity": {
+            "type": "Interactive Simulation",
+            "name": "AI Tool Management",
+            "description": "You are comparing two teachers who subscribe to several AI PD platforms to determine who is managing AI tools for maximum benefit.",
+            "scenes": [
+              {
+                "sceneNumber": 1,
+                "description": "Teacher A: Reviews each platform's offerings, eliminates redundant ones, and focuses on tools aligned with her learning goals.",
+                "options": [
+                  "This shows effective AI management",
+                  "This eliminates potentially useful resources"
+                ]
+              },
+              {
+                "sceneNumber": 2,
+                "description": "Teacher B: Subscribes to all platforms, hoping AI will eventually recommend what's best.",
+                "options": [
+                  "This maximizes available resources",
+                  "This creates information overload"
+                ]
+              }
+            ],
+            "idealPath": "A-B",
+            "idealEnding": "Teacher A demonstrates intentionality and focus, critical for effective PD. AI should support—not drown—professional growth.",
+            "badEnding": "Teacher B becomes overwhelmed by too many tools, reducing effectiveness of professional development."
+          }
+        }
+      ]
+    },
+    {
+      "level": "Level 3 (Create)",
+      "scenarios": [
+        {
+          "id": 66,
+          "title": "Leading AI Pedagogy Circles",
+          "description": "Mr. Salman decides to initiate a teacher learning circle focused on using AI tools for professional growth. Some teachers resist, fearing they will be replaced by AI.",
+          "question": "What should Mr. Salman do to build engagement?",
+          "options": [
+            "Reassure them AI will never affect teaching jobs and move on",
+            "Lead open discussions that address fears, showcase success stories, and encourage co-creation of AI integration practices",
+            "Ignore resistant teachers and only work with willing participants"
+          ],
+          "correctAnswer": 2,
+          "feedback": "This offers a collaborative and empathetic approach that respects concerns, promotes trust, and supports collective transformation through AI use.",
+          "activity": {
+            "type": "Interactive Simulation",
+            "name": "Professional Growth Leadership",
+            "description": "You are comparing two teachers starting AI-based pedagogy groups in their schools to determine who fosters deeper engagement.",
+            "scenes": [
+              {
+                "sceneNumber": 1,
+                "description": "Teacher A: Starts with open dialogue, addresses concerns about AI, and co-creates goals with team members.",
+                "options": [
+                  "This fosters real professional growth",
+                  "This takes too much time on preliminaries"
+                ]
+              },
+              {
+                "sceneNumber": 2,
+                "description": "Teacher B: Launches the group with a fixed agenda and discourages questions to avoid delays.",
+                "options": [
+                  "This ensures efficient progress",
+                  "This limits authentic engagement"
+                ]
+              }
+            ],
+            "idealPath": "A-B",
+            "idealEnding": "Teacher A builds trust and empowers peers, fostering sustainable, collaborative growth. Successful AI integration in PD relies on collective participation, not top-down enforcement.",
+            "badEnding": "Teacher B's approach may create compliance but not genuine engagement or transformation."
+          }
+        },
+        {
+          "id": 67,
+          "title": "Building Inclusive Tools",
+          "description": "Ms. Farzana wants to create a professional learning plan for her colleagues using an AI tool, but the tool lacks features for teachers with visual impairments.",
+          "question": "How can she make this tool more inclusive?",
+          "options": [
+            "Replace the tool with a non-AI resource that works for everyone",
+            "Use the AI tool as it is but pair it with separate support sessions for those who need accommodations",
+            "Advocate for the AI tool to be improved while supplementing it with assistive technologies to ensure all teachers benefit"
+          ],
+          "correctAnswer": 3,
+          "feedback": "This supports long-term equity and inclusion while still leveraging the tool's potential. It balances innovation with fairness.",
+          "activity": {
+            "type": "Interactive Simulation",
+            "name": "Inclusive AI Implementation",
+            "description": "You are comparing two school leaders introducing AI tools for teacher development to determine who promotes equitable AI use.",
+            "scenes": [
+              {
+                "sceneNumber": 1,
+                "description": "Leader A: Tests the tool with differently-abled users, integrates assistive tech, and shares feedback with developers.",
+                "options": [
+                  "This promotes equitable AI use",
+                  "This overcomplicates the implementation"
+                ]
+              },
+              {
+                "sceneNumber": 2,
+                "description": "Leader B: Deploys the tool as-is and encourages staff to find workarounds if needed.",
+                "options": [
+                  "This ensures quick deployment",
+                  "This ignores accessibility needs"
+                ]
+              }
+            ],
+            "idealPath": "A-B",
+            "idealEnding": "Leader A shows inclusive planning, ensuring all teachers benefit from AI. Equity should be embedded in AI-enabled PD from the start, not added later.",
+            "badEnding": "Leader B's approach may exclude teachers with disabilities and create inequitable professional development opportunities."
+          }
+        },
+        {
+          "id": 68,
+          "title": "Peer-Led AI Innovation",
+          "description": "A teacher peer group wants to co-design AI-based modules for science instruction. They invite Mr. Haris to lead the initiative.",
+          "question": "What leadership approach would be most effective?",
+          "options": [
+            "Take full control and assign roles to ensure quick delivery",
+            "Encourage shared ownership by co-developing the module with the group's input and reflecting on iterations together",
+            "Avoid changes to traditional modules unless administration mandates it"
+          ],
+          "correctAnswer": 2,
+          "feedback": "This promotes ownership, creativity, and adaptability—key traits of professional development leadership in the AI era.",
+          "activity": {
+            "type": "Interactive Simulation",
+            "name": "Collaborative Innovation Leadership",
+            "description": "You are comparing two facilitators co-designing AI-enhanced PD content with peers to determine who strengthens peer-led innovation.",
+            "scenes": [
+              {
+                "sceneNumber": 1,
+                "description": "Facilitator A: Collects input from peers, invites co-authorship, and shares decisions throughout development.",
+                "options": [
+                  "This enables teacher voice and innovation",
+                  "This slows down the development process"
+                ]
+              },
+              {
+                "sceneNumber": 2,
+                "description": "Facilitator B: Designs the content solo, asking for feedback only after finalizing it.",
+                "options": [
+                  "This ensures consistent quality",
+                  "This limits peer ownership and creativity"
+                ]
+              }
+            ],
+            "idealPath": "A-B",
+            "idealEnding": "Facilitator A promotes ownership, creativity, and innovation—key outcomes of teacher-driven professional learning in the AI age.",
+            "badEnding": "Facilitator B's approach may create good content but misses opportunities for peer empowerment and collaborative innovation."
+          }
+        },
+        {
+          "id": 69,
+          "title": "Evaluating EdTech Platforms",
+          "description": "Ms. Noreen wants to integrate a new AI-based learning management system (LMS) for teacher training.",
+          "question": "How should she evaluate whether it's suitable?",
+          "options": [
+            "Check how many schools are already using it",
+            "Review the AI features in light of her teachers' needs, alignment with PD goals, and ethical data practices",
+            "Use it on a trial basis without detailed review and decide later"
+          ],
+          "correctAnswer": 2,
+          "feedback": "This enables responsible decision-making by aligning tools with actual needs, ensuring long-term impact and trust.",
+          "activity": {
+            "type": "Interactive Simulation",
+            "name": "Responsible Platform Selection",
+            "description": "You are comparing two educators choosing AI tools for teacher PD to determine who is practicing responsible decision-making.",
+            "scenes": [
+              {
+                "sceneNumber": 1,
+                "description": "Educator A: Reviews ethical considerations, teacher needs, and alignment with goals before selection.",
+                "options": [
+                  "This demonstrates responsible decision-making",
+                  "This creates unnecessary delays in implementation"
+                ]
+              },
+              {
+                "sceneNumber": 2,
+                "description": "Educator B: Chooses a tool because it's popular in high-ranking schools.",
+                "options": [
+                  "This leverages proven success",
+                  "This ignores contextual needs"
+                ]
+              }
+            ],
+            "idealPath": "A-B",
+            "idealEnding": "Educator A models intentional, context-aware evaluation. Responsible AI integration requires critical assessment beyond popularity.",
+            "badEnding": "Educator B's approach may lead to tools that don't fit the specific needs and context of their teachers."
+          }
+        },
+        {
+          "id": 70,
+          "title": "Supporting Contextual Innovation",
+          "description": "Mr. Bilal is customizing an AI-powered training module for rural teachers who lack access to high-speed internet.",
+          "question": "What should be his priority?",
+          "options": [
+            "Use the same modules developed for urban teachers",
+            "Optimize the module with offline capabilities and examples from rural contexts",
+            "Wait until internet access improves"
+          ],
+          "correctAnswer": 2,
+          "feedback": "This demonstrates adaptability and inclusivity, allowing AI to serve all contexts without widening the digital divide.",
+          "activity": {
+            "type": "Interactive Simulation",
+            "name": "Contextual AI Adaptation",
+            "description": "You are comparing two teachers using AI modules in different school contexts to determine who ensures effective contextual implementation.",
+            "scenes": [
+              {
+                "sceneNumber": 1,
+                "description": "Teacher A: Localizes content, ensures offline access, and tailors examples to students' realities.",
+                "options": [
+                  "This ensures effective contextual implementation",
+                  "This requires too much customization effort"
+                ]
+              },
+              {
+                "sceneNumber": 2,
+                "description": "Teacher B: Applies the same AI modules developed for urban schools, regardless of differences.",
+                "options": [
+                  "This maintains consistency across contexts",
+                  "This ignores important contextual differences"
+                ]
+              }
+            ],
+            "idealPath": "A-B",
+            "idealEnding": "Teacher A adapts AI meaningfully, enhancing access and relevance. AI for PD should serve diverse teaching environments, not ignore them.",
+            "badEnding": "Teacher B's approach may result in tools that are irrelevant or inaccessible in certain contexts."
+          }
+        }
+      ]
     }
+  ]
+}''';
 
-    // Legacy methods for backward compatibility
-    static Map<String, dynamic> getModuleData() {
-      return json.decode(moduleJsonData);
-    }
-
-    static List<Level> getLevels() {
-      return getModule().levels;
-    }
-
-    static List<Scenario> getScenariosByLevel(String levelName) {
-      final module = getModule();
-      final level = module.getLevelByName(levelName);
-      return level?.scenarios ?? [];
-    }
-
-    static String getModuleTitle() {
-      return getModule().moduleName;
-    }
-
-    static List<dynamic> getScenarios() {
-      final moduleData = getModuleData();
-      return moduleData['scenarios'] ?? [];
-    }
-
-    static String getModuleName() {
-      return getModule().moduleName;
-    }
-
-    // New helper methods using models
-    static Scenario? getScenarioById(int id) {
-      return getModule().getScenarioById(id);
-    }
-
-    static Level? getLevelByNumber(int levelNumber) {
-      return getModule().getLevelByNumber(levelNumber);
-    }
-
-    static List<Scenario> getAllScenarios() {
-      return getModule().allScenarios;
-    }
+  static EducationModule getModule() {
+    final jsonData = json.decode(moduleJsonData);
+    return EducationModule.fromJson(jsonData);
   }
+
+  // Legacy methods for backward compatibility
+  static Map<String, dynamic> getModuleData() {
+    return json.decode(moduleJsonData);
+  }
+
+  static List<Level> getLevels() {
+    return getModule().levels;
+  }
+
+  static List<Scenario> getScenariosByLevel(String levelName) {
+    final module = getModule();
+    final level = module.getLevelByName(levelName);
+    return level?.scenarios ?? [];
+  }
+
+  static String getModuleTitle() {
+    return getModule().moduleName;
+  }
+
+  static List<dynamic> getScenarios() {
+    final moduleData = getModuleData();
+    return moduleData['scenarios'] ?? [];
+  }
+
+  static String getModuleName() {
+    return getModule().moduleName;
+  }
+
+  // New helper methods using models
+  static Scenario? getScenarioById(int id) {
+    return getModule().getScenarioById(id);
+  }
+
+  static Level? getLevelByNumber(int levelNumber) {
+    return getModule().getLevelByNumber(levelNumber);
+  }
+
+  static List<Scenario> getAllScenarios() {
+    return getModule().allScenarios;
+  }
+}

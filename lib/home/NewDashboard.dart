@@ -1,20 +1,15 @@
-
-import 'dart:math' as math;
-import 'package:artizen/json/JsonDataManagerEthics.dart';
 import 'package:flutter/material.dart';
-
 import '../data/ModuleDefinition.dart';
 import '../data/UserDataService.dart';
-import '../json/JsonDataManager2.dart';
-import '../json/JsonDataManager.dart';
+import '../json/JsonDataManager1.dart';
+import '../json/JsonDataManager3.dart';
 import '../json/JsonDataManager4.dart';
+import '../json/JsonDataManager2.dart';
 import '../json/JsonDataManager5.dart';
-import '../json/JsonDataManager6.dart';
 import '../models/LevelData.dart';
 import '../models/ModuleData.dart';
 import '../widgets/AnimatedSphere.dart';
 import '../widgets/DashboardHeader.dart';
-import '../widgets/LevelDetailsDialog.dart';
 import '../widgets/LoadingIndicator.dart';
 import '../widgets/ModuleHeaderWidget.dart';
 import '../widgets/UserBadgesWidget.dart';
@@ -52,24 +47,33 @@ class _NewDashboardState extends State<NewDashboard>
       subtitle: 'Building empathy and understanding in AI implementation',
       color: Color(0xFF4A90E2),
       icon: Icons.favorite,
-      jsonManager: 'JsonDataManager2', // ✅ Correct
+      jsonManager: 'JsonDataManager1', // ✅ Correct
       maxLevels: 3,
       isAlwaysUnlocked: true,
     ),
 
-    // ✅ Module 2: AI Ethics (FIXED)
+  //  ✅ Module 2: AI Ethics (FIXED)
     ModuleDefinition(
       id: 'ai_ethics',
       title: 'AI Ethics',
       subtitle: 'Understanding ethical implications of AI systems',
       color: Color(0xFF9C27B0), // ✅ Different color
       icon: Icons.balance, // ✅ Different icon
-      jsonManager: 'JsonDataManager5', // ✅ FIXED: Should be JsonDataManager5
+      jsonManager: 'JsonDataManager2', // ✅ FIXED: Should be JsonDataManager5
       maxLevels: 3,
       isAlwaysUnlocked: true,
     ),
-
-    // ✅ Module 3: AI Pedagogy
+    ModuleDefinition(
+      id: 'ai_foundations_applications',
+      title: 'AI Foundations and Applications',
+      subtitle: 'Core concepts and practical applications of artificial intelligence',
+      color: Color(0xFFFF6F00), // Orange color for foundations/core concepts
+      icon: Icons.memory, // Brain/chip icon representing AI foundations
+      jsonManager: 'JsonDataManager3', // Assuming this matches your existing setup
+      maxLevels: 3,
+      isAlwaysUnlocked: true,
+    ),
+    // // ✅ Module 3: AI Pedagogy
     ModuleDefinition(
       id: 'ai_pedagogy',
       title: 'AI Pedagogy',
@@ -86,7 +90,7 @@ class _NewDashboardState extends State<NewDashboard>
       subtitle: 'Leveraging AI tools for continuous teacher growth and learning',
       color: Color(0xFF2E7D32), // Green color for growth/development theme
       icon: Icons.trending_up, // Growth/development icon
-      jsonManager: 'JsonDataManager6', // ✅ Uses the new JsonDataManager6
+      jsonManager: 'JsonDataManager5', //
       maxLevels: 3,
       isAlwaysUnlocked: true,
     ),
@@ -243,18 +247,6 @@ class _NewDashboardState extends State<NewDashboard>
   }
 
   /// Check if a specific module is completed
-  bool _isModuleCompleted(String moduleId) {
-    var moduleProgress = _moduleProgress[moduleId] ?? {};
-    var moduleDef = _moduleDefinitions.firstWhere((m) => m.id == moduleId);
-
-    for (int levelId = 1; levelId <= moduleDef.maxLevels; levelId++) {
-      bool isCompleted = moduleProgress[levelId]?['isCompleted'] ?? false;
-      if (!isCompleted) {
-        return false;
-      }
-    }
-    return true;
-  }
 
   /// Check if a module should be available (for independent modules, always true)
   bool _isModuleUnlocked(String moduleId) {
@@ -516,26 +508,27 @@ class _NewDashboardState extends State<NewDashboard>
       return _generatePlaceholderModule(moduleDefinition);
     }
   }
-  /// Generate module from JSON data with enhanced validation
-  /// Generate module from JSON data - Clean production version
   ModuleData _generateModuleFromJson(ModuleDefinition moduleDefinition) {
     try {
       dynamic educationModule;
 
       // Load the appropriate JSON manager
       switch (moduleDefinition.jsonManager) {
+        case 'JsonDataManager1':
+          educationModule = JsonDataManager1.getModule();
+          break;
+
         case 'JsonDataManager2':
           educationModule = JsonDataManager2.getModule();
           break;
-
+        case 'JsonDataManager3':
+          educationModule = JsonDataManager3.getModule();
+          break;
         case 'JsonDataManager4':
           educationModule = JsonDataManager4.getModule();
           break;
         case 'JsonDataManager5':
           educationModule = JsonDataManager5.getModule();
-          break;
-        case 'JsonDataManager6':
-          educationModule = JsonDataManager6.getModule();
           break;
         default:
           throw Exception('Unknown JSON manager: ${moduleDefinition.jsonManager}');
@@ -685,16 +678,21 @@ class _NewDashboardState extends State<NewDashboard>
       try {
         dynamic educationModule;
 
-        if (moduleDefinition.jsonManager == 'JsonDataManager2') {
+        if (moduleDefinition.jsonManager == 'JsonDataManager1') {
+          educationModule = JsonDataManager1.getModule();
+          print("JsonDataManager1 returned: ${educationModule?.moduleName}");
+        }
+        else if (moduleDefinition.jsonManager == 'JsonDataManager2') {
           educationModule = JsonDataManager2.getModule();
           print("JsonDataManager2 returned: ${educationModule?.moduleName}");
-        } else if (moduleDefinition.jsonManager == 'JsonDataManager4') {
+        }
+        else if (moduleDefinition.jsonManager == 'JsonDataManager3') {
+          educationModule = JsonDataManager3.getModule();
+          print("JsonDataManager3 returned: ${educationModule?.moduleName}");
+        }
+        else if (moduleDefinition.jsonManager == 'JsonDataManager4') {
           educationModule = JsonDataManager4.getModule();
           print("JsonDataManager4 returned: ${educationModule?.moduleName}");
-        }
-        else if (moduleDefinition.jsonManager == 'JsonDataManager6') {
-          educationModule = JsonDataManager6.getModule();
-          print("JsonDataManager6 returned: ${educationModule?.moduleName}");
         }
         else if (moduleDefinition.jsonManager == 'JsonDataManager5') {
           educationModule = JsonDataManager5.getModule();

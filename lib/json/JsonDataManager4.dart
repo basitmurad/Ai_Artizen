@@ -11,7 +11,7 @@ class JsonDataManager4 {
       "level": "Level 1 (Acquire)",
       "scenarios": [
         {
-          "id": 41,
+          "id": 46,
           "title": "AI Lesson Planner Confusion",
           "description": "Zara uses an AI-powered lesson planner. It suggests activities aligned with the national curriculum, but they seem too advanced for her Grade 4 students.",
           "question": "What is the most appropriate way for Zara to proceed?",
@@ -46,7 +46,7 @@ class JsonDataManager4 {
           }
         },
         {
-          "id": 42,
+          "id": 47,
           "title": "Cross-Subject AI Use",
           "description": "Fatima wants to promote AI use across subjects in a peer training session. She plans to showcase tools that she used in her English class.",
           "question": "What strategy would best help her peers apply the tools in other subjects?",
@@ -81,7 +81,7 @@ class JsonDataManager4 {
           }
         },
         {
-          "id": 43,
+          "id": 48,
           "title": "Ethical Use of Chatbot",
           "description": "Hassan suggests using a chatbot to answer students' questions. His colleague worries it might provide incorrect or manipulative answers.",
           "question": "How should Hassan address this concern?",
@@ -116,7 +116,7 @@ class JsonDataManager4 {
           }
         },
         {
-          "id": 44,
+          "id": 49,
           "title": "Culturally Limited Content",
           "description": "Asma finds that an AI reading tool lacks regional stories and mainly promotes texts from Western contexts.",
           "question": "What should she do before deciding to use the tool?",
@@ -151,7 +151,7 @@ class JsonDataManager4 {
           }
         },
         {
-          "id": 45,
+          "id": 50,
           "title": "Choosing Between AI Tools",
           "description": "Farah must pick between two AI tools: one is designed for monolingual students, and the other supports multilingual learners but has fewer features.",
           "question": "How should she choose?",
@@ -191,7 +191,7 @@ class JsonDataManager4 {
       "level": "Level 2 (Create)",
       "scenarios": [
         {
-          "id": 46,
+          "id": 51,
           "title": "Choosing the Right Tool",
           "description": "Ms. Hina is redesigning a lesson on climate change. She has access to a chatbot that provides quick facts and a simulation tool that models carbon emissions based on student input.",
           "question": "Which tool should Ms. Hina prioritize to foster critical thinking and inquiry-based learning?",
@@ -226,7 +226,7 @@ class JsonDataManager4 {
           }
         },
         {
-          "id": 47,
+          "id": 52,
           "title": "Misusing Predictive AI",
           "description": "An AI app Mr. Danish uses labels students as \\"high potential\\" or \\"low engagement.\\\" He begins grouping students based on this data for projects.",
           "question": "How should he reflect on this practice?",
@@ -261,7 +261,7 @@ class JsonDataManager4 {
           }
         },
         {
-          "id": 48,
+          "id": 53,
           "title": "Designing Assessments",
           "description": "Ms. Sara uses an AI system to grade student essays. It highlights grammar but misses creativity and originality.",
           "question": "What should she do next?",
@@ -296,7 +296,7 @@ class JsonDataManager4 {
           }
         },
         {
-          "id": 49,
+          "id": 54,
           "title": "Integrating AI for Empathy",
           "description": "Mr. Umer asks students to use an AI storytelling app to create refugee stories. Students struggle to emotionally connect.",
           "question": "How can Mr. Umer redesign this task?",
@@ -331,7 +331,7 @@ class JsonDataManager4 {
           }
         },
         {
-          "id": 50,
+          "id": 55,
           "title": "Planning for Differentiated Learning",
           "description": "Ms. Noreen uses AI to personalize learning paths for her students in a physics unit. She notices some students are rushing through without understanding.",
           "question": "What should she do?",

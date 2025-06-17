@@ -1,10 +1,8 @@
-
-
 import 'dart:convert';
 
 import '../models/JsonModel.dart';
 
-class JsonDataManagerPedagogy {
+class JsonDataManager1 {
   static const String moduleJsonData = '''
 {
   "module": "Module 1",
@@ -617,7 +615,10 @@ class JsonDataManagerPedagogy {
   static String getModuleTitle() {
     return getModule().moduleName;
   }
-
+  static List<dynamic> getScenarios() {
+    final moduleData = getModuleData();
+    return moduleData['scenarios'] ?? [];
+  }
   static String getModuleName() {
     return getModule().moduleName;
   }
