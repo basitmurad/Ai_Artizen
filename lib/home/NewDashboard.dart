@@ -381,36 +381,71 @@ class _NewDashboardState extends State<NewDashboard>
 
     return organized;
   }
-  // Map<String, Map<int, Map<String, dynamic>>> _organizeProgressByModule(
-  //     Map<int, Map<String, dynamic>> rawProgress) {
-  //   final organized = <String, Map<int, Map<String, dynamic>>>{};
-  //
-  //   // Initialize modules with empty progress
-  //   for (final module in _moduleDefinitions) {
-  //     organized[module.id] = {};
-  //   }
-  //
-  //   // Distribute progress to modules using global level IDs
-  //   rawProgress.forEach((globalLevelId, levelData) {
-  //     final moduleId = _determineModuleFromLevelId(globalLevelId);
-  //     if (moduleId != null) {
-  //       final moduleLevelId = _getModuleLevelId(globalLevelId, moduleId);
-  //       organized[moduleId]?[moduleLevelId] = levelData;
-  //     }
-  //   });
-  //
-  //   return organized;
-  // }
 
-
+  // Update this function
   String? _determineModuleFromLevelId(int levelId) {
     if (levelId >= 1 && levelId <= 3) return 'human_centered_mindset';
     if (levelId >= 4 && levelId <= 6) return 'ai_ethics';
     if (levelId >= 7 && levelId <= 9) return 'ai_foundations_applications';
     if (levelId >= 10 && levelId <= 12) return 'ai_pedagogy';
     if (levelId >= 13 && levelId <= 15) return 'ai_professional_development';
-    return null;
+    return 'unknown_module'; // Add a fallback value
   }
+
+// Update this method
+  void _debugLevelCompletion(int globalLevelId) {
+    print('\n🔍 === LEVEL COMPLETION DEBUG ===');
+    print('Checking global level: $globalLevelId');
+
+    // Find which module this global level belongs to
+    final moduleId = _determineModuleFromLevelId(globalLevelId);
+
+    if (moduleId == null) {
+      print('   !! Error: Could not determine module for level $globalLevelId');
+      print('🔍 === END DEBUG ===\n');
+      return;
+    }
+
+    final moduleLevelId = _getModuleLevelId(globalLevelId, moduleId);
+    print('Module: $moduleId, Module Level: $moduleLevelId');
+
+    // Check progress - handle null case safely
+    final moduleProgress = _moduleProgress[moduleId] ?? {};
+    final levelProgress = moduleProgress[moduleLevelId];
+
+    print('Level Progress: ${levelProgress ?? "No data"}');
+
+    if (levelProgress != null) {
+      print('isCompleted: ${levelProgress['isCompleted']}');
+      print('totalAnswers: ${levelProgress['totalAnswers']}');
+      print('correctAnswers: ${levelProgress['correctAnswers']}');
+      print('totalScenarios: ${levelProgress['totalScenarios']}');
+    }
+
+    // Check if next level should be unlocked
+    final nextGlobalLevel = globalLevelId + 1;
+    final nextModuleId = _determineModuleFromLevelId(nextGlobalLevel);
+
+    if (nextModuleId != null) {
+      final nextModuleLevelId = _getModuleLevelId(nextGlobalLevel, nextModuleId);
+      final nextModuleProgress = _moduleProgress[nextModuleId] ?? {};
+      final isNextUnlocked = _isLevelUnlocked(nextModuleLevelId, nextModuleId, nextModuleProgress);
+      print('Is Next Level Unlocked: $isNextUnlocked');
+    } else {
+      print('   Next level $nextGlobalLevel is beyond the defined modules');
+    }
+
+    print('🔍 === END DEBUG ===\n');
+  }
+
+  // String? _determineModuleFromLevelId(int levelId) {
+  //   if (levelId >= 1 && levelId <= 3) return 'human_centered_mindset';
+  //   if (levelId >= 4 && levelId <= 6) return 'ai_ethics';
+  //   if (levelId >= 7 && levelId <= 9) return 'ai_foundations_applications';
+  //   if (levelId >= 10 && levelId <= 12) return 'ai_pedagogy';
+  //   if (levelId >= 13 && levelId <= 15) return 'ai_professional_development';
+  //   return null;
+  // }
 
   int _getModuleLevelId(int globalLevelId, String moduleId) {
     // Use module ID from progress data instead of position
@@ -424,23 +459,6 @@ class _NewDashboardState extends State<NewDashboard>
     }
   }
 
-  // int _getModuleLevelId(int globalLevelId, String moduleId) {
-  //   // Convert global level ID to module-specific level ID (1-3)
-  //   switch (moduleId) {
-  //     case 'human_centered_mindset':
-  //       return globalLevelId;
-  //     case 'ai_ethics':
-  //       return globalLevelId - 3;
-  //     case 'ai_foundations_applications':
-  //       return globalLevelId - 6;
-  //     case 'ai_pedagogy':
-  //       return globalLevelId - 9;
-  //     case 'ai_professional_development':
-  //       return globalLevelId - 12;
-  //     default:
-  //       return globalLevelId;
-  //   }
-  // }
 
   void _setDefaultUserData() {
     setState(() {
@@ -785,44 +803,44 @@ class _NewDashboardState extends State<NewDashboard>
     return ModuleData(title: educationModule.moduleName, levels: levels);
   }
 
-  void _debugLevelCompletion(int globalLevelId) {
-    print('\n🔍 === LEVEL COMPLETION DEBUG ===');
-    print('Checking global level: $globalLevelId');
-
-    // Find which module this global level belongs to
-    final moduleId = _determineModuleFromLevelId(globalLevelId);
-    final moduleLevelId = _getModuleLevelId(globalLevelId, moduleId!);
-
-    print('Module: $moduleId, Module Level: $moduleLevelId');
-
-    // Check progress
-    final moduleProgress = _moduleProgress[moduleId] ?? {};
-    final levelProgress = moduleProgress[moduleLevelId];
-
-    print('Level Progress: $levelProgress');
-
-    if (levelProgress != null) {
-      print('isCompleted: ${levelProgress['isCompleted']}');
-      print('totalAnswers: ${levelProgress['totalAnswers']}');
-      print('correctAnswers: ${levelProgress['correctAnswers']}');
-      print('totalScenarios: ${levelProgress['totalScenarios']}');
-    }
-
-    // Check if next level should be unlocked
-    final nextGlobalLevel = globalLevelId + 1;
-    final nextModuleId = _determineModuleFromLevelId(nextGlobalLevel);
-    final nextModuleLevelId = _getModuleLevelId(nextGlobalLevel, nextModuleId!);
-
-    print('\nNext Level Check:');
-    print('Next Global Level: $nextGlobalLevel');
-    print('Next Module: $nextModuleId, Next Module Level: $nextModuleLevelId');
-
-    final nextModuleProgress = _moduleProgress[nextModuleId] ?? {};
-    final isNextUnlocked = _isLevelUnlocked(nextModuleLevelId, nextModuleId, nextModuleProgress);
-
-    print('Is Next Level Unlocked: $isNextUnlocked');
-    print('🔍 === END DEBUG ===\n');
-  }
+  // void _debugLevelCompletion(int globalLevelId) {
+  //   print('\n🔍 === LEVEL COMPLETION DEBUG ===');
+  //   print('Checking global level: $globalLevelId');
+  //
+  //   // Find which module this global level belongs to
+  //   final moduleId = _determineModuleFromLevelId(globalLevelId);
+  //   final moduleLevelId = _getModuleLevelId(globalLevelId, moduleId!);
+  //
+  //   print('Module: $moduleId, Module Level: $moduleLevelId');
+  //
+  //   // Check progress
+  //   final moduleProgress = _moduleProgress[moduleId] ?? {};
+  //   final levelProgress = moduleProgress[moduleLevelId];
+  //
+  //   print('Level Progress: $levelProgress');
+  //
+  //   if (levelProgress != null) {
+  //     print('isCompleted: ${levelProgress['isCompleted']}');
+  //     print('totalAnswers: ${levelProgress['totalAnswers']}');
+  //     print('correctAnswers: ${levelProgress['correctAnswers']}');
+  //     print('totalScenarios: ${levelProgress['totalScenarios']}');
+  //   }
+  //
+  //   // Check if next level should be unlocked
+  //   final nextGlobalLevel = globalLevelId + 1;
+  //   final nextModuleId = _determineModuleFromLevelId(nextGlobalLevel);
+  //   final nextModuleLevelId = _getModuleLevelId(nextGlobalLevel, nextModuleId!);
+  //
+  //   print('\nNext Level Check:');
+  //   print('Next Global Level: $nextGlobalLevel');
+  //   print('Next Module: $nextModuleId, Next Module Level: $nextModuleLevelId');
+  //
+  //   final nextModuleProgress = _moduleProgress[nextModuleId] ?? {};
+  //   final isNextUnlocked = _isLevelUnlocked(nextModuleLevelId, nextModuleId, nextModuleProgress);
+  //
+  //   print('Is Next Level Unlocked: $isNextUnlocked');
+  //   print('🔍 === END DEBUG ===\n');
+  // }
   bool _isLevelCompleted(int globalLevelId, Map<String, dynamic>? levelProgress) {
     if (levelProgress == null) return false;
 
@@ -835,35 +853,6 @@ class _NewDashboardState extends State<NewDashboard>
 
     return totalAnswers >= totalScenarios;
   }
-  // bool _isLevelCompleted(int globalLevelId, Map<String, dynamic>? levelProgress) {
-  //   if (levelProgress == null) return false;
-  //
-  //   // 1. Check explicit completion flag
-  //   if (levelProgress['isCompleted'] == true) return true;
-  //
-  //   // 2. Check if all scenarios were answered
-  //   final totalAnswers = levelProgress['totalAnswers'] ?? 0;
-  //   final totalScenarios = levelProgress['totalScenarios'] ?? 5;
-  //
-  //   return totalAnswers >= totalScenarios;
-  // }
-  // bool _isLevelCompleted(int globalLevelId, Map<String, dynamic>? levelProgress) {
-  //   if (levelProgress == null) return false;
-  //
-  //   // Primary check: if level is marked as completed
-  //   bool isCompleted = levelProgress['isCompleted'] == true;
-  //
-  //   // If marked complete, trust it (remove strict validation that might be blocking)
-  //   if (isCompleted) return true;
-  //
-  //   // Secondary check: if user answered all scenarios correctly
-  //   final totalAnswers = levelProgress['totalAnswers'] ?? 0;
-  //   final correctAnswers = levelProgress['correctAnswers'] ?? 0;
-  //   final totalScenarios = levelProgress['totalScenarios'] ?? 5;
-  //
-  //   // Consider completed if answered all scenarios (even if not explicitly marked)
-  //   return totalAnswers >= totalScenarios && correctAnswers > 0;
-  // }
 
   int _calculateStars(Map<String, dynamic>? levelProgress) {
     if (levelProgress == null) return 0;
@@ -908,53 +897,6 @@ class _NewDashboardState extends State<NewDashboard>
     print('   totalScenarios: ${levelProgress?['totalScenarios'] ?? 5}');
     print('   Unlocked: ${_isLevelUnlocked(levelId, moduleId, progress)}');
   }
-  // bool _isLevelUnlocked(int levelId, String moduleId, Map<int, Map<String, dynamic>> progress) {
-  //   // Level 1 of the first module is always unlocked
-  //   if (moduleId == 'human_centered_mindset' && levelId == 1) return true;
-  //
-  //   // For level 1 of other modules, check if previous module is completed
-  //   if (levelId == 1) {
-  //     return _isPreviousModuleCompleted(moduleId);
-  //   }
-  //
-  //   // For levels 2-3 within a module, check previous level in same module
-  //   final previousLevelId = levelId - 1;
-  //   final previousGlobalLevelId = _getGlobalLevelId(previousLevelId, moduleId);
-  //
-  //   return _isLevelCompleted(previousGlobalLevelId, progress[previousLevelId]);
-  // }
-  // bool _isLevelUnlocked(int levelId, String moduleId, Map<int, Map<String, dynamic>> progress) {
-  //   // Level 1 of the first module is always unlocked
-  //   if (moduleId == 'human_centered_mindset' && levelId == 1) return true;
-  //
-  //   // For level 1 of other modules, check if previous module is completed
-  //   if (levelId == 1) {
-  //     return _isPreviousModuleCompleted(moduleId);
-  //   }
-  //
-  //   // For levels 2-3 within a module, check if previous level in same module is completed
-  //   final previousLevelId = levelId - 1;
-  //   final previousLevel = progress[previousLevelId];
-  //
-  //   // ✅ Enhanced check: Verify completion more thoroughly
-  //   if (previousLevel == null) return false;
-  //
-  //   // Check if previous level is marked as completed
-  //   bool isCompleted = previousLevel['isCompleted'] == true;
-  //
-  //   // ✅ Additional validation: Also check if previous level was actually completed
-  //   // by looking at the answers (in case isCompleted flag wasn't set properly)
-  //   if (!isCompleted) {
-  //     final totalAnswers = previousLevel['totalAnswers'] ?? 0;
-  //     final correctAnswers = previousLevel['correctAnswers'] ?? 0;
-  //     final totalScenarios = previousLevel['totalScenarios'] ?? 5;
-  //
-  //     // Consider completed if answered all scenarios
-  //     isCompleted = totalAnswers >= totalScenarios && correctAnswers > 0;
-  //   }
-  //
-  //   return isCompleted;
-  // }
   bool _isPreviousModuleCompleted(String currentModuleId) {
     final moduleOrder = [
       'human_centered_mindset',
@@ -1018,22 +960,6 @@ class _NewDashboardState extends State<NewDashboard>
     final moduleIndex = _moduleDefinitions.indexWhere((m) => m.id == moduleId);
     return (moduleIndex * 3) + moduleLevelId;
   }
-  // int _getGlobalLevelId(int moduleLevelId, String moduleId) {
-  //   switch (moduleId) {
-  //     case 'human_centered_mindset':
-  //       return moduleLevelId; // Levels 1-3
-  //     case 'ai_ethics':
-  //       return moduleLevelId + 3; // Levels 4-6
-  //     case 'ai_foundations_applications':
-  //       return moduleLevelId + 6; // Levels 7-9
-  //     case 'ai_pedagogy':
-  //       return moduleLevelId + 9; // Levels 10-12
-  //     case 'ai_professional_development':
-  //       return moduleLevelId + 12; // Levels 13-15
-  //     default:
-  //       return moduleLevelId;
-  //   }
-  // }
 
   void _onLevelTap(LevelData level, ModuleDefinition moduleDefinition) {
     final globalLevelId = _getGlobalLevelId(level.id, moduleDefinition.id);
@@ -1062,7 +988,8 @@ class _NewDashboardState extends State<NewDashboard>
 
       // Check if the level exists in the module
       if (level.id <= educationModule.levels.length) {
-        final globalLevelId = _getGlobalLevelId(level.id, moduleDefinition.id);
+
+        print("Id is  ${level.id}" );
 
         Navigator.push(
           context,
