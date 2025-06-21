@@ -8,7 +8,7 @@ class JsonDataManager3 {
     "module": "Module 3",
     "levels": [
       {
-        "level": "Level 1 (Acquire)",
+        "level": "Level 7 (Acquire)",
         "scenarios": [
           {
             "id": 31,
@@ -208,7 +208,7 @@ class JsonDataManager3 {
         ]
       },
       {
-        "level": "Level 2 (Deepen)",
+        "level": "Level 8 (Deepen)",
         "scenarios": [
           {
             "id": 36,
@@ -408,7 +408,7 @@ class JsonDataManager3 {
         ]
       },
       {
-        "level": "Level 3 (Create)",
+        "level": "Level 9 (Create)",
         "scenarios": [
           {
             "id": 41,

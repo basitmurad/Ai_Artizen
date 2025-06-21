@@ -15,11 +15,13 @@ class LevelScenariosScreen extends StatefulWidget {
   final String levelName;
   final String moduleID;
 
+
   const LevelScenariosScreen({
     super.key,
     required this.levelId,
     required this.levelName,
     required this.moduleID,
+
   });
 
   @override
@@ -119,29 +121,24 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
     }
   }
 
-  // Updated Firebase structure for module-specific progress
-  Future<void> _updateUserProgress(
-    bool isCorrect,
-    int scenarioId,
-    String title,
-  ) async {
+  Future<void> _updateUserProgress(bool isCorrect, int scenarioId, String title) async {
     try {
       User? user = _auth.currentUser;
       if (user == null) return;
+
+      int globalLevelId = _getGlobalLevelId(widget.levelId, widget.moduleID);
 
       DatabaseReference moduleRef = _database
           .child('Progress')
           .child(user.uid)
           .child(widget.moduleID);
 
-      // Update counters for this module
       totalAnswersCount++;
       if (isCorrect) {
         correctAnswersCount++;
-        userCoins += 10; // Award 10 coins for correct answer
+        userCoins += 10;
       }
 
-      // Update module progress using transaction for atomic updates
       await moduleRef.update({
         'moduleName': _getModuleName(),
         'coins': userCoins,
@@ -150,7 +147,7 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
         'lastActivity': ServerValue.timestamp,
       });
 
-      // Update scenario progress within the module
+      // Store scenario progress with global level ID
       DatabaseReference scenarioRef = moduleRef
           .child('scenarios')
           .child(scenarioId.toString());
@@ -167,36 +164,36 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
       await scenarioRef.set({
         'scenarioId': scenarioId,
         'scenarioTitle': title,
-        'levelId': widget.levelId,
+        'levelId': globalLevelId, // Use global level ID for consistency
+        'uiLevelId': widget.levelId, // Keep UI level ID for reference
         'levelName': widget.levelName,
+        'moduleId': widget.moduleID,
         'isCorrect': isCorrect,
         'timestamp': ServerValue.timestamp,
         'attempts': currentAttempts + 1,
       });
 
-      // Update level progress within the module
       await _updateLevelProgress(isCorrect);
 
-      print(
-        '✅ Module ${widget.moduleID} progress updated - Coins: $userCoins, Correct: $correctAnswersCount/$totalAnswersCount',
-      );
+      print('✅ Module ${widget.moduleID} progress updated - Global Level: $globalLevelId, UI Level: ${widget.levelId}');
     } catch (e) {
       print('❌ Error updating user progress: $e');
     }
   }
-
-  // Updated level progress within module structure
   Future<void> _updateLevelProgress(bool isCorrect) async {
     try {
       User? user = _auth.currentUser;
       if (user == null) return;
+
+      // Use global level ID for consistent tracking
+      int globalLevelId = _getGlobalLevelId(widget.levelId, widget.moduleID);
 
       DatabaseReference levelRef = _database
           .child('Progress')
           .child(user.uid)
           .child(widget.moduleID)
           .child('levels')
-          .child(widget.levelId.toString());
+          .child(globalLevelId.toString()); // Use global level ID
 
       DataSnapshot levelSnapshot = await levelRef.get();
       Map<String, dynamic> levelData = {};
@@ -214,8 +211,10 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
       levelTotalAnswers++;
 
       await levelRef.set({
-        'levelId': widget.levelId,
+        'levelId': globalLevelId, // Store global level ID for consistency
+        'uiLevelId': widget.levelId, // Store UI level ID for reference
         'levelName': widget.levelName,
+        'moduleId': widget.moduleID,
         'correctAnswers': levelCorrectAnswers,
         'totalAnswers': levelTotalAnswers,
         'lastPlayed': ServerValue.timestamp,
@@ -223,33 +222,24 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
         'totalScenarios': scenarios.length,
       });
 
-      print(
-        '✅ Level ${widget.levelId} progress updated in module ${widget.moduleID}',
-      );
+      print('✅ Level $globalLevelId (UI: ${widget.levelId}) progress updated in module ${widget.moduleID}');
     } catch (e) {
       print('❌ Error updating level progress: $e');
     }
   }
-
-  // Updated level completion bonus within module structure
   Future<void> _awardLevelCompletionBonus(int stars) async {
     try {
       User? user = _auth.currentUser;
       if (user == null) return;
 
+      int globalLevelId = _getGlobalLevelId(widget.levelId, widget.moduleID);
+
       int bonusCoins = 0;
       switch (stars) {
-        case 3:
-          bonusCoins = 50; // 3 stars = 50 bonus coins
-          break;
-        case 2:
-          bonusCoins = 30; // 2 stars = 30 bonus coins
-          break;
-        case 1:
-          bonusCoins = 20; // 1 star = 20 bonus coins
-          break;
-        default:
-          bonusCoins = 10; // Completion bonus = 10 coins
+        case 3: bonusCoins = 50; break;
+        case 2: bonusCoins = 30; break;
+        case 1: bonusCoins = 20; break;
+        default: bonusCoins = 10; break;
       }
 
       userCoins += bonusCoins;
@@ -259,34 +249,50 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
           .child(user.uid)
           .child(widget.moduleID);
 
-      // Get current values for incremental updates
+      // Get current module data
       DataSnapshot snapshot = await moduleRef.get();
       Map<String, dynamic> moduleData = {};
       if (snapshot.exists) {
         moduleData = Map<String, dynamic>.from(snapshot.value as Map);
       }
 
-      int currentLevelsCompleted = moduleData['levelsCompleted'] ?? 0;
+      // Count completed levels in this module by checking all level data
+      int completedLevelsCount = 0;
+      Map<String, dynamic> levelsData = moduleData['levels'] ?? {};
+
+      for (var levelEntry in levelsData.entries) {
+        Map<String, dynamic> levelInfo = Map<String, dynamic>.from(levelEntry.value as Map);
+        bool isCompleted = levelInfo['isCompleted'] ?? false;
+        if (isCompleted) {
+          completedLevelsCount++;
+        }
+      }
+
+      // Add the current level completion
+      completedLevelsCount++;
+
       int currentStarsEarned = moduleData['starsEarned'] ?? 0;
 
       await moduleRef.update({
         'coins': userCoins,
-        'levelsCompleted': currentLevelsCompleted + 1,
+        'levelsCompleted': completedLevelsCount, // Accurate count of completed levels
         'starsEarned': currentStarsEarned + stars,
-        'lastLevelCompleted': widget.levelId,
+        'lastLevelCompleted': globalLevelId, // Use global level ID
         'lastLevelCompletedName': widget.levelName,
         'lastCompletionDate': ServerValue.timestamp,
       });
 
-      print(
-        '🏆 Level completion bonus awarded for module ${widget.moduleID}: $bonusCoins coins',
-      );
+      print('🏆 Level completion bonus awarded:');
+      print('   Global Level ID: $globalLevelId');
+      print('   UI Level ID: ${widget.levelId}');
+      print('   Module: ${widget.moduleID}');
+      print('   Levels Completed in Module: $completedLevelsCount');
+      print('   Bonus Coins: $bonusCoins');
     } catch (e) {
       print('❌ Error awarding level completion bonus: $e');
     }
   }
 
-  // Real-time listener for coin updates within module
   void _setupCoinListener() {
     User? user = _auth.currentUser;
     if (user != null) {
@@ -327,89 +333,97 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
         return 'Unknown Module';
     }
   }
-  // Helper method to get module name
-  // String _getModuleName() {
-  //   switch (widget.moduleID) {
-  //     case 'human_centered_mindset':
-  //       return 'Human-Centered Mindset';
-  //     case 'ai_ethics':
-  //       return 'AI Ethics';
-  //     case 'ai_pedagogy':
-  //       return 'AI Pedagogy';
-  //     case 'ai_professional_development':
-  //       return 'AI for Professional Development';
-  //     default:
-  //       return 'Unknown Module';
-  //   }
-  // }
+
+
+
+
+  int _getGlobalLevelId(int uiLevelId, String moduleID) {
+    switch (moduleID) {
+      case 'human_centered_mindset':
+        return uiLevelId; // UI 1-3 → Global 1-3
+      case 'ai_ethics':
+        return uiLevelId + 3; // UI 1-3 → Global 4-6
+      case 'ai_foundations_applications':
+        return uiLevelId + 6; // UI 1-3 → Global 7-9
+      case 'ai_pedagogy':
+        return uiLevelId + 9; // UI 1-3 → Global 10-12
+      case 'ai_professional_development':
+        return uiLevelId + 12; // UI 1-3 → Global 13-15
+      default:
+        return uiLevelId;
+    }
+  }
 
   void _loadScenarios() {
     try {
       print('\n🔧 Loading scenarios for module: ${widget.moduleID}');
+      print('🔧 UI levelId: ${widget.levelId}');
+
+      // Convert UI level ID to global level ID for proper tracking
+      int globalLevelId = _getGlobalLevelId(widget.levelId, widget.moduleID);
+      print('🔧 Global levelId: $globalLevelId');
 
       dynamic educationModule;
 
-      // ✅ Use moduleID to determine which JsonDataManager to load
+      // Load the appropriate JSON manager
       switch (widget.moduleID) {
         case 'human_centered_mindset':
-          print('📂 Loading JsonDataManager1for human_centered_mindset');
+          print('📂 Loading JsonDataManager1 for human_centered_mindset');
           educationModule = JsonDataManager1.getModule();
-          _printCompleteModuleData(educationModule, 'JsonDataManager2');
           break;
 
         case 'ai_ethics':
           print('📂 Loading JsonDataManager2 for ai_ethics');
           educationModule = JsonDataManager2.getModule();
-          _printCompleteModuleData(educationModule, 'JsonDataManager2');
           break;
-        //
+
         case 'ai_foundations_applications':
-          print('📂 Loading JsonDataManager3 for ai_ethics');
+          print('📂 Loading JsonDataManager3 for ai_foundations_applications');
           educationModule = JsonDataManager3.getModule();
-          _printCompleteModuleData(educationModule, 'JsonDataManager5');
           break;
-        //
+
         case 'ai_pedagogy':
           print('📂 Loading JsonDataManager4 for ai_pedagogy');
           educationModule = JsonDataManager4.getModule();
-          _printCompleteModuleData(educationModule, 'JsonDataManager4');
           break;
-          case 'ai_professional_development':
+
+        case 'ai_professional_development':
           print('📂 Loading JsonDataManager5 for ai_professional_development');
           educationModule = JsonDataManager5.getModule();
-          _printCompleteModuleData(educationModule, 'JsonDataManager5');
           break;
 
         default:
-          print(
-            '❌ Unknown moduleID: ${widget.moduleID}, defaulting to JsonDataManager2',
-          );
-          // educationModule = JsonDataManager2.getModule();
-          _printCompleteModuleData(
-            educationModule,
-            'JsonDataManager2 (Default)',
-          );
-          break;
+          print('❌ Unknown moduleID: ${widget.moduleID}');
+          setState(() {
+            isLoading = false;
+          });
+          return;
       }
 
       print('🎯 Loaded module: ${educationModule?.moduleName}');
 
-      final level = educationModule.getLevelByNumber(widget.levelId);
+      // Get level by UI index (0-based)
+      int levelIndex = widget.levelId - 1; // Convert 1-based to 0-based
 
-      if (level != null) {
+      if (levelIndex >= 0 && levelIndex < educationModule.levels.length) {
+        final level = educationModule.levels[levelIndex];
+
         setState(() {
           scenarios = level.scenarios;
           isLoading = false;
         });
+
         print('📚 Loaded ${scenarios.length} scenarios for ${level.level}');
         print('✅ SUCCESS: Correct scenarios loaded for ${widget.moduleID}');
 
-        // Setup real-time coin listener after scenarios are loaded
+        // Debug: Print scenario ID range
+        if (scenarios.isNotEmpty) {
+          print('🎯 Scenario ID range: ${scenarios.first.id} - ${scenarios.last.id}');
+        }
+
         _setupCoinListener();
       } else {
-        print(
-          '❌ Level ${widget.levelId} not found in module ${educationModule?.moduleName}',
-        );
+        print('❌ Level index $levelIndex out of range for module ${educationModule?.moduleName}');
         setState(() {
           isLoading = false;
         });
@@ -422,153 +436,7 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
     }
   }
 
-  // Fixed method to print complete module data
-  void _printCompleteModuleData(dynamic educationModule, String managerName) {
-    print('\n' + '=' * 80);
-    print('📊 COMPLETE $managerName DATA ANALYSIS');
-    print('=' * 80);
 
-    if (educationModule == null) {
-      print('❌ Module is null!');
-      return;
-    }
-
-    // Print module overview
-    print('\n🏛️ MODULE OVERVIEW:');
-    print('   📋 Module Name: ${educationModule.moduleName}');
-    print('   📋 Total Levels: ${educationModule.levels.length}');
-    print('   📋 Total Scenarios: ${educationModule.allScenarios.length}');
-
-    // Print all levels and scenarios
-    for (
-      int levelIndex = 0;
-      levelIndex < educationModule.levels.length;
-      levelIndex++
-    ) {
-      var level = educationModule.levels[levelIndex];
-      print('\n🎯 LEVEL ${levelIndex + 1}: ${level.level}');
-      print('   📊 Scenarios in this level: ${level.scenarios.length}');
-
-      // Print each scenario in detail
-      for (
-        int scenarioIndex = 0;
-        scenarioIndex < level.scenarios.length;
-        scenarioIndex++
-      ) {
-        var scenario = level.scenarios[scenarioIndex];
-        print('\n   📝 SCENARIO ${scenarioIndex + 1} (ID: ${scenario.id}):');
-        print('      🏷️  Title: ${scenario.title}');
-        print('      📖 Description: ${scenario.description}');
-
-        if (scenario.question != null) {
-          print('      ❓ Question: ${scenario.question}');
-        }
-
-        print('      🎯 Options:');
-        for (
-          int optionIndex = 0;
-          optionIndex < scenario.options.length;
-          optionIndex++
-        ) {
-          String marker =
-              (optionIndex + 1) == scenario.correctAnswer ? '✅' : '   ';
-          print(
-            '         $marker ${optionIndex + 1}. ${scenario.options[optionIndex]}',
-          );
-        }
-
-        print('      🎯 Correct Answer: Option ${scenario.correctAnswer}');
-
-        if (scenario.feedback != null) {
-          print('      💡 Feedback: ${scenario.feedback}');
-        }
-
-        // Print activity details - FIXED: Handle Activity object properly
-        if (scenario.activity != null) {
-          print('      🎮 ACTIVITY:');
-          print('         📋 Type: ${scenario.activity!.type ?? 'Unknown'}');
-          print('         🏷️  Name: ${scenario.activity!.name ?? 'Unnamed'}');
-
-          if (scenario.activity!.description != null) {
-            print('         📖 Description: ${scenario.activity!.description}');
-          }
-
-          // Handle different activity types based on Activity object
-          if (scenario.activity!.type == 'Mini Card Activity') {
-            _printMiniCardActivity(scenario.activity!);
-          } else if (scenario.activity!.type == 'Interactive Simulation') {
-            _printInteractiveSimulation(scenario.activity!);
-          }
-        }
-
-        print('   ' + '-' * 60);
-      }
-    }
-
-    print('\n' + '=' * 80);
-    print('✅ END OF $managerName DATA ANALYSIS');
-    print('=' * 80 + '\n');
-  }
-
-  // Fixed method to print Mini Card Activity details
-  void _printMiniCardActivity(Activity activity) {
-    print('         🃏 CARDS:');
-
-    if (activity.cards != null && activity.cards!.isNotEmpty) {
-      for (int cardIndex = 0; cardIndex < activity.cards!.length; cardIndex++) {
-        var card = activity.cards![cardIndex];
-        String correctness = card.correct == 'Fair' ? '✅ FAIR' : '❌ UNFAIR';
-        print('            🃏 Card ${cardIndex + 1}: $correctness');
-        print('               📝 Statement: ${card.statement}');
-        print('               💡 Feedback: ${card.feedback}');
-      }
-    }
-
-    if (activity.completionMessage != null) {
-      print('         🏆 Completion Message: ${activity.completionMessage}');
-    }
-  }
-
-  // Fixed method to print Interactive Simulation details
-  void _printInteractiveSimulation(Activity activity) {
-    if (activity.scenes != null && activity.scenes!.isNotEmpty) {
-      print('         🎬 SCENES:');
-
-      for (
-        int sceneIndex = 0;
-        sceneIndex < activity.scenes!.length;
-        sceneIndex++
-      ) {
-        var scene = activity.scenes![sceneIndex];
-        print('            🎬 Scene ${scene.sceneNumber ?? sceneIndex + 1}:');
-        print('               📖 Description: ${scene.description}');
-
-        if (scene.options != null && scene.options!.isNotEmpty) {
-          print('               🎯 Options:');
-          for (
-            int optionIndex = 0;
-            optionIndex < scene.options!.length;
-            optionIndex++
-          ) {
-            String letter = String.fromCharCode(65 + optionIndex); // A, B, C...
-            print('                  $letter. ${scene.options![optionIndex]}');
-          }
-        }
-      }
-    }
-
-    if (activity.idealPath != null) {
-      print('         🏆 Ideal Path: ${activity.idealPath}');
-    }
-
-    if (activity.idealEnding != null) {
-      print('         ✅ Ideal Ending: ${activity.idealEnding}');
-    }
-
-    if (activity.badEnding != null) {
-      print('         ❌ Bad Ending: ${activity.badEnding}');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

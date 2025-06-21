@@ -8,10 +8,10 @@ class JsonDataManager5 {
   "module": "Module 5",
   "levels": [
     {
-      "level": "Level 1 (Acquire)",
+      "level": "Level 13 (Acquire)",
       "scenarios": [
         {
-          "id": 56,
+          "id": 61,
           "title": "Evolving Role in the AI Era",
           "description": "Ms. Farzana attends a staff meeting where AI tools in education are discussed. She begins to wonder how her teaching role is expected to evolve in this changing environment.",
           "question": "What should Ms. Farzana do first to stay professionally relevant?",
@@ -50,7 +50,7 @@ class JsonDataManager5 {
           }
         },
         {
-          "id": 57,
+          "id": 62,
           "title": "Identifying Learning Gaps with AI",
           "description": "Ms. Rozina finds several online AI courses but is unsure which align with her needs. She wonders how to assess what AI knowledge and skills she actually lacks.",
           "question": "What is the next best step for her?",
@@ -89,7 +89,7 @@ class JsonDataManager5 {
           }
         },
         {
-          "id": 58,
+          "id": 63,
           "title": "Reflective Practice with AI Tools",
           "description": "Mr. Karim wants to understand which of his lessons are less engaging for students. He explores whether AI can help him reflect on and improve his teaching.",
           "question": "Which option best supports this goal?",
@@ -128,7 +128,7 @@ class JsonDataManager5 {
           }
         },
         {
-          "id": 59,
+          "id": 64,
           "title": "Using AI for Content Mastery",
           "description": "Ms. Sana uses an AI platform that reviews her lesson recordings and suggests weak spots. She notices it consistently flags her fraction lessons as low in engagement.",
           "question": "How is this helping her professional growth?",
@@ -167,7 +167,7 @@ class JsonDataManager5 {
           }
         },
         {
-          "id": 60,
+          "id": 65,
           "title": "Avoiding AI Content Bubbles",
           "description": "Ms. Nilofer notices her AI news feed only shows articles that match her existing teaching style. She is concerned this might be limiting her exposure to new ideas.",
           "question": "What should she do to stay professionally diverse?",
@@ -208,10 +208,10 @@ class JsonDataManager5 {
       ]
     },
     {
-      "level": "Level 2 (Deepen)",
+      "level": "Level 14 (Deepen)",
       "scenarios": [
         {
-          "id": 61,
+          "id": 66,
           "title": "Peer Feedback or Platform Insights?",
           "description": "Ms. Fareeda is designing a professional development session and wants to base it on actual gaps in teaching practices. She has access to both peer feedback and AI-generated performance analytics.",
           "question": "Which should she prioritize to best understand evolving teacher needs?",
@@ -250,7 +250,7 @@ class JsonDataManager5 {
           }
         },
         {
-          "id": 62,
+          "id": 67,
           "title": "Self-Assessment and Data Privacy",
           "description": "Mr. Tanveer uses a self-assessment AI app that stores his teaching data on external servers.",
           "question": "What is the best course of action?",
@@ -289,7 +289,7 @@ class JsonDataManager5 {
           }
         },
         {
-          "id": 63,
+          "id": 68,
           "title": "Algorithm Bias in Peer Recommendations",
           "description": "While using an AI PD platform, Mr. Bilal notices he is repeatedly recommended the same type of peers for mentoring—those who match his existing style.",
           "question": "How should he respond to broaden his learning?",
@@ -328,7 +328,7 @@ class JsonDataManager5 {
           }
         },
         {
-          "id": 64,
+          "id": 69,
           "title": "Evaluating PD Resources",
           "description": "Ms. Rukhsana comes across two AI-based PD resources. One has peer-reviewed validation but fewer features; the other is flashy but lacks transparency.",
           "question": "Which should she choose for sustainable PD?",
@@ -367,7 +367,7 @@ class JsonDataManager5 {
           }
         },
         {
-          "id": 65,
+          "id": 70,
           "title": "AI in Collaborative Communities",
           "description": "A teacher group in Hunza is using an AI tool to share PD resources, but the platform rarely promotes contributions from local teachers.",
           "question": "What's the best action for inclusivity?",
@@ -408,10 +408,10 @@ class JsonDataManager5 {
       ]
     },
     {
-      "level": "Level 3 (Create)",
+      "level": "Level 15 (Create)",
       "scenarios": [
         {
-          "id": 66,
+          "id": 71,
           "title": "Leading AI Pedagogy Circles",
           "description": "Mr. Salman decides to initiate a teacher learning circle focused on using AI tools for professional growth. Some teachers resist, fearing they will be replaced by AI.",
           "question": "What should Mr. Salman do to build engagement?",
@@ -450,7 +450,7 @@ class JsonDataManager5 {
           }
         },
         {
-          "id": 67,
+          "id": 72,
           "title": "Building Inclusive Tools",
           "description": "Ms. Farzana wants to create a professional learning plan for her colleagues using an AI tool, but the tool lacks features for teachers with visual impairments.",
           "question": "How can she make this tool more inclusive?",
@@ -489,7 +489,7 @@ class JsonDataManager5 {
           }
         },
         {
-          "id": 68,
+          "id": 73,
           "title": "Peer-Led AI Innovation",
           "description": "A teacher peer group wants to co-design AI-based modules for science instruction. They invite Mr. Haris to lead the initiative.",
           "question": "What leadership approach would be most effective?",
@@ -528,7 +528,7 @@ class JsonDataManager5 {
           }
         },
         {
-          "id": 69,
+          "id": 74,
           "title": "Evaluating EdTech Platforms",
           "description": "Ms. Noreen wants to integrate a new AI-based learning management system (LMS) for teacher training.",
           "question": "How should she evaluate whether it's suitable?",
@@ -567,7 +567,7 @@ class JsonDataManager5 {
           }
         },
         {
-          "id": 70,
+          "id": 75,
           "title": "Supporting Contextual Innovation",
           "description": "Mr. Bilal is customizing an AI-powered training module for rural teachers who lack access to high-speed internet.",
           "question": "What should be his priority?",

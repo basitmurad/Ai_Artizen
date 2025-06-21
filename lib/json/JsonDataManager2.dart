@@ -8,7 +8,7 @@
     "module": "Module 2",
     "levels": [
       {
-        "level": "Level 1 (Acquire)",
+        "level": "Level 4 (Acquire)",
         "scenarios": [
           {
             "id": 16,
@@ -58,7 +58,7 @@
             }
           },
           {
-            "id": 16,
+            "id": 17,
             "title": "Whose Language Counts?",
             "description": "Ms. Kulsoom's school adopts an AI language-learning app that supports only dominant languages like English and Spanish. However, students from indigenous and marginalized communities feel excluded, as their native languages are not recognized by the app.",
             "question": "How should Ms. Kulsoom respond to ensure all students feel included and valued?",
@@ -200,7 +200,7 @@
         ]
       },
       {
-        "level": "Level 2 (Deepen)",
+        "level": "Level 5 (Deepen)",
         "scenarios": [
           {
             "id": 21,
@@ -400,7 +400,7 @@
         ]
       },
       {
-        "level": "Level 3 (Create)",
+        "level": "Level 6 (Create)",
         "scenarios": [
           {
             "id": 26,
