@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import '../data/ModuleDefinition.dart';
 import '../data/UserDataService.dart';
@@ -163,8 +164,28 @@ class _NewDashboardState extends State<NewDashboard>
       ),
     );
   }
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  bool _isPlaying = false;
 
-// Helper method to build instruction sections
+  Future<void> _playGameSound() async {
+    try {
+      if (_isPlaying) {
+        // Stop the sound if it's playing
+        await _audioPlayer.stop();
+        setState(() {
+          _isPlaying = false;
+        });
+      } else {
+        // Play the sound if it's not playing
+        await _audioPlayer.play(AssetSource('game.mp3'));
+        setState(() {
+          _isPlaying = true;
+        });
+      }
+    } catch (e) {
+      print('Error playing/stopping sound: $e');
+    }
+  }// Helper method to build instruction sections
   Widget _buildInstructionSection({
     required IconData icon,
     required Color color,
@@ -310,6 +331,13 @@ class _NewDashboardState extends State<NewDashboard>
     super.initState();
     _initializeAnimations();
     _fetchUserData();
+    _audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
+      if (state == PlayerState.completed) {
+        setState(() {
+          _isPlaying = false;
+        });
+      }
+    });
   }
 
   void _initializeAnimations() {
@@ -336,6 +364,8 @@ class _NewDashboardState extends State<NewDashboard>
     _floatingController.dispose();
     _pathController.dispose();
     _coinController.dispose();
+    _audioPlayer.dispose();
+
     super.dispose();
   }
   Future<void> _fetchUserData() async {
@@ -569,27 +599,58 @@ class _NewDashboardState extends State<NewDashboard>
 
                 SizedBox(height: 20),
 
-                GestureDetector(
-                  onTap: _showInstructionsDialog,
-                  child: Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 12,
-                          offset: Offset(0, 6),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: _showInstructionsDialog,
+                      child: Container(
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 12,
+                              offset: Offset(0, 6),
+                            ),
+                          ],
                         ),
-                      ],
+                        child: Icon(
+                          Icons.help_outline,
+                          color: Color(0xFF4A90E2),
+                          size: 28,
+                        ),
+                      ),
                     ),
-                    child: Icon(
-                      Icons.help_outline,
-                      color: Color(0xFF4A90E2),
-                      size: 28,
+
+                    SizedBox(width: 20),
+
+                    // Update the sound button in your widget
+                    GestureDetector(
+                      onTap: _playGameSound,
+                      child: Container(
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 12,
+                              offset: Offset(0, 6),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          _isPlaying ? Icons.stop : Icons.volume_up,
+                          color: Color(0xFF4A90E2),
+                          size: 28,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
@@ -601,6 +662,76 @@ class _NewDashboardState extends State<NewDashboard>
       ),
     );
   }
+
+  // Widget _buildGamePath() {
+  //   return SingleChildScrollView(
+  //     physics: BouncingScrollPhysics(),
+  //     child: Container(
+  //       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+  //       child: Column(
+  //         children: [
+  //           Column(
+  //             crossAxisAlignment: CrossAxisAlignment.center,
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             children: [
+  //               _buildFloatingMascot(),
+  //               SizedBox(height: 25),
+  //
+  //               Text(
+  //                 "🚀 Start Your AI Learning Journey",
+  //                 style: TextStyle(
+  //                   color: Colors.white,
+  //                   fontSize: 20,
+  //                   fontWeight: FontWeight.bold,
+  //                 ),
+  //                 textAlign: TextAlign.center,
+  //               ),
+  //
+  //               SizedBox(height: 12),
+  //
+  //               Text(
+  //                 "Need guidance? Tap below to see how to unlock levels and progress!",
+  //                 style: TextStyle(
+  //                   color: Colors.white.withOpacity(0.8),
+  //                   fontSize: 14,
+  //                 ),
+  //                 textAlign: TextAlign.center,
+  //               ),
+  //
+  //               SizedBox(height: 20),
+  //
+  //               GestureDetector(
+  //                 onTap: _showInstructionsDialog,
+  //                 child: Container(
+  //                   padding: EdgeInsets.all(16),
+  //                   decoration: BoxDecoration(
+  //                     color: Colors.white,
+  //                     shape: BoxShape.circle,
+  //                     boxShadow: [
+  //                       BoxShadow(
+  //                         color: Colors.black.withOpacity(0.2),
+  //                         blurRadius: 12,
+  //                         offset: Offset(0, 6),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                   child: Icon(
+  //                     Icons.help_outline,
+  //                     color: Color(0xFF4A90E2),
+  //                     size: 28,
+  //                   ),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //           SizedBox(height: 20),
+  //           ..._buildAllModules(),
+  //           SizedBox(height: 100),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildFloatingMascot() {
     return AnimatedSphere(
