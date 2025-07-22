@@ -1,4 +1,5 @@
 
+import 'package:artizen/widgets/scenario_card.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -8,6 +9,7 @@ import '../json/JsonDataManager4.dart';
 import '../json/JsonDataManager2.dart';
 import '../json/JsonDataManager5.dart';
 import '../models/JsonModel.dart';
+import '../widgets/option_card.dart';
 import 'ActivityScreen.dart';
 
 class LevelScenariosScreen extends StatefulWidget {
@@ -636,7 +638,9 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Scenario Card
-          _buildScenarioCard(scenario),
+          ScenarioCard(scenario: scenario),
+
+          // _buildScenarioCard(scenario),
           SizedBox(height: 20),
 
           // Options
@@ -650,74 +654,6 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
     );
   }
 
-  Widget _buildScenarioCard(Scenario scenario) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Title
-          Text(
-            scenario.title,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF4A90E2),
-            ),
-          ),
-          SizedBox(height: 12),
-
-          // Description
-          Text(
-            scenario.description,
-            style: TextStyle(fontSize: 16, color: Colors.black87, height: 1.5),
-          ),
-
-          // Question if exists
-          if (scenario.question != null) ...[
-            SizedBox(height: 16),
-            Container(
-              padding: EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Color(0xFF4A90E2).withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Color(0xFF4A90E2).withOpacity(0.3)),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(Icons.help_outline, color: Color(0xFF4A90E2), size: 20),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      scenario.question!,
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Color(0xFF4A90E2),
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
 
   Widget _buildOptionsSection(Scenario scenario) {
     return Column(
@@ -738,89 +674,26 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
           String optionText = entry.value;
           bool isSelected = userAnswers[scenario.id] == optionIndex;
 
-          return _buildOptionCard(
-            scenario,
-            optionIndex,
-            optionText,
-            isSelected,
+          return OptionCard(
+            scenario: scenario,
+            optionIndex: optionIndex,
+            optionText:  optionText,
+            isSelected: isSelected,
+            onSelect: _selectOption,
           );
+
+          // return _buildOptionCard(
+          //   scenario,
+          //   optionIndex,
+          //   optionText,
+          //   isSelected,
+          // );
         }).toList(),
       ],
     );
   }
 
-  Widget _buildOptionCard(
-    Scenario scenario,
-    int optionIndex,
-    String optionText,
-    bool isSelected,
-  ) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 12),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () => _selectOption(scenario, optionIndex),
-          borderRadius: BorderRadius.circular(16),
-          child: AnimatedContainer(
-            duration: Duration(milliseconds: 200),
-            padding: EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: isSelected ? Colors.white : Colors.white.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color:
-                    isSelected
-                        ? Color(0xFF4A90E2)
-                        : Colors.white.withOpacity(0.3),
-                width: isSelected ? 2 : 1,
-              ),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    color: isSelected ? Color(0xFF4A90E2) : Colors.transparent,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color:
-                          isSelected
-                              ? Color(0xFF4A90E2)
-                              : Colors.white.withOpacity(0.5),
-                      width: 2,
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      optionIndex.toString(),
-                      style: TextStyle(
-                        color: isSelected ? Colors.white : Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 16),
-                Expanded(
-                  child: Text(
-                    optionText,
-                    style: TextStyle(
-                      color: isSelected ? Colors.black87 : Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+
 
   Widget _buildNavigationButtons(Scenario scenario, int index) {
     bool hasAnswer = userAnswers.containsKey(scenario.id);
