@@ -1,6 +1,4 @@
 
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +17,7 @@ class WrongAnswerScreen extends StatefulWidget {
   final String attemptedAt;
 
   const WrongAnswerScreen({
-    Key? key,
+    super.key,
     required this.level,
     required this.scenarioData,
     required this.completeScenarioData,
@@ -29,7 +27,7 @@ class WrongAnswerScreen extends StatefulWidget {
     required this.correctOptionText,
     required this.feedback,
     required this.attemptedAt,
-  }) : super(key: key);
+  });
 
   @override
   _WrongAnswerScreenState createState() => _WrongAnswerScreenState();
