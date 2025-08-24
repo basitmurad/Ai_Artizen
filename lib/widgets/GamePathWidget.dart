@@ -8,12 +8,12 @@ class GamePathWidget extends StatefulWidget {
   final List<Widget> Function() buildAllModules;
 
   const GamePathWidget({
-    Key? key,
+    super.key,
     required this.isPlaying,
     required this.playGameSound,
     required this.buildFloatingMascot,
     required this.buildAllModules,
-  }) : super(key: key);
+  });
 
   @override
   _GamePathWidgetState createState() => _GamePathWidgetState();

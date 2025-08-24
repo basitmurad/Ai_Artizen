@@ -102,7 +102,7 @@ class OptionCard extends StatelessWidget {
   final bool wasUserCorrect;
 
   const OptionCard({
-    Key? key,
+    super.key,
     required this.scenario,
     required this.optionIndex,
     required this.optionText,
@@ -111,7 +111,7 @@ class OptionCard extends StatelessWidget {
     this.isAnswered = false,
     this.isCorrectOption = false,
     this.wasUserCorrect = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -2116,7 +2116,7 @@ class LevelScenariosScreen extends StatefulWidget {
 
 class _LevelScenariosScreenState extends State<LevelScenariosScreen>
     with TickerProviderStateMixin {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   List<Scenario> scenarios = [];
   int currentScenarioIndex = 0;
   Map<int, int> userAnswers = {}; // scenario_id -> selected_option
@@ -2463,7 +2463,7 @@ class _LevelScenariosScreenState extends State<LevelScenariosScreen>
             isSelected: isSelected,
             onSelect: _selectOption,
           );
-        }).toList(),
+        }),
       ],
     );
   }

@@ -9,14 +9,14 @@ class CustomHeaderWidget extends StatelessWidget implements PreferredSizeWidget 
   final VoidCallback onRefreshTap;
 
   const CustomHeaderWidget({
-    Key? key,
+    super.key,
     required this.userInitials,
     required this.userDisplayName,
     required this.coinController,
     required this.totalCoins,
     required this.onLeaderboardTap,
     required this.onRefreshTap,
-  }) : super(key: key);
+  });
 
   @override
   Size get preferredSize => const Size.fromHeight(70);

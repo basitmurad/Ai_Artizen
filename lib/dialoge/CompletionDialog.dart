@@ -13,7 +13,7 @@ class CompletionDialog extends StatelessWidget {
   final DatabaseReference database;
 
   const CompletionDialog({
-    Key? key,
+    super.key,
     required this.correct,
     required this.total,
     required this.stars,
@@ -22,7 +22,7 @@ class CompletionDialog extends StatelessWidget {
     required this.userCoins,
     required this.auth,
     required this.database,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

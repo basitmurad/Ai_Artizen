@@ -13,7 +13,7 @@ class UserBadgesWidget extends StatefulWidget {
   final String emptyStateText;
 
   const UserBadgesWidget({
-    Key? key,
+    super.key,
     required this.userProgress,
     this.title = 'Your Achievements',
     this.maxLevels = 3,
@@ -23,7 +23,7 @@ class UserBadgesWidget extends StatefulWidget {
     this.badgeSize = 80.0,
     this.showEmptyState = false,
     this.emptyStateText = 'Complete levels to earn badges!',
-  }) : super(key: key);
+  });
 
   @override
   _UserBadgesWidgetState createState() => _UserBadgesWidgetState();
@@ -33,8 +33,8 @@ class _UserBadgesWidgetState extends State<UserBadgesWidget>
     with TickerProviderStateMixin {
   late AnimationController _fadeController;
   late AnimationController _bounceController;
-  List<AnimationController> _badgeControllers = [];
-  List<Animation<double>> _badgeAnimations = [];
+  final List<AnimationController> _badgeControllers = [];
+  final List<Animation<double>> _badgeAnimations = [];
 
   @override
   void initState() {
@@ -256,7 +256,7 @@ class _UserBadgesWidgetState extends State<UserBadgesWidget>
                 _animateBadgeTap(animationIndex);
                 widget.onBadgeTap?.call(badgeType, levelId);
               },
-              child: Container(
+              child: SizedBox(
                 width: widget.badgeSize,
                 height: widget.badgeSize + 20,
                 child: Column(

@@ -10,14 +10,14 @@ class DashboardHeader extends StatelessWidget {
   final List<Widget>? additionalActions;
 
   const DashboardHeader({
-    Key? key,
+    super.key,
     required this.displayName,
     required this.userInitials,
     required this.totalCoins,
     required this.coinController,
     required this.onRefresh,
     this.additionalActions,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -57,11 +57,11 @@ class UserProfileSection extends StatelessWidget {
   final Widget? customAvatar;
 
   const UserProfileSection({
-    Key? key,
+    super.key,
     required this.displayName,
     required this.userInitials,
     this.customAvatar,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -109,13 +109,13 @@ class ProfileAvatar extends StatelessWidget {
   final Color borderColor;
 
   const ProfileAvatar({
-    Key? key,
+    super.key,
     required this.userInitials,
     this.customAvatar,
     this.size = 40,
     this.backgroundColor = Colors.white,
     this.borderColor = Colors.white,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -166,13 +166,13 @@ class AnimatedCoinsDisplay extends StatelessWidget {
   final IconData coinIcon;
 
   const AnimatedCoinsDisplay({
-    Key? key,
+    super.key,
     required this.totalCoins,
     required this.coinController,
     this.gradientStart = const Color(0xFFFFD700),
     this.gradientEnd = const Color(0xFFFFA500),
     this.coinIcon = Icons.monetization_on,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -236,10 +236,10 @@ class HeaderActionButtons extends StatelessWidget {
   final List<Widget>? additionalActions;
 
   const HeaderActionButtons({
-    Key? key,
+    super.key,
     required this.onRefresh,
     this.additionalActions,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -268,13 +268,13 @@ class HeaderActionButton extends StatelessWidget {
   final double size;
 
   const HeaderActionButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
     this.backgroundColor,
     this.iconColor = Colors.white,
     this.size = 20,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -301,13 +301,13 @@ class AIArtizenDashboardHeader extends StatelessWidget {
   final VoidCallback onRefresh;
 
   const AIArtizenDashboardHeader({
-    Key? key,
+    super.key,
     required this.displayName,
     required this.userInitials,
     required this.totalCoins,
     required this.coinController,
     required this.onRefresh,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

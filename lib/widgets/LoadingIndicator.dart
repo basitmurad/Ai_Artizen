@@ -8,13 +8,13 @@ class LoadingIndicator extends StatelessWidget {
   final FontWeight? textWeight;
 
   const LoadingIndicator({
-    Key? key,
+    super.key,
     this.message = 'Loading...',
     this.indicatorColor,
     this.textColor,
     this.textSize = 16.0,
     this.textWeight = FontWeight.w500,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -53,14 +53,14 @@ class AnimatedLoadingIndicator extends StatefulWidget {
   final Duration animationDuration;
 
   const AnimatedLoadingIndicator({
-    Key? key,
+    super.key,
     this.message = 'Loading...',
     this.indicatorColor,
     this.textColor,
     this.textSize = 16.0,
     this.textWeight = FontWeight.w500,
     this.animationDuration = const Duration(milliseconds: 1500),
-  }) : super(key: key);
+  });
 
   @override
   _AnimatedLoadingIndicatorState createState() => _AnimatedLoadingIndicatorState();
@@ -131,9 +131,9 @@ class DashboardLoadingIndicator extends StatelessWidget {
   final String message;
 
   const DashboardLoadingIndicator({
-    Key? key,
+    super.key,
     this.message = 'Loading your progress...',
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

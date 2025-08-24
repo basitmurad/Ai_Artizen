@@ -17,9 +17,9 @@ class DashboardLoadingWidget extends StatelessWidget {
   final String message;
 
   const DashboardLoadingWidget({
-    Key? key,
+    super.key,
     this.message = 'Loading your progress...',
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +51,10 @@ class UserAvatarWidget extends StatelessWidget {
   final double size;
 
   const UserAvatarWidget({
-    Key? key,
+    super.key,
     required this.userProfile,
     this.size = 40,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -105,12 +105,12 @@ class DashboardHeader extends StatelessWidget {
   final VoidCallback onRefresh;
 
   const DashboardHeader({
-    Key? key,
+    super.key,
     required this.userProfile,
     required this.totalCoins,
     required this.coinController,
     required this.onRefresh,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

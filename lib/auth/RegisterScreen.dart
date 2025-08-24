@@ -1,12 +1,13 @@
 import 'package:artizen/home/NewDashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/text_field_widget.dart';
 
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
@@ -255,7 +256,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             SizedBox(height: 24),
 
             // Register Button
-            Container(
+            SizedBox(
               height: 56,
               child: ElevatedButton(
                 onPressed: _isLoading ? null : _register,

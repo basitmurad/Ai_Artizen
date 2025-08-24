@@ -271,6 +271,8 @@ class _SplashScreenState extends State<SplashScreen>
 
 // Alternative splash screen with stream listener for real-time auth changes
 class SplashScreenWithAuthStream extends StatefulWidget {
+  const SplashScreenWithAuthStream({super.key});
+
   @override
   _SplashScreenWithAuthStreamState createState() => _SplashScreenWithAuthStreamState();
 }

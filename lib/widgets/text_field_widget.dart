@@ -19,7 +19,7 @@ class TextFieldWidget extends StatelessWidget {
   final Function(String)? onChanged;
 
   const TextFieldWidget({
-    Key? key,
+    super.key,
     this.hintText,
     this.subTitle,
     this.prefixIcon,
@@ -36,7 +36,7 @@ class TextFieldWidget extends StatelessWidget {
     this.maxLines = 1,
     this.focusNode,
     this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

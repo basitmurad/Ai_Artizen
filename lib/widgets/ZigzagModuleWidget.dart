@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 // Level data model for the zigzag widget
 class ZigzagLevelData {
@@ -32,7 +31,7 @@ class ZigzagModuleWidget extends StatefulWidget {
   final Color pathColor;
 
   const ZigzagModuleWidget({
-    Key? key,
+    super.key,
     required this.levels,
     this.onLevelTap,
     this.animationDuration = const Duration(milliseconds: 3000),
@@ -42,7 +41,7 @@ class ZigzagModuleWidget extends StatefulWidget {
     this.levelSize = 70.0,
     this.showConnectors = true,
     this.pathColor = Colors.white,
-  }) : super(key: key);
+  });
 
   @override
   _ZigzagModuleWidgetState createState() => _ZigzagModuleWidgetState();
@@ -160,7 +159,7 @@ class _ZigzagModuleWidgetState extends State<ZigzagModuleWidget>
     bool currentIsLeft = levelIndex % 2 == 0;
     bool nextIsLeft = (levelIndex + 1) % 2 == 0;
 
-    return Container(
+    return SizedBox(
       height: 20,
       child: CustomPaint(
         size: Size(double.infinity, 20),
@@ -291,7 +290,7 @@ class _ZigzagModuleWidgetState extends State<ZigzagModuleWidget>
   }
 
   Widget _buildLevelTitle(ZigzagLevelData level) {
-    return Container(
+    return SizedBox(
       width: widget.levelSize + 10,
       child: Text(
         level.title,
@@ -374,6 +373,8 @@ class ZigzagConnectorPainter extends CustomPainter {
 
 // Usage examples
 class ZigzagModuleExamples extends StatelessWidget {
+  const ZigzagModuleExamples({super.key});
+
   @override
   Widget build(BuildContext context) {
     final sampleLevels = [

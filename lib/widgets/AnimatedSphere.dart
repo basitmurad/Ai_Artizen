@@ -10,14 +10,14 @@ class AnimatedSphere extends StatefulWidget {
   final VoidCallback? onTap;
 
   const AnimatedSphere({
-    Key? key,
+    super.key,
     this.size = 100.0,
     this.primaryColor = const Color(0xFF4A90E2),
     this.secondaryColor = const Color(0xFF7B68EE),
     this.animationDuration = const Duration(seconds: 3),
     this.child,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   _AnimatedSphereState createState() => _AnimatedSphereState();
@@ -78,7 +78,7 @@ class _AnimatedSphereState extends State<AnimatedSphere>
             ),
             child: Transform.scale(
               scale: 1.0 + (_pulseController.value * 0.1),
-              child: Container(
+              child: SizedBox(
                 width: widget.size,
                 height: widget.size,
                 child: CustomPaint(
@@ -212,6 +212,8 @@ class SpherePainter extends CustomPainter {
 
 // Usage example widget
 class SphereExample extends StatelessWidget {
+  const SphereExample({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -292,7 +292,6 @@
 //
 
 // activity_card.dart
-import 'dart:convert';
 
 class ActivityCard {
   final String statement;

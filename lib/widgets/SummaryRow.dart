@@ -8,13 +8,13 @@ class SummaryRow extends StatelessWidget {
   final EdgeInsetsGeometry padding;
 
   const SummaryRow({
-    Key? key,
+    super.key,
     required this.label,
     required this.value,
     this.labelColor,
     this.valueColor,
     this.padding = const EdgeInsets.symmetric(vertical: 4),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

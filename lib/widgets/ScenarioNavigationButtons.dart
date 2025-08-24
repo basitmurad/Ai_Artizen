@@ -101,14 +101,14 @@ class ScenarioNavigationButtons extends StatefulWidget {
   final VoidCallback onNext;
 
   const ScenarioNavigationButtons({
-    Key? key,
+    super.key,
     required this.scenario,
     required this.index,
     required this.totalScenarios,
     required this.hasAnswer,
     required this.onPrevious,
     required this.onNext,
-  }) : super(key: key);
+  });
 
   @override
   State<ScenarioNavigationButtons> createState() => _ScenarioNavigationButtonsState();

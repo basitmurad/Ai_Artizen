@@ -25,7 +25,7 @@ class _UserDetailScreenState extends State<UserDetailScreen>
   late Animation<Offset> _slideAnimation;
 
   bool _isLoading = true;
-  Map<String, ModuleProgress> _moduleProgress = {};
+  final Map<String, ModuleProgress> _moduleProgress = {};
   Map<String, dynamic> _userDetails = {};
 
   @override

@@ -48,7 +48,7 @@ class _WrongAnswerScreenState extends State<WrongAnswerScreen>
   late Animation<double> _choiceAnimation;
 
   // Card and choice variables
-  PageController _cardPageController = PageController();
+  final PageController _cardPageController = PageController();
   int _currentCardIndex = 0;
   List<Map<String, dynamic>> _activityCards = [];
   List<String?> _userChoices = [];

@@ -13,7 +13,7 @@ class ModuleHeaderWidget extends StatefulWidget {
   final EdgeInsets padding;
 
   const ModuleHeaderWidget({
-    Key? key,
+    super.key,
     required this.title,
     required this.subtitle,
     required this.icon,
@@ -24,7 +24,7 @@ class ModuleHeaderWidget extends StatefulWidget {
     this.showAnimation = true,
     this.margin = const EdgeInsets.symmetric(vertical: 15),
     this.padding = const EdgeInsets.all(20),
-  }) : super(key: key);
+  });
 
   @override
   _ModuleHeaderWidgetState createState() => _ModuleHeaderWidgetState();
@@ -319,6 +319,8 @@ class _ModuleHeaderWidgetState extends State<ModuleHeaderWidget>
 
 // Usage Examples
 class ModuleHeaderExamples extends StatelessWidget {
+  const ModuleHeaderExamples({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

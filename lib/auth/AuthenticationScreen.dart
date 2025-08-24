@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../main.dart';
 import 'LoginScreen.dart';
 import 'RegisterScreen.dart';
 
 class AuthenticationScreen extends StatefulWidget {
+  const AuthenticationScreen({super.key});
+
   @override
   _AuthenticationScreenState createState() => _AuthenticationScreenState();
 }

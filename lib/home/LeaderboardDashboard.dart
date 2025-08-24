@@ -21,7 +21,7 @@ class _LeaderboardDashboardState extends State<LeaderboardDashboard>
 
   bool _isLoading = true;
   List<LeaderboardUser> _leaderboardData = [];
-  Map<String, String> _userIdMap = {}; // Store userId for each user
+  final Map<String, String> _userIdMap = {}; // Store userId for each user
 
   @override
   void initState() {
@@ -780,7 +780,7 @@ class _LeaderboardDashboardState extends State<LeaderboardDashboard>
             ),
           ],
         ),
-        trailing: Container(
+        trailing: SizedBox(
           width: 60,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

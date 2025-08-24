@@ -2,7 +2,6 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/services.dart';
 
 import '../dialoge/FeedbackHelper.dart';
 import '../models/JsonModel.dart';
@@ -356,20 +355,15 @@ class _EnhancedActivityScreenState extends State<EnhancedActivityScreen>
 
   Widget _buildHeader(Activity activity) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.only(top: 16),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () => _handleBackNavigation(),
-            ),
+          IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => _handleBackNavigation(),
           ),
-          SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -377,16 +371,16 @@ class _EnhancedActivityScreenState extends State<EnhancedActivityScreen>
                 Text(
                   activity.name,
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    color: Colors.white.withValues(alpha: 0.8),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 // Show module name
                 Text(
                   _getModuleName(),
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white,
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                   ),
@@ -412,77 +406,59 @@ class _EnhancedActivityScreenState extends State<EnhancedActivityScreen>
               // Module coins display
               StreamBuilder<DatabaseEvent>(
                 stream:
-                    _auth.currentUser != null
-                        ? _database
-                            .child('Progress')
-                            .child(_auth.currentUser!.uid)
-                            .child(widget.moduleID)
-                            .child('coins')
-                            .onValue
-                        : null,
+                _auth.currentUser != null
+                    ? _database
+                    .child('Progress')
+                    .child(_auth.currentUser!.uid)
+                    .child(widget.moduleID)
+                    .child('coins')
+                    .onValue
+                    : null,
                 builder: (context, snapshot) {
                   int displayCoins = userCoins;
                   if (snapshot.hasData && snapshot.data!.snapshot.exists) {
                     displayCoins = snapshot.data!.snapshot.value as int? ?? 0;
                   }
 
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 4),
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.amber.withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.monetization_on,
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.monetization_on,
+                        color: Colors.white,
+                        size: 12,
+                      ),
+                      SizedBox(width: 4),
+                      Text(
+                        displayCoins.toString(),
+                        style: TextStyle(
                           color: Colors.white,
-                          size: 12,
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(width: 4),
-                        Text(
-                          displayCoins.toString(),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   );
                 },
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color:
-                      isSimulationActivity
-                          ? Colors.purple.withOpacity(0.8)
-                          : Colors.orange.withOpacity(0.8),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      isSimulationActivity ? Icons.psychology : Icons.quiz,
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    isSimulationActivity ? Icons.psychology : Icons.quiz,
+                    color: Colors.white,
+                    size: 16,
+                  ),
+                  SizedBox(width: 4),
+                  Text(
+                    isSimulationActivity ? 'Simulation' : 'Cards',
+                    style: TextStyle(
                       color: Colors.white,
-                      size: 16,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
                     ),
-                    SizedBox(width: 4),
-                    Text(
-                      isSimulationActivity ? 'Simulation' : 'Cards',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               if (hasPassedActivity) ...[
                 SizedBox(height: 4),
@@ -504,6 +480,7 @@ class _EnhancedActivityScreenState extends State<EnhancedActivityScreen>
               ],
             ],
           ),
+          SizedBox(width: 8,)
         ],
       ),
     );
@@ -1338,18 +1315,612 @@ class _EnhancedActivityScreenState extends State<EnhancedActivityScreen>
       await _awardCoins(2, 'correct_card_answer');
     }
 
-    // Show feedback after a brief delay
+    // Show different feedback based on the answer selected
     Future.delayed(Duration(milliseconds: 500), () {
-      FeedbackHelper.showCardFeedback(
-        context,
-        feedbackText: card.feedback,
-        isCorrect: true,
-        rewardCoins: 2,
-        moduleName: _getModuleName(),
-      );
-      // _showCardFeedback(card, isCorrect);
+      if (answer == "Fair" && isCorrect) {
+        // Show excellent feedback for correct "Fair" answer
+        _showExcellentFairFeedback(card);
+      } else if (answer == "Unfair" && isCorrect) {
+        // Show excellent feedback for correct "Unfair" answer
+        _showExcellentUnfairFeedback(card);
+      } else if (answer == "Fair" && !isCorrect) {
+        // Show feedback for incorrect "Fair" answer (should be Unfair)
+        _showIncorrectFairFeedback(card);
+      } else if (answer == "Unfair" && !isCorrect) {
+        // Show feedback for incorrect "Unfair" answer (should be Fair)
+        _showIncorrectUnfairFeedback(card);
+      } else {
+        // Default feedback for other cases (like "Biased Outcome", "Valid Pattern")
+        FeedbackHelper.showCardFeedback(
+          context,
+          feedbackText: card.feedback,
+          isCorrect: isCorrect,
+          rewardCoins: isCorrect ? 2 : 0,
+          moduleName: _getModuleName(),
+        );
+      }
     });
   }
+
+// Custom feedback method for correct "Fair" answers
+  void _showExcellentFairFeedback(ActivityCard card) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Container(
+            padding: EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Colors.green[400]!, Colors.green[600]!],
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Success Icon with animation
+                Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.thumb_up,
+                    color: Colors.green[600],
+                    size: 48,
+                  ),
+                ),
+                SizedBox(height: 16),
+
+                // Title
+                Text(
+                  "Excellent Choice!",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 12),
+
+                // Subtitle
+                Text(
+                  "You correctly identified this as Fair",
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.9),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+
+                // Feedback content
+                Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    card.feedback,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(height: 20),
+
+                // Coins earned
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.monetization_on, color: Colors.white, size: 20),
+                      SizedBox(width: 8),
+                      Text(
+                        "+2 Coins Earned!",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+
+                // Continue button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.green[600],
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text(
+                      "Continue",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+// Custom feedback method for correct "Unfair" answers
+  void _showExcellentUnfairFeedback(ActivityCard card) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Container(
+            padding: EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Colors.blue[400]!, Colors.blue[600]!],
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Success Icon
+                Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.balance,
+                    color: Colors.blue[600],
+                    size: 48,
+                  ),
+                ),
+                SizedBox(height: 16),
+
+                // Title
+                Text(
+                  "Well Spotted!",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 12),
+
+                // Subtitle
+                Text(
+                  "You correctly identified this as Unfair",
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.9),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+
+                // Feedback content
+                Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    card.feedback,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(height: 20),
+
+                // Coins earned
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.monetization_on, color: Colors.white, size: 20),
+                      SizedBox(width: 8),
+                      Text(
+                        "+2 Coins Earned!",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+
+                // Continue button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.blue[600],
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text(
+                      "Continue",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+// Custom feedback method for incorrect "Fair" answers
+  void _showIncorrectFairFeedback(ActivityCard card) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Container(
+            padding: EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Colors.orange[400]!, Colors.orange[600]!],
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Warning Icon
+                Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.lightbulb_outline,
+                    color: Colors.orange[600],
+                    size: 48,
+                  ),
+                ),
+                SizedBox(height: 16),
+
+                // Title
+                Text(
+                  "Let's Think About This",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 12),
+
+                // Subtitle
+                Text(
+                  "This situation may not be as fair as it appears",
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.9),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+
+                // Feedback content
+                Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    card.feedback,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(height: 20),
+
+                // Learning message
+                Container(
+                  padding: EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.white.withOpacity(0.3)),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.school, color: Colors.white, size: 20),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          "Keep learning - every mistake helps you grow!",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+
+                // Continue button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.orange[600],
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text(
+                      "Continue",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+// Custom feedback method for incorrect "Unfair" answers
+  void _showIncorrectUnfairFeedback(ActivityCard card) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Container(
+            padding: EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Colors.red[400]!, Colors.red[600]!],
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Info Icon
+                Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.info_outline,
+                    color: Colors.red[600],
+                    size: 48,
+                  ),
+                ),
+                SizedBox(height: 16),
+
+                // Title
+                Text(
+                  "Consider Again",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 12),
+
+                // Subtitle
+                Text(
+                  "This situation might actually be fair",
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.9),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+
+                // Feedback content
+                Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    card.feedback,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(height: 20),
+
+                // Learning message
+                Container(
+                  padding: EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.white.withOpacity(0.3)),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.psychology, color: Colors.white, size: 20),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          "Understanding fairness takes practice!",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+
+                // Continue button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.red[600],
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text(
+                      "Continue",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+  // void _selectCardAnswer(int index, String answer, ActivityCard card) async {
+  //   bool isCorrect = answer == card.correct;
+  //
+  //   setState(() {
+  //     cardAnswers[index] = answer;
+  //     totalItemsAnswered++;
+  //     if (isCorrect) {
+  //       correctAnswersCount++;
+  //     }
+  //   });
+  //
+  //   // Update Firebase tracking in module
+  //   await _updateCardProgress(index, answer, isCorrect);
+  //   await _updateProgress();
+  //
+  //   // Award coins for correct answer
+  //   if (isCorrect) {
+  //     await _awardCoins(2, 'correct_card_answer');
+  //   }
+  //
+  //   // Show feedback after a brief delay
+  //   Future.delayed(Duration(milliseconds: 500), () {
+  //     FeedbackHelper.showCardFeedback(
+  //       context,
+  //       feedbackText: card.feedback,
+  //       isCorrect: true,
+  //       rewardCoins: 2,
+  //       moduleName: _getModuleName(),
+  //     );
+  //     // _showCardFeedback(card, isCorrect);
+  //   });
+  // }
 
   void _selectSimulationChoice(
     int sceneIndex,
@@ -1890,7 +2461,7 @@ class _EnhancedActivityScreenState extends State<EnhancedActivityScreen>
                 ),
               ],
               // Continue/Return button
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {

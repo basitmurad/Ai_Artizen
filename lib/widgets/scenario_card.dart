@@ -95,9 +95,9 @@ class ScenarioCard extends StatelessWidget {
   final Scenario scenario;
 
   const ScenarioCard({
-    Key? key,
+    super.key,
     required this.scenario,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

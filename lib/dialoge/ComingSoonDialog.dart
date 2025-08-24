@@ -5,10 +5,10 @@ class ComingSoonDialog extends StatelessWidget {
   final String level;
 
   const ComingSoonDialog({
-    Key? key,
+    super.key,
     required this.module,
     required this.level,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
