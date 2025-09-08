@@ -312,7 +312,6 @@ class _EnhancedActivityScreenState extends State<EnhancedActivityScreen>
       print('❌ Error awarding coins: $e');
     }
   }
-
   @override
   Widget build(BuildContext context) {
     final activity = widget.scenario.activity;
@@ -339,12 +338,13 @@ class _EnhancedActivityScreenState extends State<EnhancedActivityScreen>
           child: Column(
             children: [
               _buildHeader(activity),
+              _buildDescriptionSection(activity), // Add description section
               _buildProgressSection(),
               Expanded(
                 child:
-                    isSimulationActivity
-                        ? _buildSimulationView(activity)
-                        : _buildCardActivityView(activity),
+                isSimulationActivity
+                    ? _buildSimulationView(activity)
+                    : _buildCardActivityView(activity),
               ),
             ],
           ),
@@ -371,32 +371,20 @@ class _EnhancedActivityScreenState extends State<EnhancedActivityScreen>
                 Text(
                   activity.name,
                   style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.8),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 // Show module name
                 Text(
                   _getModuleName(),
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
+                    color: Colors.white.withOpacity(0.8),
+                    fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                if (activity.description != null) ...[
-                  SizedBox(height: 4),
-                  Text(
-                    activity.description!,
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.8),
-                      fontSize: 14,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
               ],
             ),
           ),
@@ -485,6 +473,239 @@ class _EnhancedActivityScreenState extends State<EnhancedActivityScreen>
       ),
     );
   }
+
+  Widget _buildDescriptionSection(Activity activity) {
+    if (activity.description == null || activity.description!.isEmpty) {
+      return SizedBox.shrink(); // Return empty widget if no description
+    }
+
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.2),
+          width: 1,
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(
+              Icons.info_outline,
+              color: Colors.white,
+              size: 18,
+            ),
+          ),
+          SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Activity Description',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  activity.description!,
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.9),
+                    fontSize: 13,
+                    height: 1.4,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   final activity = widget.scenario.activity;
+  //   if (activity == null) {
+  //     return Scaffold(body: Center(child: Text('No activity available')));
+  //   }
+  //
+  //   return Scaffold(
+  //     backgroundColor: Color(0xFFE91E63),
+  //     body: Container(
+  //       decoration: BoxDecoration(
+  //         gradient: LinearGradient(
+  //           begin: Alignment.topLeft,
+  //           end: Alignment.bottomRight,
+  //           colors: [
+  //             Color(0xFFE91E63),
+  //             Color(0xFFAD1457),
+  //             Color(0xFF880E4F),
+  //             Color(0xFF4A148C),
+  //           ],
+  //         ),
+  //       ),
+  //       child: SafeArea(
+  //         child: Column(
+  //           children: [
+  //             _buildHeader(activity),
+  //             _buildProgressSection(),
+  //             Expanded(
+  //               child:
+  //                   isSimulationActivity
+  //                       ? _buildSimulationView(activity)
+  //                       : _buildCardActivityView(activity),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+  //
+  // Widget _buildHeader(Activity activity) {
+  //   return Container(
+  //     padding: EdgeInsets.only(top: 16),
+  //     child: Row(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         IconButton(
+  //           icon: Icon(Icons.arrow_back, color: Colors.white),
+  //           onPressed: () => _handleBackNavigation(),
+  //         ),
+  //         Expanded(
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               Text(
+  //                 activity.name,
+  //                 style: TextStyle(
+  //                   color: Colors.white.withValues(alpha: 0.8),
+  //                   fontSize: 16,
+  //                   fontWeight: FontWeight.w500,
+  //                 ),
+  //               ),
+  //               // Show module name
+  //               Text(
+  //                 _getModuleName(),
+  //                 style: TextStyle(
+  //                   color: Colors.white,
+  //                   fontSize: 12,
+  //                   fontWeight: FontWeight.w500,
+  //                 ),
+  //               ),
+  //               if (activity.description != null) ...[
+  //                 Text(
+  //                   activity.description!,
+  //                   style: TextStyle(
+  //                     color: Colors.white.withOpacity(0.8),
+  //                     fontSize: 14,
+  //                   ),
+  //                   maxLines: 8,
+  //                   overflow: TextOverflow.ellipsis,
+  //                 ),
+  //               ],
+  //             ],
+  //           ),
+  //         ),
+  //         // Activity type indicator with retry badge and module coins
+  //         Column(
+  //           children: [
+  //             // Module coins display
+  //             StreamBuilder<DatabaseEvent>(
+  //               stream:
+  //               _auth.currentUser != null
+  //                   ? _database
+  //                   .child('Progress')
+  //                   .child(_auth.currentUser!.uid)
+  //                   .child(widget.moduleID)
+  //                   .child('coins')
+  //                   .onValue
+  //                   : null,
+  //               builder: (context, snapshot) {
+  //                 int displayCoins = userCoins;
+  //                 if (snapshot.hasData && snapshot.data!.snapshot.exists) {
+  //                   displayCoins = snapshot.data!.snapshot.value as int? ?? 0;
+  //                 }
+  //
+  //                 return Row(
+  //                   mainAxisSize: MainAxisSize.min,
+  //                   children: [
+  //                     Icon(
+  //                       Icons.monetization_on,
+  //                       color: Colors.white,
+  //                       size: 12,
+  //                     ),
+  //                     SizedBox(width: 4),
+  //                     Text(
+  //                       displayCoins.toString(),
+  //                       style: TextStyle(
+  //                         color: Colors.white,
+  //                         fontSize: 11,
+  //                         fontWeight: FontWeight.bold,
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 );
+  //               },
+  //             ),
+  //             Row(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: [
+  //                 Icon(
+  //                   isSimulationActivity ? Icons.psychology : Icons.quiz,
+  //                   color: Colors.white,
+  //                   size: 16,
+  //                 ),
+  //                 SizedBox(width: 4),
+  //                 Text(
+  //                   isSimulationActivity ? 'Simulation' : 'Cards',
+  //                   style: TextStyle(
+  //                     color: Colors.white,
+  //                     fontSize: 12,
+  //                     fontWeight: FontWeight.bold,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //             if (hasPassedActivity) ...[
+  //               SizedBox(height: 4),
+  //               Container(
+  //                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+  //                 decoration: BoxDecoration(
+  //                   color: Colors.green.withOpacity(0.8),
+  //                   borderRadius: BorderRadius.circular(10),
+  //                 ),
+  //                 child: Text(
+  //                   'RETRY',
+  //                   style: TextStyle(
+  //                     color: Colors.white,
+  //                     fontSize: 10,
+  //                     fontWeight: FontWeight.bold,
+  //                   ),
+  //                 ),
+  //               ),
+  //             ],
+  //           ],
+  //         ),
+  //         SizedBox(width: 8,)
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _buildProgressSection() {
     return Container(
@@ -1889,38 +2110,6 @@ class _EnhancedActivityScreenState extends State<EnhancedActivityScreen>
       },
     );
   }
-  // void _selectCardAnswer(int index, String answer, ActivityCard card) async {
-  //   bool isCorrect = answer == card.correct;
-  //
-  //   setState(() {
-  //     cardAnswers[index] = answer;
-  //     totalItemsAnswered++;
-  //     if (isCorrect) {
-  //       correctAnswersCount++;
-  //     }
-  //   });
-  //
-  //   // Update Firebase tracking in module
-  //   await _updateCardProgress(index, answer, isCorrect);
-  //   await _updateProgress();
-  //
-  //   // Award coins for correct answer
-  //   if (isCorrect) {
-  //     await _awardCoins(2, 'correct_card_answer');
-  //   }
-  //
-  //   // Show feedback after a brief delay
-  //   Future.delayed(Duration(milliseconds: 500), () {
-  //     FeedbackHelper.showCardFeedback(
-  //       context,
-  //       feedbackText: card.feedback,
-  //       isCorrect: true,
-  //       rewardCoins: 2,
-  //       moduleName: _getModuleName(),
-  //     );
-  //     // _showCardFeedback(card, isCorrect);
-  //   });
-  // }
 
   void _selectSimulationChoice(
     int sceneIndex,
